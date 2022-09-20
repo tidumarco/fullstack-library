@@ -1,7 +1,6 @@
 # Fullstack project - read carefully.
 Choose between 2 topics provided in the REST API Slides
 
-
 ## Installation
 
 You should use either `npm` or `yarn` but not both. **It's recommended** to use `yarn`
