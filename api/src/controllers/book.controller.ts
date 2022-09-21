@@ -23,7 +23,7 @@ export const createBook = async (
       borrowDate,
       returnDate,
       adminId,
-      editDate,
+      timestamps,
     } = req.body
 
     const book = new Book({
@@ -38,7 +38,7 @@ export const createBook = async (
       borrowDate,
       returnDate,
       adminId,
-      editDate,
+      timestamps,
     })
 
     await bookService.create(book)
