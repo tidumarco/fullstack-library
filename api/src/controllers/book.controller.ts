@@ -16,14 +16,14 @@ export const createBook = async (
       title,
       description,
       publisher,
-      published_date,
+      publishedDate,
       author,
       available,
-      borrower_id,
-      borrow_date,
-      return_date,
-      admin_id,
-      edit_date,
+      borrowerId,
+      borrowDate,
+      returnDate,
+      adminId,
+      editDate,
     } = req.body
 
     const book = new Book({
@@ -31,18 +31,18 @@ export const createBook = async (
       title,
       description,
       publisher,
-      published_date,
+      publishedDate,
       author,
       available,
-      borrower_id,
-      borrow_date,
-      return_date,
-      admin_id,
-      edit_date,
+      borrowerId,
+      borrowDate,
+      returnDate,
+      adminId,
+      editDate,
     })
 
     await bookService.create(book)
-    res.json(book)
+    res.status(201).json(book)
   } catch (error) {
     if (error instanceof Error && error.name == 'ValidationError') {
       next(new BadRequestError('Invalid Request', 400, error))
@@ -62,7 +62,8 @@ export const updateBook = async (
     const update = req.body
     const bookId = req.params.bookId
     const updateBook = await bookService.update(bookId, update)
-    res.json(updateBook)
+    res.status(200).json(updateBook)
+    console.log('Book edited.')
   } catch (error) {
     if (error instanceof Error && error.name == 'ValidationError') {
       next(new BadRequestError('Invalid Request', 400, error))
@@ -97,7 +98,7 @@ export const findById = async (
   next: NextFunction
 ) => {
   try {
-    res.json(await bookService.findById(req.params.bookId))
+    res.status(200).json(await bookService.findById(req.params.bookId))
   } catch (error) {
     if (error instanceof Error && error.name == 'ValidationError') {
       next(new BadRequestError('Invalid Request', 400, error))
@@ -114,7 +115,7 @@ export const findAll = async (
   next: NextFunction
 ) => {
   try {
-    res.json(await bookService.findAll())
+    res.status(200).json(await bookService.findAll())
   } catch (error) {
     if (error instanceof Error && error.name == 'ValidationError') {
       next(new BadRequestError('Invalid Request', 400, error))
