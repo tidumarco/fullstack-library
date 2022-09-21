@@ -61,6 +61,7 @@ export const deleteMovie = async (
   try {
     await movieService.deleteMovie(req.params.movieId)
     res.status(204).end()
+    res.json({ msg: 'movie deleted.' })
   } catch (error) {
     if (error instanceof Error && error.name == 'ValidationError') {
       next(new BadRequestError('Invalid Request', 400, error))
