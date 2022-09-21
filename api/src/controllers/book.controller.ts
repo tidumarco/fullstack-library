@@ -60,7 +60,7 @@ export const updateBook = async (
 ) => {
   try {
     const update = req.body
-    const bookId = req.params.movieId
+    const bookId = req.params.bookId
     const updateBook = await bookService.update(bookId, update)
     res.json(updateBook)
   } catch (error) {
@@ -79,9 +79,8 @@ export const deleteBook = async (
   next: NextFunction
 ) => {
   try {
-    await bookService.deleteBook(req.params.movieId)
-    res.status(204).end()
-    res.json({ msg: 'movie deleted.' })
+    await bookService.deleteBook(req.params.bookId)
+    res.status(200).json({ message: 'Book deleted.' })
   } catch (error) {
     if (error instanceof Error && error.name == 'ValidationError') {
       next(new BadRequestError('Invalid Request', 400, error))
@@ -108,7 +107,7 @@ export const findById = async (
   }
 }
 
-// GET /movies
+// GET /books
 export const findAll = async (
   req: Request,
   res: Response,
