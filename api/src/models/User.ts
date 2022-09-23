@@ -1,6 +1,7 @@
 import mongoose, { Document, Date } from 'mongoose'
 
 export type UserDocument = Document & {
+  isAdmin: boolean
   userId: string
   firstName: string
   lastName: string
@@ -9,6 +10,7 @@ export type UserDocument = Document & {
 }
 
 const userSchema = new mongoose.Schema({
+  isAdmin: Boolean,
   userId: String,
   firstName: String,
   lastName: String,
