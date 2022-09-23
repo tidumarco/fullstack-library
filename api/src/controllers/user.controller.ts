@@ -61,7 +61,7 @@ export const deleteUser = async (
 ) => {
   try {
     await userService.deleteUser(req.params.bookId)
-    res.status(200).json({ message: 'Book deleted.' })
+    res.status(200).json({ message: 'User deleted.' })
   } catch (error) {
     if (error instanceof Error && error.name == 'ValidationError') {
       next(new BadRequestError('Invalid Request', 400, error))
