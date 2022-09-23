@@ -12,7 +12,10 @@ export type BookDocument = Document & {
   borrowDate: Date
   returnDate: Date
   adminId: string[]
-  timestamps: boolean
+  timestamps: {
+    createdAt: Date
+    updatedAt: Date
+  }
 }
 
 const bookSchema = new mongoose.Schema({
@@ -34,7 +37,10 @@ const bookSchema = new mongoose.Schema({
   borrowDate: '',
   returnDate: '',
   adminId: [String],
-  timestamps: Boolean,
+  timestamps: {
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
 })
 
 export default mongoose.model<BookDocument>('Book', bookSchema)
