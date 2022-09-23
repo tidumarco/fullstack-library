@@ -1,6 +1,6 @@
 import mongoose, { Document, Date } from 'mongoose'
 
-export type UserDocument = Document & {
+export type AuthorDocument = Document & {
   firstName: string
   lastName: string
   publishedBooks: string[]
@@ -10,14 +10,14 @@ export type UserDocument = Document & {
   }
 }
 
-const userSchema = new mongoose.Schema({
+const authorSchema = new mongoose.Schema({
   firstName: String,
   lastName: String,
   publishedBooks: [],
   timestamps: {
-    createdAt: new Date(),
-    updatedAt: new Date(),
+    createdAt: '',
+    updatedAt: '',
   },
 })
 
-export default mongoose.model<UserDocument>('User', userSchema)
+export default mongoose.model<AuthorDocument>('Author', authorSchema)

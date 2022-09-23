@@ -1,28 +1,27 @@
 import { Request, Response, NextFunction } from 'express'
 
-import User from '../models/User'
-import userService from '../services/user.service'
+import Author from '../models/Author'
+import authorService from '../services/author.service'
 import { BadRequestError } from '../helpers/apiError'
 
-// POST /users
-export const createUser = async (
+// POST /authors
+export const createAuthor = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    const { userId, firstName, lastName, email, password } = req.body
+    const { firstName, lastName, publishedBooks, timestamps } = req.body
 
-    const user = new User({
-      userId,
+    const author = new Author({
       firstName,
       lastName,
-      email,
-      password,
+      publishedBooks,
+      timestamps,
     })
 
-    await userService.create(user)
-    res.status(201).json(user)
+    await authorService.create(author)
+    res.status(201).json(author)
   } catch (error) {
     if (error instanceof Error && error.name == 'ValidationError') {
       next(new BadRequestError('Invalid Request', 400, error))
@@ -32,18 +31,18 @@ export const createUser = async (
   }
 }
 
-// PUT /users/:userId
-export const updateUser = async (
+// PUT /authors/:authorId
+export const updateAuthor = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
     const update = req.body
-    const userId = req.params.userId
-    const updateUser = await userService.update(userId, update)
-    res.status(200).json(updateUser)
-    console.log('User edited.')
+    const authorId = req.params.authorId
+    const updateAuthor = await authorService.update(authorId, update)
+    res.status(200).json(updateAuthor)
+    console.log('Author edited.')
   } catch (error) {
     if (error instanceof Error && error.name == 'ValidationError') {
       next(new BadRequestError('Invalid Request', 400, error))
@@ -53,15 +52,15 @@ export const updateUser = async (
   }
 }
 
-// DELETE /users/:userId
-export const deleteUser = async (
+// DELETE /authors/:authorId
+export const deleteAuthor = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    await userService.deleteUser(req.params.userId)
-    res.status(200).json({ message: 'User deleted.' })
+    await authorService.deleteAuthor(req.params.authorId)
+    res.status(200).json({ message: 'Author deleted.' })
   } catch (error) {
     if (error instanceof Error && error.name == 'ValidationError') {
       next(new BadRequestError('Invalid Request', 400, error))
@@ -71,14 +70,14 @@ export const deleteUser = async (
   }
 }
 
-// GET /users/:userId
+// GET /authors/:authorId
 export const findById = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    res.status(200).json(await userService.findById(req.params.userId))
+    res.status(200).json(await authorService.findById(req.params.authorId))
   } catch (error) {
     if (error instanceof Error && error.name == 'ValidationError') {
       next(new BadRequestError('Invalid Request', 400, error))
@@ -95,7 +94,7 @@ export const findAll = async (
   next: NextFunction
 ) => {
   try {
-    res.status(200).json(await userService.findAll())
+    res.status(200).json(await authorService.findAll())
   } catch (error) {
     if (error instanceof Error && error.name == 'ValidationError') {
       next(new BadRequestError('Invalid Request', 400, error))

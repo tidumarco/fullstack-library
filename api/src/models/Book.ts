@@ -38,8 +38,8 @@ const bookSchema = new mongoose.Schema({
   returnDate: '',
   adminId: [String],
   timestamps: {
-    createdAt: new Date(),
-    updatedAt: new Date(),
+    createdAt: '',
+    updatedAt: '',
   },
 })
 
