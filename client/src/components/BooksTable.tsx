@@ -41,6 +41,8 @@ export default function BooksTable({ filter }: BasicTable) {
               <TableCell>Available</TableCell>
               <TableCell>Created on</TableCell>
 			  <TableCell>Updated on</TableCell>
+			  <TableCell>Borrowed on</TableCell>
+			  <TableCell>Returned on</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -65,8 +67,9 @@ export default function BooksTable({ filter }: BasicTable) {
                     <div>Not Available</div>
                   )}
                 </TableCell>
-                <TableCell>{book.createdAt}</TableCell>
-				<TableCell>{book.updatedAt}</TableCell>
+                <TableCell>{JSON.stringify(book.createdAt)}</TableCell>
+				<TableCell>{JSON.stringify(book.updatedAt)}</TableCell>
+				
               </TableRow>
             ))}
           </TableBody>

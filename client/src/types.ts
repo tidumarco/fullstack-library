@@ -4,11 +4,13 @@ export type Book = {
   description: string;
   authors: string[];
   borrowerId: string[];
+  borrowDate: Date;
+  returnDate: Date;
   adminId: string[];
   category: string;
   available: boolean;
-  createdAt: string;
-  updatedAt: string;
+  createdAt: Date;
+  updatedAt: Date;
   timestamps: boolean
 };
 
