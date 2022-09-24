@@ -25,7 +25,6 @@ export default function BooksTable({ filter }: BasicTable) {
           <TableHead>
             <TableRow
               sx={{
-                
                 borderBottom: "2px solid black",
                 "& th": {
                   fontSize: "1.25rem",
@@ -39,6 +38,7 @@ export default function BooksTable({ filter }: BasicTable) {
               <TableCell>Authors</TableCell>
               <TableCell>Borrower ID</TableCell>
               <TableCell>Admin ID</TableCell>
+              <TableCell>Available</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -47,9 +47,22 @@ export default function BooksTable({ filter }: BasicTable) {
                 <TableCell align="right">{book.ISBN}</TableCell>
                 <TableCell align="right">{book.title}</TableCell>
                 <TableCell align="right">{book.description}</TableCell>
-                <TableCell align="right">{book.authors}</TableCell>
+                <TableCell align="right">
+                  <ul>
+                    {Object.values(book.authors).map((auth: string) => {
+                      return <li key={JSON.stringify(auth)}>{auth}</li>;
+                    })}
+                  </ul>
+                </TableCell>
                 <TableCell align="right">{book.borrowerId}</TableCell>
                 <TableCell align="right">{book.adminId}</TableCell>
+                <TableCell align="right">
+                  {book.available ? (
+                    <div>Available</div>
+                  ) : (
+                    <div>Not Available</div>
+                  )}
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>

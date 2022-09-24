@@ -1,9 +1,9 @@
-import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import {booksReducer} from './slices/booksSlice'
+import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
+import { booksReducer } from "./slices/booksSlice";
 
 export const store = configureStore({
   reducer: {
-	books: booksReducer
+    books: booksReducer,
   },
 });
 

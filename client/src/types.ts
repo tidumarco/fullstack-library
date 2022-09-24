@@ -5,6 +5,8 @@ export type Book = {
   authors: string[];
   borrowerId: string[];
   adminId: string[];
+  category: string;
+  available: boolean;
 };
 
 export type BooksState = {

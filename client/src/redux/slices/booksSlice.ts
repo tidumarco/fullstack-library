@@ -17,7 +17,6 @@ const initialState: booksState = {
 export const fetchBooksThunk = createAsyncThunk("books/fetch", async () => {
   const url = "http://localhost:4000/api/v1/books";
   const response = await axios.get(url);
-  console.log("Books fetched!")
 
   return {
     data: response.data as Book[],
