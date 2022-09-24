@@ -7,6 +7,9 @@ export type Book = {
   adminId: string[];
   category: string;
   available: boolean;
+  createdAt: string;
+  updatedAt: string;
+  timestamps: boolean
 };
 
 export type BooksState = {
