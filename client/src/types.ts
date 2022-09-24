@@ -20,3 +20,7 @@ export type AppState = {
 export type BasicTable = {
   filter: Book[];
 };
+
+export interface SearchProps {
+	handleChange: (e: any) => void
+  }
