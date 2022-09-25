@@ -1,6 +1,11 @@
 import Book, { BookDocument } from '../models/Book'
 import { NotFoundError } from '../helpers/apiError'
 
+type Authors = {
+  firstName: string
+  lastName: string
+}
+
 const create = async (book: BookDocument): Promise<BookDocument> => {
   return book.save()
 }
@@ -29,6 +34,15 @@ const findByISBN = async (ISBN: string): Promise<BookDocument> => {
 
   if (!foundBook) {
     throw new NotFoundError(`Book's ISBN ${ISBN} not found`)
+  }
+  return foundBook
+}
+
+const findByAuthors = async (authors: Authors): Promise<BookDocument> => {
+  const foundBook = await Book.findOne({ authors: authors.lastName })
+
+  if (!foundBook) {
+    throw new NotFoundError(`Book's authors ${authors} not found`)
   }
   return foundBook
 }
@@ -68,6 +82,7 @@ export default {
   findAll,
   findByCategory,
   findByISBN,
+  findByAuthors,
   update,
   deleteBook,
 }

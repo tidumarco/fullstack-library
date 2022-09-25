@@ -8,6 +8,7 @@ import {
   updateBook,
   findByCategory,
   findByISBN,
+  //   findByAuthors,
 } from '../controllers/book.controller'
 
 const router = express.Router()
@@ -17,6 +18,7 @@ router.get('/', findAll)
 router.get('/:bookId', findById)
 router.get('/category/:category', findByCategory)
 router.get('/ISBN/:ISBN', findByISBN)
+// router.get('/authors/:authors', findByAuthors)
 router.put('/:bookId', updateBook)
 router.delete('/:bookId', deleteBook)
 router.post('/', createBook)
