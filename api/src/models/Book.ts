@@ -40,6 +40,7 @@ const bookSchema = new mongoose.Schema(
     borrowDate: Date,
     returnDate: Date,
     adminId: [String],
+    category: String,
   },
   {
     timestamps: true,

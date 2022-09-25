@@ -39,6 +39,7 @@ export default function BooksTable({ filter }: BasicTable) {
               <TableCell>Borrower ID</TableCell>
               <TableCell>Admin ID</TableCell>
               <TableCell>Available</TableCell>
+			  <TableCell>Category</TableCell>
               <TableCell>Created on</TableCell>
 			  <TableCell>Updated on</TableCell>
 			  <TableCell>Borrowed on</TableCell>
@@ -67,8 +68,11 @@ export default function BooksTable({ filter }: BasicTable) {
                     <div>Not Available</div>
                   )}
                 </TableCell>
-                <TableCell>{JSON.stringify(book.createdAt)}</TableCell>
-				<TableCell>{JSON.stringify(book.updatedAt)}</TableCell>
+				<TableCell>{book.category}</TableCell>
+                <TableCell>{book.createdAt.toString()}</TableCell>
+				<TableCell>{book.updatedAt.toString()}</TableCell>
+				<TableCell>{book.borrowDate.toString()}</TableCell>
+				<TableCell>{book.returnDate.toString()}</TableCell>
 				
               </TableRow>
             ))}

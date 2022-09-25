@@ -18,14 +18,20 @@ import BooksTable from "../components/BooksTable";
 
 export default function Home() {
   const [search, setSearch] = useState("");
-  
+
   const dispatch = useDispatch<AppDispatch>();
-  const { books } = useSelector((state:RootState)=> state)
+  const { books } = useSelector((state: RootState) => state);
 
   const filteredBooks = books.items.filter((book) => {
     const searchBook = search.toLowerCase();
     const bookTitle = book.title.toLowerCase();
-    return searchBook ? bookTitle.startsWith(searchBook) : book;
+    const bookStatus = book.available;
+    // return searchBook ? bookTitle.startsWith(searchBook) : book;
+    if (searchBook == "available") {
+      return bookStatus;
+    } else {
+      return book;
+    }
   });
 
   useEffect(() => {
