@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "redux/store";
 
-import { BasicTable, Book } from "types";
+import { Book } from "types";
 
 import {
   Table,
@@ -14,7 +14,7 @@ import {
   Typography,
 } from "@mui/material";
 
-export default function BooksTable({ filter }: BasicTable) {
+export default function BooksTable() {
   const dispatch = useDispatch<AppDispatch>();
   const { books } = useSelector((state: RootState) => state);
   return (
@@ -47,7 +47,7 @@ export default function BooksTable({ filter }: BasicTable) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {filter.map((book: Book) => (
+            {books.items.map((book: Book) => (
               <TableRow key={book.ISBN}>
                 <TableCell align="right">{book.ISBN}</TableCell>
                 <TableCell align="right">{book.title}</TableCell>

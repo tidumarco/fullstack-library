@@ -108,6 +108,40 @@ export const findById = async (
   }
 }
 
+// GET /books/:category
+export const findByCategory = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    res.status(200).json(await bookService.findByCategory(req.params.category))
+  } catch (error) {
+    if (error instanceof Error && error.name == 'ValidationError') {
+      next(new BadRequestError('Invalid Request', 400, error))
+    } else {
+      next(error)
+    }
+  }
+}
+
+// GET /books/:ISBN
+export const findByISBN = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    res.status(200).json(await bookService.findByISBN(req.params.ISBN))
+  } catch (error) {
+    if (error instanceof Error && error.name == 'ValidationError') {
+      next(new BadRequestError('Invalid Request', 400, error))
+    } else {
+      next(error)
+    }
+  }
+}
+
 // GET /books
 export const findAll = async (
   req: Request,
@@ -124,3 +158,5 @@ export const findAll = async (
     }
   }
 }
+
+// GET search

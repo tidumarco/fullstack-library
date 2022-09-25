@@ -24,11 +24,3 @@ export type BooksState = {
 export type AppState = {
   books: BooksState;
 };
-
-export type BasicTable = {
-  filter: Book[];
-};
-
-export interface SearchProps {
-	handleChange: (e: any) => void
-  }
