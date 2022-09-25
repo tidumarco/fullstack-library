@@ -53,8 +53,8 @@ export default function BooksTable({ filter }: BasicTable) {
                 <TableCell align="right">{book.description}</TableCell>
                 <TableCell align="right">
                   <ul>
-                    {Object.values(book.authors).map((auth: string) => {
-                      return <li key={JSON.stringify(auth)}>{auth}</li>;
+                    {Object.values(book.authors).map((auth: any) => {
+                      return <li key={auth.firstName}>{auth.firstName} {auth.lastName}</li>;
                     })}
                   </ul>
                 </TableCell>

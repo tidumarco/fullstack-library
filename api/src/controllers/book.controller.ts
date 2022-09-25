@@ -12,13 +12,12 @@ export const createBook = async (
 ) => {
   try {
     const {
-      _id,
       ISBN,
       title,
       description,
       publisher,
       publishedDate,
-      author,
+      authors,
       available,
       borrowerId,
       borrowDate,
@@ -27,13 +26,12 @@ export const createBook = async (
     } = req.body
 
     const book = new Book({
-      _id,
       ISBN,
       title,
       description,
       publisher,
       publishedDate,
-      author,
+      authors,
       available,
       borrowerId,
       borrowDate,

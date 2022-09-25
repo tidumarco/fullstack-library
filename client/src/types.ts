@@ -2,7 +2,9 @@ export type Book = {
   ISBN: string;
   title: string;
   description: string;
-  authors: string[];
+  publisher: string
+  publishedDate: Date
+  authors: {}[];
   borrowerId: string[];
   borrowDate: Date;
   returnDate: Date;
@@ -11,7 +13,6 @@ export type Book = {
   available: boolean;
   createdAt: Date;
   updatedAt: Date;
-  timestamps: boolean
 };
 
 export type BooksState = {
