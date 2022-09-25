@@ -7,23 +7,20 @@ export type UserDocument = Document & {
   lastName: string
   email: string
   password: string
-  timestamps: {
-    createdAt: Date
-    updatedAt: Date
-  }
 }
 
-const userSchema = new mongoose.Schema({
-  isAdmin: Boolean,
-  userId: String,
-  firstName: String,
-  lastName: String,
-  email: String,
-  password: String,
-  timestamps: {
-    createdAt: '',
-    updatedAt: '',
+const userSchema = new mongoose.Schema(
+  {
+    isAdmin: Boolean,
+    userId: String,
+    firstName: String,
+    lastName: String,
+    email: String,
+    password: String,
   },
-})
+  {
+    timestamps: true,
+  }
+)
 
 export default mongoose.model<UserDocument>('User', userSchema)
