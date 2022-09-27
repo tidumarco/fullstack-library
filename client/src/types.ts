@@ -5,7 +5,10 @@ export type Book = {
   description: string;
   publisher: string;
   publishedDate: Date;
-  authors: {}[];
+  authors: {
+    firstName: string;
+    lastName: string;
+  };
   borrowerId: string[];
   borrowDate: Date;
   returnDate: Date;
@@ -23,7 +26,10 @@ export type UpdatedBook = {
   description?: string;
   publisher?: string;
   publishedDate?: Date;
-  authors?: {}[];
+  authors?: {
+    firstName: string;
+    lastName: string;
+  };
   borrowerId?: string[];
   borrowDate?: Date;
   returnDate?: Date;
@@ -34,17 +40,42 @@ export type UpdatedBook = {
   updatedAt?: Date;
 };
 
-export type BooksState = {
-  items: Book[];
-  isLoading: boolean;
-  error: null;
-};
+export interface BooksState {
+	allBooks: Book[];
+	singleBook: Book;
+	isLoading: boolean;
+  }
 
 export type AppState = {
   books: BooksState;
 };
 
 export type PutType = {
-	bookId: string;
-	updatedBook: UpdatedBook;
+  bookId: string;
+  updatedBook: UpdatedBook;
+};
+
+export const initialState: BooksState = {
+	allBooks: [],
+	singleBook: {
+	  _id: "",
+	  ISBN: "",
+	  title: "",
+	  description: "",
+	  publisher: "",
+	  publishedDate: new Date(),
+	  authors: {
+		firstName: "",
+		lastName: "",
+	  },
+	  borrowerId: [],
+	  borrowDate: new Date(),
+	  returnDate: new Date(),
+	  adminId: [],
+	  category: "",
+	  available: true,
+	  createdAt: new Date(),
+	  updatedAt: new Date(),
+	},
+	isLoading: false,
   };
