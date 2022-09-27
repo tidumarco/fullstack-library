@@ -28,7 +28,7 @@ export const booksSlice = createSlice({
       state.isLoading = true;
     });
     builder.addCase(fetchBookThunk.fulfilled, (state, action) => {
-      state.singleBook = action.payload.data;
+      state.allBooks = action.payload.data;
       state.isLoading = false;
     });
 
@@ -46,7 +46,7 @@ export const booksSlice = createSlice({
       state.isLoading = true;
     });
     builder.addCase(updateBookThunk.fulfilled, (state, action) => {
-      state.singleBook = action.payload.data;
+      state.allBooks = action.payload.data;
       state.isLoading = false;
     });
 

@@ -39,15 +39,15 @@ export default function BooksTable() {
               <TableCell>Borrower ID</TableCell>
               <TableCell>Admin ID</TableCell>
               <TableCell>Available</TableCell>
-			  <TableCell>Category</TableCell>
+              <TableCell>Category</TableCell>
               <TableCell>Created on</TableCell>
-			  <TableCell>Updated on</TableCell>
-			  <TableCell>Borrowed on</TableCell>
-			  <TableCell>Returned on</TableCell>
+              <TableCell>Updated on</TableCell>
+              <TableCell>Borrowed on</TableCell>
+              <TableCell>Returned on</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {books.items.map((book: Book) => (
+            {books.allBooks.map((book: Book) => (
               <TableRow key={book.ISBN}>
                 <TableCell align="right">{book.ISBN}</TableCell>
                 <TableCell align="right">{book.title}</TableCell>
@@ -55,7 +55,11 @@ export default function BooksTable() {
                 <TableCell align="right">
                   <ul>
                     {Object.values(book.authors).map((auth: any) => {
-                      return <li key={auth.firstName}>{auth.firstName} {auth.lastName}</li>;
+                      return (
+                        <li key={auth.firstName}>
+                          {auth.firstName} {auth.lastName}
+                        </li>
+                      );
                     })}
                   </ul>
                 </TableCell>
@@ -68,12 +72,19 @@ export default function BooksTable() {
                     <div>Not Available</div>
                   )}
                 </TableCell>
-				<TableCell>{book.category}</TableCell>
-                <TableCell>{book.createdAt.toString()}</TableCell>
-				<TableCell>{book.updatedAt.toString()}</TableCell>
-				<TableCell>{book.borrowDate.toString()}</TableCell>
-				<TableCell>{book.returnDate.toString()}</TableCell>
-				
+                <TableCell>{book.category}</TableCell>
+                <TableCell>
+                  {book.createdAt.toString()}
+                </TableCell>
+                <TableCell>
+                  {book.updatedAt.toString()}
+                </TableCell>
+                <TableCell>
+                  {book.borrowDate.toString()}
+                </TableCell>
+                <TableCell>
+                  {book.returnDate.toString()}
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>

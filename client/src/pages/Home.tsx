@@ -2,7 +2,7 @@ import SearchBar from "components/SearchBar";
 import { ChangeEvent, useEffect, useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
-import { fetchBooksThunk } from "redux/slices/booksSlice";
+import { fetchBooksThunk } from "redux/services/book.service";
 import { AppDispatch, RootState } from "redux/store";
 import BooksTable from "../components/BooksTable";
 

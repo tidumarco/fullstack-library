@@ -42,7 +42,7 @@ export type UpdatedBook = {
 
 export interface BooksState {
 	allBooks: Book[];
-	singleBook: Book;
+	// singleBook: Book;
 	isLoading: boolean;
   }
 
@@ -57,25 +57,25 @@ export type PutType = {
 
 export const initialState: BooksState = {
 	allBooks: [],
-	singleBook: {
-	  _id: "",
-	  ISBN: "",
-	  title: "",
-	  description: "",
-	  publisher: "",
-	  publishedDate: new Date(),
-	  authors: {
-		firstName: "",
-		lastName: "",
-	  },
-	  borrowerId: [],
-	  borrowDate: new Date(),
-	  returnDate: new Date(),
-	  adminId: [],
-	  category: "",
-	  available: true,
-	  createdAt: new Date(),
-	  updatedAt: new Date(),
-	},
+	// singleBook: {
+	//   _id: "",
+	//   ISBN: "",
+	//   title: "",
+	//   description: "",
+	//   publisher: "",
+	//   publishedDate: new Date(),
+	//   authors: {
+	// 	firstName: "",
+	// 	lastName: "",
+	//   },
+	//   borrowerId: [],
+	//   borrowDate: new Date(),
+	//   returnDate: new Date(),
+	//   adminId: [],
+	//   category: "",
+	//   available: true,
+	//   createdAt: new Date(),
+	//   updatedAt: new Date(),
+	// },
 	isLoading: false,
   };
