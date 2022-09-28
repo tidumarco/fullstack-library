@@ -1,3 +1,4 @@
+
 import SearchBar from "components/SearchBar";
 import { ChangeEvent, useEffect, useState } from "react";
 
@@ -16,6 +17,7 @@ export default function Home() {
   return (
     <>
       <SearchBar />
+      
       <BooksTable />
     </>
   );

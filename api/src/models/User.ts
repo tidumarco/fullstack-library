@@ -12,11 +12,26 @@ export type UserDocument = Document & {
 const userSchema = new mongoose.Schema(
   {
     isAdmin: Boolean,
-    userId: String,
-    firstName: String,
-    lastName: String,
-    email: String,
-    password: String,
+    userId: {
+      type: String,
+      required: true,
+    },
+    firstName: {
+      type: String,
+      required: true,
+    },
+    lastName: {
+      type: String,
+      required: true,
+    },
+    email: {
+      type: String,
+      required: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
   },
   {
     timestamps: true,

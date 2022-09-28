@@ -7,7 +7,7 @@ type Authors = {
 }
 
 const create = async (book: BookDocument): Promise<BookDocument> => {
-  return book.save()
+  return await book.save()
 }
 
 const findById = async (bookId: string): Promise<BookDocument> => {

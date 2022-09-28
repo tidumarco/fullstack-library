@@ -26,21 +26,40 @@ const bookSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    description: String,
-    publisher: String,
-    publishedDate: '',
+    description: {
+      type: String,
+      required: true,
+    },
+    publisher: {
+      type: String,
+      required: true,
+    },
+    publishedDate: Date,
     authors: [
       {
         firstName: String,
         lastName: String,
       },
     ],
-    available: Boolean,
-    borrowerId: [String],
+    borrowerId: [
+      {
+        type: String,
+        required: true,
+      },
+    ],
     borrowDate: Date,
     returnDate: Date,
-    adminId: [String],
-    category: String,
+    adminId: [
+      {
+        type: String,
+        required: true,
+      },
+    ],
+    category: {
+      type: String,
+      required: true,
+    },
+    available: Boolean,
   },
   {
     timestamps: true,
