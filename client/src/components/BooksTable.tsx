@@ -22,7 +22,7 @@ export default function BooksTable() {
   const dispatch = useDispatch<AppDispatch>();
   const { books } = useSelector((state: RootState) => state);
 
-  const [formData, setFormData] = useState({
+  const [searchData, setSearchData] = useState({
     ISBN: "",
     title: "",
   });
@@ -32,7 +32,7 @@ export default function BooksTable() {
   }, [dispatch]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData((prevState) => {
+    setSearchData((prevState) => {
       return {
         ...prevState,
         [e.target.name]: e.target.value,
@@ -40,26 +40,26 @@ export default function BooksTable() {
     });
   };
 
-  const filteredBooks = books.allBooks.filter((book) => {
-    const searchTitle = formData.title.toLocaleLowerCase();
-    const searchISBN = formData.ISBN;
-    const bookTitle = book.title.toLocaleLowerCase();
-    const bookISBN = book.ISBN;
+  //   const filteredBooks = books.allBooks.filter((book) => {
+  //     const searchTitle = formData.title.toLocaleLowerCase();
+  //     const searchISBN = formData.ISBN;
+  //     const bookTitle = book.title.toLocaleLowerCase();
+  //     const bookISBN = book.ISBN;
 
-    if (searchTitle) {
-      return bookTitle.includes(searchTitle);
-    }
+  //     if (searchTitle) {
+  //       return bookTitle.includes(searchTitle);
+  //     }
 
-    if (searchISBN) {
-      return bookISBN.includes(searchISBN);
-    } else {
-      return book;
-    }
-  });
+  //     if (searchISBN) {
+  //       return bookISBN.includes(searchISBN);
+  //     } else {
+  //       return book;
+  //     }
+  //   });
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const { ISBN, title } = formData;
+    const { ISBN, title } = searchData;
     let filter = "";
 
     if (ISBN) {
@@ -82,8 +82,8 @@ export default function BooksTable() {
       <SearchBar
         handleSubmit={handleSubmit}
         handleChange={handleChange}
-        title={formData.title}
-        ISBN={formData.ISBN}
+        title={searchData.title}
+        ISBN={searchData.ISBN}
       />
 
       <TableContainer component={Paper}>
@@ -113,7 +113,7 @@ export default function BooksTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {filteredBooks.map((book: Book) => (
+            {books.allBooks.map((book: Book) => (
               <TableRow key={book.ISBN}>
                 <TableCell align="right">{book.ISBN}</TableCell>
                 <TableCell align="right">{book.title}</TableCell>

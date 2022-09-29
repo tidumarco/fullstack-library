@@ -66,12 +66,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function SearchAppBar({
-  handleSubmit,
-  handleChange,
-  ISBN,
-  title,
-}: SearchBarProps) {
+export default function SearchAppBar({ ISBN, title }: SearchBarProps) {
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
   const [formData, setFormData] = useState({
@@ -94,15 +89,15 @@ export default function SearchAppBar({
     e.preventDefault();
     const { ISBN, title } = formData;
     let filter = "";
-
     if (ISBN) {
-      filter = `ISBN=${ISBN}&`;
+      filter += `ISBN=${ISBN}&`;
     }
     if (title) {
-      filter = `title=${title}&`;
-      console.log("filter", filter);
+      filter += `title=${title}&`;
     }
+    filter += `passowrd=23423&`;
     if (filter) {
+      console.log("filter", filter);
       return dispatch(fetchBooksThunk({ filter }));
     }
 
@@ -140,14 +135,13 @@ export default function SearchAppBar({
           >
             TIDU LIBRARY
           </Typography>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleBookSubmit}>
             <Search>
               <TextField
                 placeholder="Search title"
                 type="text"
                 name="title"
-                onChange={handleChange}
-                value={title}
+                onChange={handleBookChange}
               />
             </Search>
             <Search sx={{ flexGrow: 1 }}>
@@ -155,11 +149,10 @@ export default function SearchAppBar({
                 placeholder="Search ISBN"
                 type="text"
                 name="ISBN"
-                onChange={handleChange}
-                value={ISBN}
+                onChange={handleBookChange}
               />
             </Search>
-            <Button type="submit">Search</Button>
+            <Button type="submit" variant="contained">Search</Button>
           </form>
         </Toolbar>
         <SwipeableDrawer

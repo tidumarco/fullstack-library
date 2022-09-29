@@ -9,7 +9,7 @@ import {
   updateBook,
   findByCategory,
   findByISBN,
-  //   findByAuthors,
+  filterBooks,
 } from '../controllers/book.controller'
 
 const router = express.Router()
@@ -19,7 +19,7 @@ router.get('/', findAll)
 router.get('/id/:bookId', findById)
 router.get('/category/:category', findByCategory)
 router.get('/ISBN/:ISBN', findByISBN)
-// router.get('/authors/:authors', findByAuthors)
+router.get('/filter', filterBooks)
 router.put('/id/:bookId', updateBook)
 router.delete('/id/:bookId', deleteBook)
 router.post('/', createBook)

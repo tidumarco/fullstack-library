@@ -7,7 +7,7 @@ import {
   updateBookThunk,
 } from "redux/services/book.service";
 
-import { Book, BooksState, initialState } from "../../types";
+import { initialState } from "../../types";
 
 export const booksSlice = createSlice({
   name: "book",
@@ -17,6 +17,9 @@ export const booksSlice = createSlice({
     //GET ALL BOOKS
     builder.addCase(fetchBooksThunk.pending, (state) => {
       state.isLoading = true;
+    });
+    builder.addCase(fetchBooksThunk.rejected, (state) => {
+      state.isLoading = false;
     });
     builder.addCase(fetchBooksThunk.fulfilled, (state, action) => {
       state.allBooks = action.payload.data;

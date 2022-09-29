@@ -3,20 +3,20 @@ import axios from "axios";
 
 import { Book, PutType } from "types";
 
-const origin = "http://localhost:4000/api/v1/books";
-
 //GET ALL BOOKS
 export const fetchBooksThunk = createAsyncThunk(
   "books/fetch",
   async ({ filter }: { filter?: string } = { filter: "" }) => {
     const origin = "http://localhost:4000";
     let URL: string;
+
     if (filter) {
       URL = `${origin}/api/v1/books/filter?${filter}`;
     } else {
       URL = `${origin}/api/v1/books`;
     }
     const response = await axios.get(`${URL}`);
+    console.log(response.data);
     return {
       data: response.data,
       status: response.status,

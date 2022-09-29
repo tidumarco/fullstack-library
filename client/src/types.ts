@@ -81,28 +81,26 @@ export const initialState: BooksState = {
 };
 
 export type SearchBarProps = {
-	handleSubmit: React.FormEventHandler<HTMLFormElement>;
-	handleChange: React.ChangeEventHandler<HTMLInputElement>;
-	ISBN: string;
-	title: string;
+  handleSubmit: React.FormEventHandler<HTMLFormElement>;
+  handleChange: React.ChangeEventHandler<HTMLInputElement>;
+  ISBN: string;
+  title: string;
 };
 
 export type AddBookProps = {
-	handleBookSubmit: React.FormEventHandler<HTMLFormElement>;
-	handleBookChange: React.ChangeEventHandler<HTMLInputElement>;
-	ISBN: string;
-	title: string;
-	description: string;
-	publisher: string;
-	publishedDate: Date;
-	authors: {
-	  firstName: string;
-	  lastName: string;
-	};
-	borrowerId: string;
-	
-	
-	adminId: string;
-	category: string;
-	available: boolean;
+  handleBookSubmit: React.FormEventHandler<HTMLFormElement>;
+  handleBookChange: React.ChangeEventHandler<HTMLInputElement>;
+  ISBN: string;
+  title: string;
+  description: string;
+  publisher: string;
+  publishedDate: Date;
+  authors: {
+    firstName: string;
+    lastName: string;
+  };
+  borrowerId: string;
+  adminId: string;
+  category: string;
+  available: boolean;
 };

@@ -26,6 +26,13 @@ export const createBook = async (
       category,
     } = req.body
 
+    //create another form to create Author (admin)
+
+    // 1. first change the author from text input to a dropdown (the values of dropdown should come from GET /authors)
+    // 2. if the admin needs a new author then thye have to create one before even filling the create new book
+    // 3. when creating new book, all what you need is that author id.
+    // 4. how to get it? from the dropdown. (you already got them!)
+    // 5. send that id/s via the req.body
     const book = new Book({
       ISBN,
       title,
@@ -159,6 +166,32 @@ export const findByISBN = async (
 //   }
 
 // GET /books
+export const filterBooks = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const queries = []
+    const allowedQuries = ['title', 'ISBN']
+
+    for (const key in req.query) {
+      const value = req.query[key]
+      const isAllowedKey = allowedQuries.includes(key)
+      if (isAllowedKey) {
+        queries.push({ [key]: value })
+      }
+    }
+    console.log(queries)
+    res.status(200).json(await bookService.findByFilter(queries))
+  } catch (error) {
+    if (error instanceof Error && error.name == 'ValidationError') {
+      next(new BadRequestError('Invalid Request', 400, error))
+    } else {
+      next(error)
+    }
+  }
+}
 export const findAll = async (
   req: Request,
   res: Response,
