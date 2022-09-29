@@ -73,7 +73,7 @@ export const updateBook = async (
   }
 }
 
-// DELETE /books/:bookId
+// DELETE /books/id/:bookId
 export const deleteBook = async (
   req: Request,
   res: Response,
@@ -91,7 +91,7 @@ export const deleteBook = async (
   }
 }
 
-// GET /books/:bookId
+// GET /books/id/:bookId
 export const findById = async (
   req: Request,
   res: Response,
@@ -108,7 +108,7 @@ export const findById = async (
   }
 }
 
-// GET /books/:category
+// GET /books/category/:category
 export const findByCategory = async (
   req: Request,
   res: Response,
@@ -125,7 +125,7 @@ export const findByCategory = async (
   }
 }
 
-// GET /books/:ISBN
+// GET /books/ISBN/:ISBN
 export const findByISBN = async (
   req: Request,
   res: Response,

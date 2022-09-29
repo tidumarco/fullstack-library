@@ -1,19 +1,28 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-import { PutType, Book } from "types";
+import { Book, PutType } from "types";
 
-const URL = "http://localhost:4000/api/v1/books";
+const origin = "http://localhost:4000/api/v1/books";
 
 //GET ALL BOOKS
-export const fetchBooksThunk = createAsyncThunk("books/fetch", async () => {
-  const response = await axios.get(`${URL}`);
-
-  return {
-    data: response.data,
-    status: response.status,
-  };
-});
+export const fetchBooksThunk = createAsyncThunk(
+  "books/fetch",
+  async ({ filter }: { filter?: string } = { filter: "" }) => {
+    const origin = "http://localhost:4000";
+    let URL: string;
+    if (filter) {
+      URL = `${origin}/api/v1/books/filter?${filter}`;
+    } else {
+      URL = `${origin}/api/v1/books`;
+    }
+    const response = await axios.get(`${URL}`);
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  }
+);
 
 //GET ONE BOOK
 export const fetchBookThunk = createAsyncThunk("book/fetch", async (bookId) => {

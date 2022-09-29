@@ -1,5 +1,6 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import { booksReducer } from "./slices/booksSlice";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const store = configureStore({
   reducer: {

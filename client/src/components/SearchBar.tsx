@@ -1,4 +1,3 @@
-import * as React from "react";
 import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -7,12 +6,23 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import InputBase from "@mui/material/InputBase";
 import MenuIcon from "@mui/icons-material/Menu";
-import SearchIcon from "@mui/icons-material/Search";
+
 import CloseIcon from "@mui/icons-material/Close";
 
 import { useState } from "react";
-import { List, ListItem, SwipeableDrawer } from "@mui/material";
+import {
+  Button,
+  List,
+  ListItem,
+  SwipeableDrawer,
+  TextField,
+} from "@mui/material";
 import AddBook from "./AddBook";
+
+import { SearchBarProps } from "types";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "redux/store";
+import { fetchBooksThunk } from "redux/services/book.service";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -56,8 +66,58 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function SearchAppBar() {
+export default function SearchAppBar({
+  handleSubmit,
+  handleChange,
+  ISBN,
+  title,
+}: SearchBarProps) {
   const [open, setOpen] = useState(false);
+  const dispatch = useDispatch<AppDispatch>();
+  const [formData, setFormData] = useState({
+    ISBN: "",
+    title: "",
+    description: "",
+    publisher: "",
+    publishedDate: new Date(0),
+    authors: {
+      firstName: "",
+      lastName: "",
+    },
+    borrowerId: "",
+    adminId: "",
+    category: "",
+    available: true,
+  });
+
+  const handleBookSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const { ISBN, title } = formData;
+    let filter = "";
+
+    if (ISBN) {
+      filter = `ISBN=${ISBN}&`;
+    }
+    if (title) {
+      filter = `title=${title}&`;
+      console.log("filter", filter);
+    }
+    if (filter) {
+      return dispatch(fetchBooksThunk({ filter }));
+    }
+
+    dispatch(fetchBooksThunk());
+  };
+
+  const handleBookChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData((prevState) => {
+      return {
+        ...prevState,
+        [e.target.name]: e.target.value,
+      };
+    });
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -80,16 +140,27 @@ export default function SearchAppBar() {
           >
             TIDU LIBRARY
           </Typography>
-
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ "aria-label": "search" }}
-            />
-          </Search>
+          <form onSubmit={handleSubmit}>
+            <Search>
+              <TextField
+                placeholder="Search title"
+                type="text"
+                name="title"
+                onChange={handleChange}
+                value={title}
+              />
+            </Search>
+            <Search sx={{ flexGrow: 1 }}>
+              <TextField
+                placeholder="Search ISBN"
+                type="text"
+                name="ISBN"
+                onChange={handleChange}
+                value={ISBN}
+              />
+            </Search>
+            <Button type="submit">Search</Button>
+          </form>
         </Toolbar>
         <SwipeableDrawer
           anchor="left"
@@ -97,8 +168,8 @@ export default function SearchAppBar() {
           onOpen={() => setOpen(true)}
           onClose={() => setOpen(false)}
         >
-          <IconButton>
-            <CloseIcon onClick={() => setOpen(false)} />
+          <IconButton onClick={() => setOpen(false)}>
+            <CloseIcon />
           </IconButton>
           <List>
             <ListItem>

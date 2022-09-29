@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "redux/store";
 
-import { Book } from "types";
+import { Book, SearchBarProps } from "types";
 
 import {
   Table,
@@ -12,14 +12,80 @@ import {
   TableRow,
   Paper,
   Typography,
+  Button,
 } from "@mui/material";
+import SearchBar from "./SearchBar";
+import { useEffect, useState } from "react";
+import { fetchBooksThunk } from "redux/services/book.service";
 
 export default function BooksTable() {
   const dispatch = useDispatch<AppDispatch>();
   const { books } = useSelector((state: RootState) => state);
+
+  const [formData, setFormData] = useState({
+    ISBN: "",
+    title: "",
+  });
+
+  useEffect(() => {
+    dispatch(fetchBooksThunk());
+  }, [dispatch]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData((prevState) => {
+      return {
+        ...prevState,
+        [e.target.name]: e.target.value,
+      };
+    });
+  };
+
+  const filteredBooks = books.allBooks.filter((book) => {
+    const searchTitle = formData.title.toLocaleLowerCase();
+    const searchISBN = formData.ISBN;
+    const bookTitle = book.title.toLocaleLowerCase();
+    const bookISBN = book.ISBN;
+
+    if (searchTitle) {
+      return bookTitle.includes(searchTitle);
+    }
+
+    if (searchISBN) {
+      return bookISBN.includes(searchISBN);
+    } else {
+      return book;
+    }
+  });
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const { ISBN, title } = formData;
+    let filter = "";
+
+    if (ISBN) {
+      filter = `ISBN=${ISBN}&`;
+    }
+    if (title) {
+      filter = `title=${title}&`;
+      console.log("filter", filter);
+    }
+    if (filter) {
+      return dispatch(fetchBooksThunk({ filter }));
+    }
+
+    dispatch(fetchBooksThunk());
+  };
   return (
     <>
       <Typography>{books.isLoading && "Loading books"}</Typography>
+
+      <SearchBar
+        handleSubmit={handleSubmit}
+        handleChange={handleChange}
+        title={formData.title}
+        ISBN={formData.ISBN}
+      />
+
       <TableContainer component={Paper}>
         <Table sx={{ tableLayout: "auto" }} aria-label="simple table">
           <TableHead>
@@ -47,7 +113,7 @@ export default function BooksTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {books.allBooks.map((book: Book) => (
+            {filteredBooks.map((book: Book) => (
               <TableRow key={book.ISBN}>
                 <TableCell align="right">{book.ISBN}</TableCell>
                 <TableCell align="right">{book.title}</TableCell>
@@ -73,18 +139,10 @@ export default function BooksTable() {
                   )}
                 </TableCell>
                 <TableCell>{book.category}</TableCell>
-                <TableCell>
-                  {book.createdAt.toString()}
-                </TableCell>
-                <TableCell>
-                  {book.updatedAt.toString()}
-                </TableCell>
-                <TableCell>
-                  {book.borrowDate.toString()}
-                </TableCell>
-                <TableCell>
-                  {book.returnDate.toString()}
-                </TableCell>
+                <TableCell>{book.createdAt.toString()}</TableCell>
+                <TableCell>{book.updatedAt.toString()}</TableCell>
+                <TableCell>{book.borrowDate.toString()}</TableCell>
+                <TableCell>{book.returnDate.toString()}</TableCell>
               </TableRow>
             ))}
           </TableBody>
