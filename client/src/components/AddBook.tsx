@@ -1,4 +1,14 @@
-import { Button, Container, Grid, TextField, Typography } from "@mui/material";
+import {
+  Button,
+  Container,
+  Grid,
+  Menu,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -10,6 +20,11 @@ import { AddBookProps } from "types";
 export default function AddBook() {
   const { books } = useSelector((state: RootState) => state);
   const dispatch = useDispatch<AppDispatch>();
+  const [author, setAuthor] = useState("");
+  const [authorData, setAuthorData] = useState({
+    firstName: "",
+    lastName: "",
+  });
   const [formData, setFormData] = useState({
     ISBN: "",
     title: "",
@@ -53,9 +68,58 @@ export default function AddBook() {
       };
     });
   };
+
+  const handleAuthorSubmit = () => {
+    console.log("Author Added");
+  };
+
+  const handleAuthorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setAuthorData((prevState) => {
+      return {
+        ...prevState,
+        [e.target.name]: e.target.value,
+      };
+    });
+  };
+
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   return (
     <Container>
-      <Typography variant="h4">Add a new book</Typography>
+      <Typography variant="h6">Add a new author</Typography>
+      <form onSubmit={handleAuthorSubmit}>
+        <Grid item>
+          <TextField
+            id="author-firstName-input"
+            name="firstName"
+            label="Author First Name"
+            type="text"
+            value={authorData.firstName}
+            onChange={handleAuthorChange}
+          />
+        </Grid>
+        <Grid item>
+          <TextField
+            id="author-lastName-input"
+            name="lastName"
+            label="Author Last Name"
+            type="text"
+            value={authorData.lastName}
+            onChange={handleAuthorChange}
+          />
+        </Grid>
+        <Button variant="contained" color="primary" type="submit">
+          Submit
+        </Button>
+      </form>
+
+      <Typography variant="h6">Add a new book</Typography>
       <form onSubmit={handleBookSubmit}>
         <Grid>
           <Grid item>
@@ -108,22 +172,28 @@ export default function AddBook() {
             />
           </Grid>
           <Grid item>
-            <TextField
-              id="author-firstName-input"
-              name="firstName"
-              label="Author First Name"
-              type="text"
-              value={formData.authors.firstName}
-              onChange={handleBookChange}
-            />
-            <TextField
-              id="author-lastName-input"
-              name="lastName"
-              label="Author Last Name"
-              type="text"
-              value={formData.authors.lastName}
-              onChange={handleBookChange}
-            />
+            <Button
+              id="basic-button"
+              aria-controls={open ? "basic-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+              onClick={handleClick}
+            >
+              Dashboard
+            </Button>
+            <Menu
+              id="basic-menu"
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              MenuListProps={{
+                "aria-labelledby": "basic-button",
+              }}
+            >
+              <MenuItem onClick={handleClose}>Profile</MenuItem>
+              <MenuItem onClick={handleClose}>My account</MenuItem>
+              <MenuItem onClick={handleClose}>Logout</MenuItem>
+            </Menu>
           </Grid>
           <Grid item>
             <TextField
