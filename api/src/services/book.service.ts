@@ -50,9 +50,10 @@ const findByAuthors = async (authors: Authors): Promise<BookDocument> => {
 const findAll = async (): Promise<BookDocument[]> => {
   return Book.find().sort({ title: 1, publishedDate: -1 })
 }
+
 const findByFilter = async (queries: any[]): Promise<BookDocument[]> => {
   return Book.find({
-    $and: queries,
+    $or: queries,
   })
 }
 

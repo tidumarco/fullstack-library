@@ -1,8 +1,10 @@
 import Author, { AuthorDocument } from '../models/Author'
 import { NotFoundError } from '../helpers/apiError'
 
-const create = async (user: AuthorDocument): Promise<AuthorDocument> => {
-  return user.save()
+const createAuthor = async (
+  author: AuthorDocument
+): Promise<AuthorDocument> => {
+  return author.save()
 }
 
 const findById = async (authorId: string): Promise<AuthorDocument> => {
@@ -47,7 +49,7 @@ const deleteAuthor = async (
 }
 
 export default {
-  create,
+  createAuthor,
   findById,
   findAll,
   update,

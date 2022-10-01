@@ -16,11 +16,9 @@ export const createAuthor = async (
     const author = new Author({
       firstName,
       lastName,
-      publishedBooks,
-      timestamps,
     })
 
-    await authorService.create(author)
+    await authorService.createAuthor(author)
     res.status(201).json(author)
   } catch (error) {
     if (error instanceof Error && error.name == 'ValidationError') {

@@ -104,3 +104,19 @@ export type AddBookProps = {
   category: string;
   available: boolean;
 };
+
+export type Author = {
+  _id?: string;
+  firstName: string;
+  lastName: string;
+};
+export type PutAuthorType = {
+  authorId: string;
+  updatedAuthor: UpdatedAuthor;
+};
+
+export type UpdatedAuthor = {
+  _id?: string;
+  firstName: string;
+  lastName: string;
+};

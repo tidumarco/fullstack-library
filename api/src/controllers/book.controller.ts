@@ -148,22 +148,6 @@ export const findByISBN = async (
     }
   }
 }
-// GET /books/:authors
-// export const findByAuthors = async (
-// 	req: Request,
-// 	res: Response,
-// 	next: NextFunction
-//   ) => {
-// 	try {
-// 	  res.status(200).json(await bookService.findByAuthors(req.params.authors))
-// 	} catch (error) {
-// 	  if (error instanceof Error && error.name == 'ValidationError') {
-// 		next(new BadRequestError('Invalid Request', 400, error))
-// 	  } else {
-// 		next(error)
-// 	  }
-// 	}
-//   }
 
 // GET /books
 export const filterBooks = async (
@@ -173,16 +157,16 @@ export const filterBooks = async (
 ) => {
   try {
     const queries = []
-    const allowedQuries = ['title', 'ISBN']
+    const allowedQueries = ['title', 'ISBN']
 
     for (const key in req.query) {
       const value = req.query[key]
-      const isAllowedKey = allowedQuries.includes(key)
+      const isAllowedKey = allowedQueries.includes(key)
       if (isAllowedKey) {
         queries.push({ [key]: value })
       }
     }
-    console.log(queries)
+    // console.log(queries)
     res.status(200).json(await bookService.findByFilter(queries))
   } catch (error) {
     if (error instanceof Error && error.name == 'ValidationError') {
@@ -207,5 +191,3 @@ export const findAll = async (
     }
   }
 }
-
-// GET search

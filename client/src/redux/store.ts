@@ -1,10 +1,11 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import { booksReducer } from "./slices/booksSlice";
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { authorsReducer } from "./slices/authorSlice";
 
 export const store = configureStore({
   reducer: {
     books: booksReducer,
+    authors: authorsReducer,
   },
 });
 

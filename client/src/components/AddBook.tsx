@@ -13,9 +13,10 @@ import { useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import { fetchBooksThunk } from "redux/services/book.service";
-
+import { createAuthorThunk } from "redux/services/author.service";
 import { AppDispatch, RootState } from "redux/store";
 import { AddBookProps } from "types";
+import AddAuthor from "./AddAuthor";
 
 export default function AddBook() {
   const { books } = useSelector((state: RootState) => state);
@@ -69,19 +70,6 @@ export default function AddBook() {
     });
   };
 
-  const handleAuthorSubmit = () => {
-    console.log("Author Added");
-  };
-
-  const handleAuthorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setAuthorData((prevState) => {
-      return {
-        ...prevState,
-        [e.target.name]: e.target.value,
-      };
-    });
-  };
-
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -92,32 +80,7 @@ export default function AddBook() {
   };
   return (
     <Container>
-      <Typography variant="h6">Add a new author</Typography>
-      <form onSubmit={handleAuthorSubmit}>
-        <Grid item>
-          <TextField
-            id="author-firstName-input"
-            name="firstName"
-            label="Author First Name"
-            type="text"
-            value={authorData.firstName}
-            onChange={handleAuthorChange}
-          />
-        </Grid>
-        <Grid item>
-          <TextField
-            id="author-lastName-input"
-            name="lastName"
-            label="Author Last Name"
-            type="text"
-            value={authorData.lastName}
-            onChange={handleAuthorChange}
-          />
-        </Grid>
-        <Button variant="contained" color="primary" type="submit">
-          Submit
-        </Button>
-      </form>
+      <AddAuthor />
 
       <Typography variant="h6">Add a new book</Typography>
       <form onSubmit={handleBookSubmit}>
