@@ -16,7 +16,7 @@ export const fetchBooksThunk = createAsyncThunk(
       URL = `${origin}/api/v1/books`;
     }
     const response = await axios.get(`${URL}`);
-    console.log(response.data);
+
     return {
       data: response.data,
       status: response.status,

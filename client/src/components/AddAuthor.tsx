@@ -37,7 +37,7 @@ export default function AddAuthor() {
     dispatch(createAuthorThunk(newAuthor));
     e.target.reset();
     resetState();
-    console.log(newAuthor);
+    // console.log(newAuthor);
   };
 
   return (

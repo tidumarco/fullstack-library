@@ -40,23 +40,6 @@ export default function BooksTable() {
     });
   };
 
-  //   const filteredBooks = books.allBooks.filter((book) => {
-  //     const searchTitle = formData.title.toLocaleLowerCase();
-  //     const searchISBN = formData.ISBN;
-  //     const bookTitle = book.title.toLocaleLowerCase();
-  //     const bookISBN = book.ISBN;
-
-  //     if (searchTitle) {
-  //       return bookTitle.includes(searchTitle);
-  //     }
-
-  //     if (searchISBN) {
-  //       return bookISBN.includes(searchISBN);
-  //     } else {
-  //       return book;
-  //     }
-  //   });
-
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const { ISBN, title } = searchData;
@@ -67,7 +50,7 @@ export default function BooksTable() {
     }
     if (title) {
       filter = `title=${title}&`;
-      console.log("filter", filter);
+      
     }
     if (filter) {
       return dispatch(fetchBooksThunk({ filter }));

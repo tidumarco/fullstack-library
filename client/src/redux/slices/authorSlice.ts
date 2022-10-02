@@ -7,13 +7,28 @@ import {
   updateAuthorThunk,
 } from "redux/services/author.service";
 
-import { initialState } from "../../types";
+
+export type Author = {
+  _id?: string;
+  firstName: string;
+  lastName: string;
+};
+export interface AuthorsState {
+  allAuthors: Author[];
+  isLoading: boolean;
+}
+
+export const initialState: AuthorsState = {
+  allAuthors: [],
+  isLoading: false,
+};
 
 export const authorsSlice = createSlice({
-  name: "book",
+  name: "author",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
+
     //GET ALL AUTHORS
     builder.addCase(fetchAuthorsThunk.pending, (state) => {
       state.isLoading = true;
@@ -22,7 +37,7 @@ export const authorsSlice = createSlice({
       state.isLoading = false;
     });
     builder.addCase(fetchAuthorsThunk.fulfilled, (state, action) => {
-      state.allBooks = action.payload.data;
+      state.allAuthors = action.payload.data;
       state.isLoading = false;
     });
 
@@ -31,7 +46,7 @@ export const authorsSlice = createSlice({
       state.isLoading = true;
     });
     builder.addCase(fetchAuthorThunk.fulfilled, (state, action) => {
-      state.allBooks = action.payload.data;
+      state.allAuthors = action.payload.data;
       state.isLoading = false;
     });
 
@@ -40,7 +55,7 @@ export const authorsSlice = createSlice({
       state.isLoading = true;
     });
     builder.addCase(createAuthorThunk.fulfilled, (state, action) => {
-      state.allBooks = [...state.allBooks, action.payload.data];
+      state.allAuthors = [...state.allAuthors, action.payload.data];
       state.isLoading = false;
     });
 
@@ -49,7 +64,7 @@ export const authorsSlice = createSlice({
       state.isLoading = true;
     });
     builder.addCase(updateAuthorThunk.fulfilled, (state, action) => {
-      state.allBooks = action.payload.data;
+      state.allAuthors = action.payload.data;
       state.isLoading = false;
     });
 
@@ -58,8 +73,8 @@ export const authorsSlice = createSlice({
       state.isLoading = true;
     });
     builder.addCase(deleteAuthorThunk.fulfilled, (state, action) => {
-      state.allBooks = state.allBooks.filter(
-        (book) => book._id !== action.payload.data
+      state.allAuthors = state.allAuthors.filter(
+        (author) => author._id !== action.payload.data
       );
       state.isLoading = false;
     });

@@ -1,6 +1,7 @@
 import {
   Button,
   Container,
+  FormControl,
   Grid,
   Menu,
   MenuItem,
@@ -9,19 +10,23 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchAuthorsThunk,
+  fetchAuthorThunk,
+} from "redux/services/author.service";
 import { fetchBooksThunk } from "redux/services/book.service";
-import { createAuthorThunk } from "redux/services/author.service";
+
 import { AppDispatch, RootState } from "redux/store";
-import { AddBookProps } from "types";
+
 import AddAuthor from "./AddAuthor";
 
 export default function AddBook() {
-  const { books } = useSelector((state: RootState) => state);
+  const { authors, books } = useSelector((state: RootState) => state);
   const dispatch = useDispatch<AppDispatch>();
-  const [author, setAuthor] = useState("");
+  const [author, setAuthor] = useState([]);
   const [authorData, setAuthorData] = useState({
     firstName: "",
     lastName: "",
@@ -41,7 +46,6 @@ export default function AddBook() {
     category: "",
     available: true,
   });
-
   const handleBookSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const { ISBN, title } = formData;
@@ -78,6 +82,11 @@ export default function AddBook() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  useEffect(() => {
+    dispatch(fetchAuthorsThunk());
+  }, [dispatch]);
+
   return (
     <Container>
       <AddAuthor />
@@ -135,28 +144,19 @@ export default function AddBook() {
             />
           </Grid>
           <Grid item>
-            <Button
-              id="basic-button"
-              aria-controls={open ? "basic-menu" : undefined}
-              aria-haspopup="true"
-              aria-expanded={open ? "true" : undefined}
-              onClick={handleClick}
-            >
-              Dashboard
-            </Button>
-            <Menu
-              id="basic-menu"
-              anchorEl={anchorEl}
-              open={open}
-              onClose={handleClose}
-              MenuListProps={{
-                "aria-labelledby": "basic-button",
-              }}
-            >
-              <MenuItem onClick={handleClose}>Profile</MenuItem>
-              <MenuItem onClick={handleClose}>My account</MenuItem>
-              <MenuItem onClick={handleClose}>Logout</MenuItem>
-            </Menu>
+            <FormControl fullWidth>
+              <Select onClick={fetchAuthorsThunk}>
+                <ul>
+                  {authors.allAuthors.map((auth: any) => {
+                    return (
+                      <li key={auth.firstName}>
+                        {auth.firstName} {auth.lastName}
+                      </li>
+                    );
+                  })}
+                </ul>
+              </Select>
+            </FormControl>
           </Grid>
           <Grid item>
             <TextField

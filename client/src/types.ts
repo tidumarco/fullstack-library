@@ -42,9 +42,15 @@ export type UpdatedBook = {
 
 export interface BooksState {
   allBooks: Book[];
-  // singleBook: Book;
+  allAuthors: Author[],
   isLoading: boolean;
 }
+
+export type Author = {
+	_id?: string;
+	firstName: string;
+	lastName: string;
+  };
 
 export type AppState = {
   books: BooksState;
@@ -57,26 +63,7 @@ export type PutType = {
 
 export const initialState: BooksState = {
   allBooks: [],
-  // singleBook: {
-  //   _id: "",
-  //   ISBN: "",
-  //   title: "",
-  //   description: "",
-  //   publisher: "",
-  //   publishedDate: new Date(),
-  //   authors: {
-  // 	firstName: "",
-  // 	lastName: "",
-  //   },
-  //   borrowerId: [],
-  //   borrowDate: new Date(),
-  //   returnDate: new Date(),
-  //   adminId: [],
-  //   category: "",
-  //   available: true,
-  //   createdAt: new Date(),
-  //   updatedAt: new Date(),
-  // },
+  allAuthors: [],
   isLoading: false,
 };
 
@@ -105,18 +92,4 @@ export type AddBookProps = {
   available: boolean;
 };
 
-export type Author = {
-  _id?: string;
-  firstName: string;
-  lastName: string;
-};
-export type PutAuthorType = {
-  authorId: string;
-  updatedAuthor: UpdatedAuthor;
-};
 
-export type UpdatedAuthor = {
-  _id?: string;
-  firstName: string;
-  lastName: string;
-};
