@@ -3,68 +3,94 @@ import {
   Container,
   FormControl,
   Grid,
-  Menu,
+  InputLabel,
   MenuItem,
   Select,
   SelectChangeEvent,
   TextField,
   Typography,
 } from "@mui/material";
+
 import { useEffect, useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
-import {
-  fetchAuthorsThunk,
-  fetchAuthorThunk,
-} from "redux/services/author.service";
-import { fetchBooksThunk } from "redux/services/book.service";
+import { fetchAuthorsThunk } from "redux/services/author.service";
+import { createBookThunk } from "redux/services/book.service";
 
 import { AppDispatch, RootState } from "redux/store";
+import { Book } from "types";
 
 import AddAuthor from "./AddAuthor";
 
 export default function AddBook() {
-  const { authors, books } = useSelector((state: RootState) => state);
+  const { authors } = useSelector((state: RootState) => state);
   const dispatch = useDispatch<AppDispatch>();
-  const [author, setAuthor] = useState([]);
-  const [authorData, setAuthorData] = useState({
-    firstName: "",
-    lastName: "",
-  });
-  const [formData, setFormData] = useState({
+
+  useEffect(() => {
+    dispatch(fetchAuthorsThunk());
+  }, [dispatch]);
+
+  const [formData, setFormData] = useState<Book>({
+    _id: "",
     ISBN: "",
     title: "",
     description: "",
+    borrowerId: "",
+    borrowDate: new Date(),
     publisher: "",
-    publishedDate: "",
-    authors: {
-      firstName: "",
-      lastName: "",
-    },
-    returnDate: "",
+    publishedDate: new Date(),
+    authors: [],
+    returnDate: new Date(),
     adminId: "",
     category: "",
     available: true,
+    createdAt: new Date(),
+    updatedAt: new Date(),
   });
-  const handleBookSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const { ISBN, title } = formData;
-    let filter = "";
 
-    if (ISBN) {
-      filter = `ISBN=${ISBN}&`;
-    }
-    if (title) {
-      filter = `title=${title}&`;
-      console.log("filter", filter);
-    }
-    if (filter) {
-      return dispatch(fetchBooksThunk({ filter }));
-    }
-
-    dispatch(fetchBooksThunk());
+  const resetState = () => {
+    setFormData({
+      _id: "",
+      ISBN: "",
+      title: "",
+      description: "",
+      borrowerId: "",
+      borrowDate: new Date(),
+      publisher: "",
+      publishedDate: new Date(),
+      authors: [],
+      returnDate: new Date(),
+      adminId: "",
+      category: "",
+      available: true,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
   };
-
+  const handleBookSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const newBook = {
+      _id: formData._id,
+      ISBN: formData.ISBN,
+      title: formData.title,
+      description: formData.description,
+      borrowerId: formData.borrowerId,
+      borrowDate: formData.borrowDate,
+      publisher: formData.publisher,
+      publishedDate: formData.publishedDate,
+      authors: formData.authors,
+      returnDate: formData.returnDate,
+      adminId: formData.adminId,
+      category: formData.category,
+      available: formData.available,
+      createdAt: formData.createdAt,
+      updatedAt: formData.updatedAt,
+    };
+    dispatch(createBookThunk(newBook));
+    e.target.reset();
+    resetState();
+    console.log(newBook);
+  };
   const handleBookChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData((prevState) => {
       return {
@@ -75,22 +101,28 @@ export default function AddBook() {
   };
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
   const open = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
 
-  useEffect(() => {
-    dispatch(fetchAuthorsThunk());
-  }, [dispatch]);
+  const handleAvailableChange = (e: SelectChangeEvent) => {
+    setFormData({ ...formData, available: !formData.available });
+  };
+
+  const handleAuthorChange = (e: SelectChangeEvent) => {
+    const authorId = e.target.value;
+    setFormData((prevState) => ({
+      ...prevState,
+      authors: [...prevState.authors, authorId],
+    }));
+  };
 
   return (
     <Container>
       <AddAuthor />
-
       <Typography variant="h6">Add a new book</Typography>
       <form onSubmit={handleBookSubmit}>
         <Grid>
@@ -139,22 +171,29 @@ export default function AddBook() {
               id="publishedDate-input"
               name="publishedDate"
               type="date"
-              value={formData.publishedDate}
+              //   value={formData.publishedDate}
               onChange={handleBookChange}
             />
           </Grid>
           <Grid item>
             <FormControl fullWidth>
-              <Select onClick={fetchAuthorsThunk}>
-                <ul>
-                  {authors.allAuthors.map((auth: any) => {
-                    return (
-                      <li key={auth.firstName}>
-                        {auth.firstName} {auth.lastName}
-                      </li>
-                    );
-                  })}
-                </ul>
+              <InputLabel>Author</InputLabel>
+              <Select
+                label="Author"
+                name="Author"
+                onChange={handleAuthorChange}
+              >
+                {authors.allAuthors.map((author) => {
+                  return (
+                    <MenuItem
+                      key={author._id}
+                      value={author._id}
+                      onChange={handleClose}
+                    >
+                      {author.firstName} {author.lastName}
+                    </MenuItem>
+                  );
+                })}
               </Select>
             </FormControl>
           </Grid>
@@ -169,14 +208,15 @@ export default function AddBook() {
             />
           </Grid>
           <Grid item>
-            <TextField
-              id="availability-input"
-              name="availability"
-              label="Availability"
-              type="boolean"
-              value={formData.available}
-              onChange={handleBookChange}
-            />
+            <FormControl fullWidth>
+              <Select
+                value={formData.available.toString()}
+                onChange={handleAvailableChange}
+              >
+                <MenuItem value="true">True</MenuItem>
+                <MenuItem value="false">False</MenuItem>
+              </Select>
+            </FormControl>
           </Grid>
 
           <Button variant="contained" color="primary" type="submit">

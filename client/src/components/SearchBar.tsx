@@ -95,7 +95,7 @@ export default function SearchAppBar({ ISBN, title }: SearchBarProps) {
     if (title) {
       filter += `title=${title}&`;
     }
-    filter += `passowrd=23423&`;
+    
     if (filter) {
       console.log("filter", filter);
       return dispatch(fetchBooksThunk({ filter }));

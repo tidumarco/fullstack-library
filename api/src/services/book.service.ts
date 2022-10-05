@@ -39,7 +39,9 @@ const findByISBN = async (ISBN: string): Promise<BookDocument> => {
 }
 
 const findByAuthors = async (authors: Authors): Promise<BookDocument> => {
-  const foundBook = await Book.findOne({ authors: authors.lastName })
+  const foundBook = await Book.findOne({ authors: authors.lastName }).populate(
+    'authors'
+  )
 
   if (!foundBook) {
     throw new NotFoundError(`Book's authors ${authors} not found`)
@@ -48,13 +50,13 @@ const findByAuthors = async (authors: Authors): Promise<BookDocument> => {
 }
 
 const findAll = async (): Promise<BookDocument[]> => {
-  return Book.find().sort({ title: 1, publishedDate: -1 })
+  return Book.find().sort({ title: 1, publishedDate: -1 }).populate('authors')
 }
 
 const findByFilter = async (queries: any[]): Promise<BookDocument[]> => {
   return Book.find({
     $or: queries,
-  })
+  }).populate('authors')
 }
 
 const update = async (

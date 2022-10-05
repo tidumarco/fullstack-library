@@ -4,10 +4,11 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { createAuthorThunk } from "redux/services/author.service";
-import { AppDispatch, RootState } from "redux/store";
+import { AppDispatch } from "redux/store";
+import { Author } from "types";
 
 export default function AddAuthor() {
-  const [authorData, setAuthorData] = useState({
+  const [authorData, setAuthorData] = useState<Author>({
     firstName: "",
     lastName: "",
   });
@@ -37,7 +38,6 @@ export default function AddAuthor() {
     dispatch(createAuthorThunk(newAuthor));
     e.target.reset();
     resetState();
-    // console.log(newAuthor);
   };
 
   return (

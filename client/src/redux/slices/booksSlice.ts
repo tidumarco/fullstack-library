@@ -7,14 +7,18 @@ import {
   updateBookThunk,
 } from "redux/services/book.service";
 
-import { initialState } from "../../types";
+import { BooksState, Author } from "../../types";
+
+export const initialState: BooksState = {
+  allBooks: [],
+  isLoading: false,
+};
 
 export const booksSlice = createSlice({
   name: "book",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-	
     //GET ALL BOOKS
     builder.addCase(fetchBooksThunk.pending, (state) => {
       state.isLoading = true;
@@ -41,6 +45,14 @@ export const booksSlice = createSlice({
       state.isLoading = true;
     });
     builder.addCase(createBookThunk.fulfilled, (state, action) => {
+      // const authorsRes: Author[] = action.payload.data.authors;
+
+      // const authors = state.allAuthors.filter((author) => {
+      //   console.log(author);
+      //   const isFound = authorsRes.some((authorRes) => authorRes === author);
+      //   if (isFound) return author;
+      // });
+
       state.allBooks = [...state.allBooks, action.payload.data];
       state.isLoading = false;
     });

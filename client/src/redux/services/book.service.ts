@@ -3,11 +3,12 @@ import axios from "axios";
 
 import { Book, PutType } from "types";
 
+const origin = "http://localhost:4000";
+
 //GET ALL BOOKS
 export const fetchBooksThunk = createAsyncThunk(
   "books/fetch",
   async ({ filter }: { filter?: string } = { filter: "" }) => {
-    const origin = "http://localhost:4000";
     let URL: string;
 
     if (filter) {
@@ -38,8 +39,9 @@ export const fetchBookThunk = createAsyncThunk("book/fetch", async (bookId) => {
 export const createBookThunk = createAsyncThunk(
   "book/create",
   async (book: Book) => {
-    //@ts-ignore
-    const response = await axios.get(`${URL}/`, book);
+    console.log("redux", book);
+
+    const response = await axios.post(`${origin}/api/v1/books`, book);
 
     return {
       data: response.data,

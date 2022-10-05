@@ -5,52 +5,30 @@ export type Book = {
   description: string;
   publisher: string;
   publishedDate: Date;
-  authors: {
-    firstName: string;
-    lastName: string;
-  };
-  borrowerId: string[];
+  borrowerId: string;
   borrowDate: Date;
+  authors:  (string | Author)[];
   returnDate: Date;
-  adminId: string[];
+  adminId: string;
   category: string;
   available: boolean;
   createdAt: Date;
   updatedAt: Date;
 };
 
-export type UpdatedBook = {
-  _id?: string;
-  ISBN?: string;
-  title?: string;
-  description?: string;
-  publisher?: string;
-  publishedDate?: Date;
-  authors?: {
-    firstName: string;
-    lastName: string;
-  };
-  borrowerId?: string[];
-  borrowDate?: Date;
-  returnDate?: Date;
-  adminId?: string[];
-  category?: string;
-  available?: boolean;
-  createdAt?: Date;
-  updatedAt?: Date;
-};
+export type UpdatedBook = Partial<Book>
 
 export interface BooksState {
   allBooks: Book[];
-  allAuthors: Author[],
   isLoading: boolean;
 }
 
 export type Author = {
-	_id?: string;
-	firstName: string;
-	lastName: string;
-  };
+  _id?: string;
+  firstName: string;
+  lastName: string;
+};
+
 
 export type AppState = {
   books: BooksState;
@@ -61,11 +39,7 @@ export type PutType = {
   updatedBook: UpdatedBook;
 };
 
-export const initialState: BooksState = {
-  allBooks: [],
-  allAuthors: [],
-  isLoading: false,
-};
+
 
 export type SearchBarProps = {
   handleSubmit: React.FormEventHandler<HTMLFormElement>;
@@ -82,14 +56,15 @@ export type AddBookProps = {
   description: string;
   publisher: string;
   publishedDate: Date;
-  authors: {
-    firstName: string;
-    lastName: string;
-  };
+  authors: Author[];
   borrowerId: string;
   adminId: string;
   category: string;
   available: boolean;
 };
 
-
+export type AuthorData = {
+  _id?: string;
+  firstName: string;
+  lastName: string;
+};

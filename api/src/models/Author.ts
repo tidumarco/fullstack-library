@@ -1,4 +1,4 @@
-import mongoose, { Document, Date } from 'mongoose'
+import mongoose, { Document, Schema } from 'mongoose'
 
 export type AuthorDocument = Document & {
   firstName: string
@@ -10,7 +10,7 @@ const authorSchema = new mongoose.Schema(
   {
     firstName: String,
     lastName: String,
-    publishedBooks: [],
+    publishedBooks: [{ type: Schema.Types.ObjectId, ref: 'Book' }],
   },
   {
     timestamps: true,

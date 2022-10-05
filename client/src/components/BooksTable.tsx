@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "redux/store";
 
-import { Book, SearchBarProps } from "types";
+import { Book } from "types";
 
 import {
   Table,
@@ -103,9 +103,9 @@ export default function BooksTable() {
                 <TableCell align="right">{book.description}</TableCell>
                 <TableCell align="right">
                   <ul>
-                    {Object.values(book.authors).map((auth: any) => {
+                    {book.authors.map((auth: any) => {
                       return (
-                        <li key={auth.firstName}>
+                        <li key={auth._id}>
                           {auth.firstName} {auth.lastName}
                         </li>
                       );
