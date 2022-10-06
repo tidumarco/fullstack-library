@@ -26,11 +26,7 @@ export default function AddBook() {
   const { authors } = useSelector((state: RootState) => state);
   const dispatch = useDispatch<AppDispatch>();
 
-  useEffect(() => {
-    dispatch(fetchAuthorsThunk());
-  }, [dispatch]);
-
-  const [formData, setFormData] = useState<Book>({
+  const initialBook = {
     _id: "",
     ISBN: "",
     title: "",
@@ -46,26 +42,16 @@ export default function AddBook() {
     available: true,
     createdAt: new Date(),
     updatedAt: new Date(),
-  });
+  };
+
+  useEffect(() => {
+    dispatch(fetchAuthorsThunk());
+  }, [dispatch]);
+
+  const [formData, setFormData] = useState<Book>(initialBook);
 
   const resetState = () => {
-    setFormData({
-      _id: "",
-      ISBN: "",
-      title: "",
-      description: "",
-      borrowerId: "",
-      borrowDate: new Date(),
-      publisher: "",
-      publishedDate: new Date(),
-      authors: [],
-      returnDate: new Date(),
-      adminId: "",
-      category: "",
-      available: true,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    });
+    setFormData(initialBook);
   };
   const handleBookSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
