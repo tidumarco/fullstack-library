@@ -69,27 +69,10 @@ export default function AddBook() {
   };
   const handleBookSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const newBook = {
-      _id: formData._id,
-      ISBN: formData.ISBN,
-      title: formData.title,
-      description: formData.description,
-      borrowerId: formData.borrowerId,
-      borrowDate: formData.borrowDate,
-      publisher: formData.publisher,
-      publishedDate: formData.publishedDate,
-      authors: formData.authors,
-      returnDate: formData.returnDate,
-      adminId: formData.adminId,
-      category: formData.category,
-      available: formData.available,
-      createdAt: formData.createdAt,
-      updatedAt: formData.updatedAt,
-    };
-    dispatch(createBookThunk(newBook));
+    dispatch(createBookThunk(formData));
     e.target.reset();
     resetState();
-    console.log(newBook);
+    console.log(formData);
   };
   const handleBookChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData((prevState) => {

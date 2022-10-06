@@ -1,14 +1,15 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { Author } from "types";
+import { Params } from "react-router-dom";
 
+import { Author } from "types";
 
 const URL = "http://localhost:4000/api/v1/authors";
 
 //GET ALL AUTHORS
 export const fetchAuthorsThunk = createAsyncThunk("authors/fetch", async () => {
   const response = await axios.get(`${URL}`);
- 
+
   return {
     data: response.data,
     status: response.status,
@@ -44,7 +45,7 @@ export const createAuthorThunk = createAsyncThunk(
 //UPDATE ONE AUTHOR
 export const updateAuthorThunk = createAsyncThunk(
   "author/update",
-  async (data: any) => {
+  async (data: Params) => {
     const { authorId, updatedAuthor } = data;
 
     const response = await axios.put(`${URL}/${authorId}`, updatedAuthor);

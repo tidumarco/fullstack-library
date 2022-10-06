@@ -95,11 +95,10 @@ export default function SearchAppBar({ ISBN, title }: SearchBarProps) {
     if (title) {
       filter += `title=${title}&`;
     }
+    if (category) {
+      filter += `category=${category}&`;
+    }
 
-	if (category) {
-		filter += `category=${category}&`;
-	  }
-    
     if (filter) {
       console.log("filter", filter);
       return dispatch(fetchBooksThunk({ filter }));
@@ -156,7 +155,7 @@ export default function SearchAppBar({ ISBN, title }: SearchBarProps) {
                 onChange={handleBookChange}
               />
             </Search>
-			<Search sx={{ flexGrow: 1 }}>
+            <Search sx={{ flexGrow: 1 }}>
               <TextField
                 placeholder="Search author"
                 type="text"
@@ -164,7 +163,7 @@ export default function SearchAppBar({ ISBN, title }: SearchBarProps) {
                 onChange={handleBookChange}
               />
             </Search>
-			<Search sx={{ flexGrow: 1 }}>
+            <Search sx={{ flexGrow: 1 }}>
               <TextField
                 placeholder="Search category"
                 type="text"
@@ -172,7 +171,9 @@ export default function SearchAppBar({ ISBN, title }: SearchBarProps) {
                 onChange={handleBookChange}
               />
             </Search>
-            <Button type="submit" variant="contained">Search</Button>
+            <Button type="submit" variant="contained">
+              Search
+            </Button>
           </form>
         </Toolbar>
         <SwipeableDrawer
