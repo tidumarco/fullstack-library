@@ -87,7 +87,7 @@ export default function SearchAppBar({ ISBN, title }: SearchBarProps) {
 
   const handleBookSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const { ISBN, title } = formData;
+    const { ISBN, title, category } = formData;
     let filter = "";
     if (ISBN) {
       filter += `ISBN=${ISBN}&`;
@@ -95,6 +95,10 @@ export default function SearchAppBar({ ISBN, title }: SearchBarProps) {
     if (title) {
       filter += `title=${title}&`;
     }
+
+	if (category) {
+		filter += `category=${category}&`;
+	  }
     
     if (filter) {
       console.log("filter", filter);
@@ -149,6 +153,22 @@ export default function SearchAppBar({ ISBN, title }: SearchBarProps) {
                 placeholder="Search ISBN"
                 type="text"
                 name="ISBN"
+                onChange={handleBookChange}
+              />
+            </Search>
+			<Search sx={{ flexGrow: 1 }}>
+              <TextField
+                placeholder="Search author"
+                type="text"
+                name="author"
+                onChange={handleBookChange}
+              />
+            </Search>
+			<Search sx={{ flexGrow: 1 }}>
+              <TextField
+                placeholder="Search category"
+                type="text"
+                name="category"
                 onChange={handleBookChange}
               />
             </Search>
