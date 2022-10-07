@@ -21,6 +21,7 @@ import { AppDispatch, RootState } from "redux/store";
 import { Book } from "types";
 
 import AddAuthor from "./AddAuthor";
+import EditBook from "./EditBook";
 
 export default function AddBook() {
   const { authors } = useSelector((state: RootState) => state);
@@ -44,11 +45,12 @@ export default function AddBook() {
     updatedAt: new Date(),
   };
 
+  const [formData, setFormData] = useState<Book>(initialBook);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
   useEffect(() => {
     dispatch(fetchAuthorsThunk());
   }, [dispatch]);
-
-  const [formData, setFormData] = useState<Book>(initialBook);
 
   const resetState = () => {
     setFormData(initialBook);
@@ -69,8 +71,6 @@ export default function AddBook() {
     });
   };
 
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-
   const open = Boolean(anchorEl);
 
   const handleClose = () => {
@@ -90,8 +90,7 @@ export default function AddBook() {
   };
 
   return (
-    <Container>
-      <AddAuthor />
+    <>
       <Typography variant="h6">Add a new book</Typography>
       <form onSubmit={handleBookSubmit}>
         <Grid>
@@ -193,6 +192,6 @@ export default function AddBook() {
           </Button>
         </Grid>
       </form>
-    </Container>
+    </>
   );
 }

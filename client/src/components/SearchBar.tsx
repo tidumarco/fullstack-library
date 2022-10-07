@@ -23,6 +23,7 @@ import { SearchBarProps } from "types";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "redux/store";
 import { fetchBooksThunk } from "redux/services/book.service";
+import Dashboard from "./Dashboard";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -187,7 +188,7 @@ export default function SearchAppBar({ ISBN, title }: SearchBarProps) {
           </IconButton>
           <List>
             <ListItem>
-              <AddBook />
+              <Dashboard />
             </ListItem>
           </List>
         </SwipeableDrawer>
