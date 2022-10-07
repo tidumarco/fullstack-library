@@ -85,9 +85,9 @@ export default function BooksTable() {
               <TableCell>Title</TableCell>
               <TableCell>Description</TableCell>
               <TableCell>Authors</TableCell>
-              <TableCell>Borrower ID</TableCell>
-              <TableCell>Admin ID</TableCell>
-              <TableCell>Available</TableCell>
+              <TableCell>Publisher</TableCell>
+              <TableCell>Published Date</TableCell>
+              <TableCell>Status</TableCell>
               <TableCell>Category</TableCell>
               <TableCell>Created on</TableCell>
               <TableCell>Updated on</TableCell>
@@ -112,8 +112,8 @@ export default function BooksTable() {
                     })}
                   </ul>
                 </TableCell>
-                <TableCell align="right">{book.borrowerId}</TableCell>
-                <TableCell align="right">{book.adminId}</TableCell>
+				<TableCell align="right">{book.publisher}</TableCell>
+                <TableCell align="right">{book.publishedDate.toString()}</TableCell>
                 <TableCell align="right">
                   {book.available ? (
                     <div>Available</div>

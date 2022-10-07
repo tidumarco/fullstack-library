@@ -140,7 +140,7 @@ export default function AddBook() {
               id="publishedDate-input"
               name="publishedDate"
               type="date"
-              //   value={formData.publishedDate}
+              value={formData.publishedDate}
               onChange={handleBookChange}
             />
           </Grid>
