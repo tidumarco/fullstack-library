@@ -1,7 +1,19 @@
-import { useState } from "react";
-import { fetchBooksThunk } from "redux/services/book.service";
 import BooksTable from "../components/BooksTable";
+import { GoogleLogin } from "@react-oauth/google";
 
 export default function Home() {
-  return <BooksTable />;
+  const handleGoogleOnSuccess = (response: any) => {
+    console.log("response", response);
+  };
+  return (
+    <>
+      <GoogleLogin
+        onSuccess={handleGoogleOnSuccess}
+        onError={() => {
+          console.log("Login Failed");
+        }}
+      />
+      <BooksTable />
+    </>
+  );
 }

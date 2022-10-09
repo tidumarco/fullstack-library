@@ -155,7 +155,7 @@ export default function AddBook() {
                   return (
                     <MenuItem
                       key={author._id}
-                      value={author._id}
+                    //   value={author._id}
                       onChange={handleClose}
                     >
                       {author.firstName} {author.lastName}
