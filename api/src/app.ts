@@ -57,7 +57,6 @@ app.post(
   passport.authenticate('google-id-token', { session: false }),
   (req, res) => {
     const user: any = req.user
-
     const token = jwt.sign(
       { userId: user._id, isAdmin: user.isAdmin },
       JWT_SECRET,

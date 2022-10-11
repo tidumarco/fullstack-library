@@ -12,19 +12,22 @@ export default function () {
       googleId: string,
       done: VerifiedCallback
     ) => {
-      //   console.log('🚀 ~ file: google.ts ~ line 31 ~ parsedToken', parsedToken)
-      //   console.log('🚀 ~ file: google.ts ~ line 31 ~ googleId', googleId)
-
-      let user: any = await User.findOne({ email: parsedToken.payload.email })
-      if (!user) {
-        user = new User({
-          email: parsedToken.payload.email,
-          isAdmin: false,
-        })
-        user.save()
+      try {
+        const email = parsedToken.payload.email
+        let user: any = await User.findOne({ email: parsedToken.payload.email })
+        if (!user) {
+          user = new User({
+            email,
+            isAdmin: email === 'tidumarco@gmail.com',
+          })
+          user.save()
+        }
+        done(null, user)
+        console.log('Is it Admin?', user.isAdmin)
+        console.log('Email', email)
+      } catch (error) {
+        done(error)
       }
-      done(null, user)
-      return
     }
   )
 }

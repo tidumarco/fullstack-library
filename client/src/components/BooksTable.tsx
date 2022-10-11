@@ -50,7 +50,6 @@ export default function BooksTable() {
     }
     if (title) {
       filter = `title=${title}&`;
-      
     }
     if (filter) {
       return dispatch(fetchBooksThunk({ filter }));
@@ -112,8 +111,10 @@ export default function BooksTable() {
                     })}
                   </ul>
                 </TableCell>
-				<TableCell align="right">{book.publisher}</TableCell>
-                <TableCell align="right">{book.publishedDate.toString()}</TableCell>
+                <TableCell align="right">{book.publisher}</TableCell>
+                <TableCell align="right">
+                  {book.publishedDate.toString()}
+                </TableCell>
                 <TableCell align="right">
                   {book.available ? (
                     <div>Available</div>

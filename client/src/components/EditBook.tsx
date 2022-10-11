@@ -46,7 +46,7 @@ export default function EditBook() {
     e.preventDefault();
     setSelectedBook(initialBook);
   };
-  console.log({selectedBook});
+  console.log({ selectedBook });
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -54,6 +54,7 @@ export default function EditBook() {
   return (
     <>
       <Typography variant="h6">Edit a book</Typography>
+
       <form onSubmit={handleSubmit}>
         <FormControl fullWidth>
           <Select name="_id" onChange={handleBookChange}>
@@ -64,11 +65,12 @@ export default function EditBook() {
                   value={book._id}
                   onChange={handleClose}
                 >
-                  {book.ISBN}, {book.title}
+                  {book.title}
                 </MenuItem>
               );
             })}
           </Select>
+			
           <Grid>
             <Grid item>
               <TextField

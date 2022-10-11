@@ -24,6 +24,7 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "redux/store";
 import { fetchBooksThunk } from "redux/services/book.service";
 import Dashboard from "./Dashboard";
+import LoginButton from "./LoginButton";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -139,6 +140,7 @@ export default function SearchAppBar({ ISBN, title }: SearchBarProps) {
           >
             TIDU LIBRARY
           </Typography>
+
           <form onSubmit={handleBookSubmit}>
             <Search>
               <TextField
@@ -177,6 +179,7 @@ export default function SearchAppBar({ ISBN, title }: SearchBarProps) {
             </Button>
           </form>
         </Toolbar>
+
         <SwipeableDrawer
           anchor="left"
           open={open}
@@ -193,6 +196,7 @@ export default function SearchAppBar({ ISBN, title }: SearchBarProps) {
           </List>
         </SwipeableDrawer>
       </AppBar>
+      <LoginButton />
     </Box>
   );
 }

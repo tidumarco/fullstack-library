@@ -7,7 +7,7 @@ export type Book = {
   publishedDate: Date;
   borrowerId: string;
   borrowDate: Date;
-  authors:  (string | Author)[];
+  authors: (string | Author)[];
   returnDate: Date;
   adminId: string;
   category: string;
@@ -16,7 +16,7 @@ export type Book = {
   updatedAt: Date;
 };
 
-export type UpdatedBook = Partial<Book>
+export type UpdatedBook = Partial<Book>;
 
 export interface BooksState {
   allBooks: Book[];
@@ -29,6 +29,11 @@ export type Author = {
   lastName: string;
 };
 
+export type User = {
+  _id?: string;
+  userName: string;
+  email: string;
+};
 
 export type AppState = {
   books: BooksState;
@@ -38,8 +43,6 @@ export type PutType = {
   bookId: string;
   updatedBook: UpdatedBook;
 };
-
-
 
 export type SearchBarProps = {
   handleSubmit: React.FormEventHandler<HTMLFormElement>;
