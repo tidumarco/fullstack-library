@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { GoogleLogin } from "@react-oauth/google";
+import jwt_decode from "jwt-decode";
 
 interface CredentialResponse {
   credential?: string;
@@ -16,14 +17,25 @@ interface CredentialResponse {
     | "btn_confirm_add_session";
   clientId?: string;
 }
+
+type DecodedUser = {
+  userId: string;
+  isAdmin: boolean;
+  iat: number;
+  exp: number;
+};
+
 export default function LoginButton() {
   const [token, setToken] = useState("");
-  console.log("token:", token);
-  
+  const [user, setUser] = useState<null | DecodedUser>(null);
 
   useEffect(() => {
     const token = localStorage.getItem("token") || "";
-    setToken(token);
+    if (token) {
+      const decoded = jwt_decode(token) as DecodedUser;
+      setUser(decoded);
+      setToken(token);
+    }
   }, []);
 
   const handleGetBooks = async () => {
@@ -40,6 +52,7 @@ export default function LoginButton() {
   };
 
   const handleGoogleOnSuccess = async (response: CredentialResponse) => {
+	
     console.log("response", response);
     if (response.credential) {
       const res = await axios.post(
@@ -55,10 +68,12 @@ export default function LoginButton() {
       localStorage.setItem("token", token);
       setToken(token);
     }
+	// dispatch(fetchTokenThunk());
   };
   return (
     <>
-      <button onClick={handleGetBooks}>FETCH BOOKs</button>
+      <h2>IS ADMIN? {user?.isAdmin ? "Yes it is!" : "No it's not"}</h2>
+      <button onClick={handleGetBooks}>FETCH BOOKS</button>
       <GoogleLogin
         onSuccess={handleGoogleOnSuccess}
         onError={() => {

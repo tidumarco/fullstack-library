@@ -144,26 +144,25 @@ export default function AddBook() {
             />
           </Grid>
           <Grid item>
-            <FormControl fullWidth>
-              <InputLabel>Author</InputLabel>
-              <Select
-                label="Author"
-                name="Author"
-                onChange={handleAuthorChange}
-              >
-                {authors.allAuthors.map((author) => {
-                  return (
-                    <MenuItem
-                      key={author._id}
+            <InputLabel>Author</InputLabel>
+            <Select
+              style={{ minWidth: 200 }}
+              label="Author"
+              name="Author"
+              onChange={handleAuthorChange}
+            >
+              {authors.allAuthors.map((author) => {
+                return (
+                  <MenuItem
+                    key={author._id}
                     //   value={author._id}
-                      onChange={handleClose}
-                    >
-                      {author.firstName} {author.lastName}
-                    </MenuItem>
-                  );
-                })}
-              </Select>
-            </FormControl>
+                    onChange={handleClose}
+                  >
+                    {author.firstName} {author.lastName}
+                  </MenuItem>
+                );
+              })}
+            </Select>
           </Grid>
           <Grid item>
             <TextField
@@ -176,15 +175,14 @@ export default function AddBook() {
             />
           </Grid>
           <Grid item>
-            <FormControl fullWidth>
-              <Select
-                value={formData.available.toString()}
-                onChange={handleAvailableChange}
-              >
-                <MenuItem value="true">True</MenuItem>
-                <MenuItem value="false">False</MenuItem>
-              </Select>
-            </FormControl>
+            <Select
+              style={{ minWidth: 200 }}
+              value={formData.available.toString()}
+              onChange={handleAvailableChange}
+            >
+              <MenuItem value="true">True</MenuItem>
+              <MenuItem value="false">False</MenuItem>
+            </Select>
           </Grid>
 
           <Button variant="contained" color="primary" type="submit">

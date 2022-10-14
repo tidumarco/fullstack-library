@@ -106,7 +106,7 @@ export default function SearchAppBar({ ISBN, title }: SearchBarProps) {
       return dispatch(fetchBooksThunk({ filter }));
     }
 
-    dispatch(fetchBooksThunk());
+    dispatch(fetchBooksThunk({filter}));
   };
 
   const handleBookChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -122,16 +122,6 @@ export default function SearchAppBar({ ISBN, title }: SearchBarProps) {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            sx={{ mr: 2 }}
-            onClick={() => setOpen(true)}
-          >
-            <MenuIcon />
-          </IconButton>
           <Typography
             variant="h6"
             noWrap
@@ -179,24 +169,8 @@ export default function SearchAppBar({ ISBN, title }: SearchBarProps) {
             </Button>
           </form>
         </Toolbar>
-
-        <SwipeableDrawer
-          anchor="left"
-          open={open}
-          onOpen={() => setOpen(true)}
-          onClose={() => setOpen(false)}
-        >
-          <IconButton onClick={() => setOpen(false)}>
-            <CloseIcon />
-          </IconButton>
-          <List>
-            <ListItem>
-              <Dashboard />
-            </ListItem>
-          </List>
-        </SwipeableDrawer>
       </AppBar>
-      <LoginButton />
+      {/* <LoginButton /> */}
     </Box>
   );
 }

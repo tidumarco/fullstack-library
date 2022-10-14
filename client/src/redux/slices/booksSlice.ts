@@ -7,9 +7,9 @@ import {
   updateBookThunk,
 } from "redux/services/book.service";
 
-import { BooksState, Author } from "../../types";
+import { BooksState } from "../../types";
 
-export const initialState: BooksState = {
+const initialState: BooksState = {
   allBooks: [],
   isLoading: false,
 };

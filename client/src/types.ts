@@ -29,12 +29,6 @@ export type Author = {
   lastName: string;
 };
 
-export type User = {
-  _id?: string;
-  userName: string;
-  email: string;
-};
-
 export type AppState = {
   books: BooksState;
 };
@@ -71,3 +65,24 @@ export type AuthorData = {
   firstName: string;
   lastName: string;
 };
+
+export type DecodedUser = {
+  userId: string;
+  email: string;
+  role: string;
+  iat: number;
+  exp: number;
+};
+
+export type User = {
+  _id?: string;
+  userName: string;
+  email: string;
+  isAdmin: boolean;
+};
+
+export interface AuthState {
+  token: string;
+  isLoading: boolean;
+  error: boolean;
+}

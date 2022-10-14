@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "redux/store";
 
-import { Book } from "types";
+import { Book, DecodedUser } from "types";
 
 import {
   Table,
@@ -17,19 +17,27 @@ import {
 import SearchBar from "./SearchBar";
 import { useEffect, useState } from "react";
 import { fetchBooksThunk } from "redux/services/book.service";
+import { fetchTokenThunk } from "redux/services/auth.service";
+import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
+import jwt_decode from "jwt-decode";
+import LoginButton from "./LoginButton";
 
 export default function BooksTable() {
   const dispatch = useDispatch<AppDispatch>();
   const { books } = useSelector((state: RootState) => state);
+  const { auth } = useSelector((state: RootState) => state);
 
   const [searchData, setSearchData] = useState({
     ISBN: "",
     title: "",
   });
 
+  console.log("Token in frontend here:", auth.token);
+  const filter = undefined;
+
   useEffect(() => {
-    dispatch(fetchBooksThunk());
-  }, [dispatch]);
+    dispatch(fetchBooksThunk({ filter }));
+  }, [dispatch, auth.token]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchData((prevState) => {
@@ -38,6 +46,10 @@ export default function BooksTable() {
         [e.target.name]: e.target.value,
       };
     });
+  };
+
+  const handleGoogleOnSuccess = async (response: CredentialResponse) => {
+    dispatch(fetchTokenThunk(response));
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -54,22 +66,30 @@ export default function BooksTable() {
     if (filter) {
       return dispatch(fetchBooksThunk({ filter }));
     }
-
-    dispatch(fetchBooksThunk());
+    dispatch(fetchBooksThunk({ filter }));
   };
+
   return (
     <>
       <Typography>{books.isLoading && "Loading books"}</Typography>
-
+      <GoogleLogin
+        onSuccess={handleGoogleOnSuccess}
+        onError={() => {
+          console.log("Login Failed");
+        }}
+      />
       <SearchBar
         handleSubmit={handleSubmit}
         handleChange={handleChange}
         title={searchData.title}
         ISBN={searchData.ISBN}
       />
-
+      {/* <LoginButton /> */}
       <TableContainer component={Paper}>
-        <Table sx={{ tableLayout: "auto" }} aria-label="simple table">
+        <Table
+          sx={{ width: "95%", margin: "0, auto" }}
+          aria-label="simple table"
+        >
           <TableHead>
             <TableRow
               sx={{
@@ -97,10 +117,10 @@ export default function BooksTable() {
           <TableBody>
             {books.allBooks.map((book: Book) => (
               <TableRow key={book.ISBN}>
-                <TableCell align="right">{book.ISBN}</TableCell>
-                <TableCell align="right">{book.title}</TableCell>
-                <TableCell align="right">{book.description}</TableCell>
-                <TableCell align="right">
+                <TableCell>{book.ISBN}</TableCell>
+                <TableCell>{book.title}</TableCell>
+                <TableCell>{book.description}</TableCell>
+                <TableCell>
                   <ul>
                     {book.authors.map((auth: any) => {
                       return (

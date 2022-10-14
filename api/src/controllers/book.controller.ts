@@ -182,6 +182,7 @@ export const findAll = async (
   next: NextFunction
 ) => {
   try {
+    console.log('USER HERE', req.user)
     res.status(200).json(await bookService.findAll())
   } catch (error) {
     if (error instanceof Error && error.name == 'ValidationError') {

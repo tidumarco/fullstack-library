@@ -3,20 +3,37 @@ import axios from "axios";
 
 import { Book, PutType } from "types";
 
+import jwt_decode from "jwt-decode";
+import { RootState } from "redux/store";
+
 const origin = "http://localhost:4000";
+
+type DecodedUser = {
+  userId: string;
+  isAdmin: boolean;
+  iat: number;
+  exp: number;
+};
 
 //GET ALL BOOKS
 export const fetchBooksThunk = createAsyncThunk(
   "books/fetch",
-  async ({ filter }: { filter?: string } = { filter: "" }) => {
+  async ({ filter }: { filter?: string } = { filter: "" }, thunkAPI) => {
     let URL: string;
+    // let token = localStorage.getItem("token") || "";
+    let state = thunkAPI.getState() as RootState;
+    
 
     if (filter) {
       URL = `${origin}/api/v1/books/filter?${filter}`;
     } else {
       URL = `${origin}/api/v1/books`;
     }
-    const response = await axios.get(`${URL}`);
+    const response = await axios.get(`${URL}`, {
+      headers: {
+        Authorization: `Bearer ${state.auth.token}`,
+      },
+    });
 
     return {
       data: response.data,

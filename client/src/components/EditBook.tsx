@@ -1,4 +1,3 @@
-import { BookmarkAddSharp } from "@mui/icons-material";
 import {
   Button,
   Container,
@@ -12,10 +11,12 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "redux/store";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchBooksThunk } from "redux/services/book.service";
+import { AppDispatch, RootState } from "redux/store";
 
 export default function EditBook() {
+  const dispatch = useDispatch<AppDispatch>();
   const initialBook = {
     _id: "",
     ISBN: "",
@@ -35,7 +36,7 @@ export default function EditBook() {
   };
 
   const { books } = useSelector((state: RootState) => state);
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  console.log("🚀 ~ file: EditBook.tsx ~ line 38 ~ EditBook ~ books", books);
   const [selectedBook, setSelectedBook] = useState(initialBook);
 
   const handleBookChange = (e: SelectChangeEvent) => {
@@ -47,45 +48,32 @@ export default function EditBook() {
     setSelectedBook(initialBook);
   };
   console.log({ selectedBook });
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+const filter = undefined
+  useEffect(() => {
+    dispatch(fetchBooksThunk({filter}));
+  }, [dispatch]);
   return (
     <>
       <Typography variant="h6">Edit a book</Typography>
-
       <form onSubmit={handleSubmit}>
-        <FormControl fullWidth>
-          <Select name="_id" onChange={handleBookChange}>
+        <Grid item>
+          <Select
+            style={{ minWidth: 200 }}
+            name="_id"
+            onChange={handleBookChange}
+          >
             {books.allBooks.map((book) => {
               return (
-                <MenuItem
-                  key={book._id}
-                  value={book._id}
-                  onChange={handleClose}
-                >
+                <MenuItem key={book._id} value={book._id}>
                   {book.title}
                 </MenuItem>
               );
             })}
           </Select>
-			
-          <Grid>
-            <Grid item>
-              <TextField
-                id="ISBN-input"
-                name="ISBN"
-                label="ISBN"
-                type="text"
-                value={selectedBook.ISBN}
-              />
-            </Grid>
-          </Grid>
-        </FormControl>
-        <Button variant="contained" color="primary" type="submit">
-          Submit
-        </Button>
+        </Grid>
+      <Button variant="contained" color="primary" type="submit">
+        Submit
+      </Button>
       </form>
     </>
   );

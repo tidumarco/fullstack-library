@@ -11,6 +11,7 @@ export default function AddUser() {
   const [userData, setUserData] = useState<User>({
     userName: "",
     email: "",
+    isAdmin: false,
   });
   const dispatch = useDispatch<AppDispatch>();
 
@@ -18,6 +19,7 @@ export default function AddUser() {
     setUserData({
       userName: "",
       email: "",
+      isAdmin: false,
     });
   };
 
@@ -34,6 +36,7 @@ export default function AddUser() {
     const newUser = {
       userName: userData.userName,
       email: userData.email,
+      isAdmin: userData.isAdmin,
     };
     dispatch(createUserThunk(newUser));
     e.target.reset();
