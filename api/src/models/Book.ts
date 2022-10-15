@@ -49,7 +49,6 @@ const bookSchema = new mongoose.Schema(
     ],
     borrowDate: Date,
     returnDate: Date,
-
     category: {
       type: String,
       required: true,

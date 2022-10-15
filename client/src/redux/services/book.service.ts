@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-import { Book, PutType } from "types";
+import { Book, NewBook, PutType } from "types";
 
 import jwt_decode from "jwt-decode";
 import { RootState } from "redux/store";
@@ -22,7 +22,6 @@ export const fetchBooksThunk = createAsyncThunk(
     let URL: string;
     // let token = localStorage.getItem("token") || "";
     let state = thunkAPI.getState() as RootState;
-    
 
     if (filter) {
       URL = `${origin}/api/v1/books/filter?${filter}`;
@@ -55,7 +54,7 @@ export const fetchBookThunk = createAsyncThunk("book/fetch", async (bookId) => {
 //CREATE BOOK
 export const createBookThunk = createAsyncThunk(
   "book/create",
-  async (book: Book) => {
+  async (book: NewBook) => {
     console.log("redux", book);
 
     const response = await axios.post(`${origin}/api/v1/books`, book);

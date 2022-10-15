@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "redux/store";
 
-import { Book, DecodedUser } from "types";
+import { Book } from "types";
 
 import {
   Table,
@@ -19,8 +19,6 @@ import { useEffect, useState } from "react";
 import { fetchBooksThunk } from "redux/services/book.service";
 import { fetchTokenThunk } from "redux/services/auth.service";
 import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
-import jwt_decode from "jwt-decode";
-import LoginButton from "./LoginButton";
 
 export default function BooksTable() {
   const dispatch = useDispatch<AppDispatch>();
@@ -33,6 +31,7 @@ export default function BooksTable() {
   });
 
   console.log("Token in frontend here:", auth.token);
+  console.log("Books here:", books.allBooks);
   const filter = undefined;
 
   useEffect(() => {
@@ -103,15 +102,15 @@ export default function BooksTable() {
               <TableCell>ISBN</TableCell>
               <TableCell>Title</TableCell>
               <TableCell>Description</TableCell>
+              <TableCell>Available</TableCell>
               <TableCell>Authors</TableCell>
               <TableCell>Publisher</TableCell>
               <TableCell>Published Date</TableCell>
-              <TableCell>Status</TableCell>
               <TableCell>Category</TableCell>
               <TableCell>Created on</TableCell>
               <TableCell>Updated on</TableCell>
-              <TableCell>Borrowed on</TableCell>
-              <TableCell>Returned on</TableCell>
+              {/* <TableCell>Borrowed on</TableCell>
+              <TableCell>Returned on</TableCell> */}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -120,6 +119,13 @@ export default function BooksTable() {
                 <TableCell>{book.ISBN}</TableCell>
                 <TableCell>{book.title}</TableCell>
                 <TableCell>{book.description}</TableCell>
+                <TableCell align="right">
+                  {book.available ? (
+                    <div>Available</div>
+                  ) : (
+                    <div>Not Available</div>
+                  )}
+                </TableCell>
                 <TableCell>
                   <ul>
                     {book.authors.map((auth: any) => {
@@ -135,18 +141,12 @@ export default function BooksTable() {
                 <TableCell align="right">
                   {book.publishedDate.toString()}
                 </TableCell>
-                <TableCell align="right">
-                  {book.available ? (
-                    <div>Available</div>
-                  ) : (
-                    <div>Not Available</div>
-                  )}
-                </TableCell>
+
                 <TableCell>{book.category}</TableCell>
                 <TableCell>{book.createdAt.toString()}</TableCell>
                 <TableCell>{book.updatedAt.toString()}</TableCell>
-                <TableCell>{book.borrowDate.toString()}</TableCell>
-                <TableCell>{book.returnDate.toString()}</TableCell>
+                {/* <TableCell>{book.borrowDate.toString()}</TableCell>
+                <TableCell>{book.returnDate.toString()}</TableCell> */}
               </TableRow>
             ))}
           </TableBody>

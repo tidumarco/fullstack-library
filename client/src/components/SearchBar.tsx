@@ -17,14 +17,11 @@ import {
   SwipeableDrawer,
   TextField,
 } from "@mui/material";
-import AddBook from "./AddBook";
 
 import { SearchBarProps } from "types";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "redux/store";
 import { fetchBooksThunk } from "redux/services/book.service";
-import Dashboard from "./Dashboard";
-import LoginButton from "./LoginButton";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -106,7 +103,7 @@ export default function SearchAppBar({ ISBN, title }: SearchBarProps) {
       return dispatch(fetchBooksThunk({ filter }));
     }
 
-    dispatch(fetchBooksThunk({filter}));
+    dispatch(fetchBooksThunk({ filter }));
   };
 
   const handleBookChange = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -1,7 +1,9 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "pages/Home";
-import Dashboard from "./Dashboard";
 import PrivateRoute from "./PrivateRoute";
+import AddBook from "./AddBook";
+
+import AddAuthor from "./AddAuthor";
 
 const App = () => {
   return (
@@ -9,13 +11,14 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route
-          path="/dashboard"
+          path="/create-book"
           element={
-            <PrivateRoute>
-              <Dashboard />
-            </PrivateRoute>
+            // <PrivateRoute>
+            <AddBook />
+            // </PrivateRoute>
           }
         />
+        <Route path="/create-author" element={<AddAuthor />} />
       </Routes>
     </BrowserRouter>
   );

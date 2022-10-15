@@ -86,3 +86,5 @@ export interface AuthState {
   isLoading: boolean;
   error: boolean;
 }
+
+export type NewBook = Partial<Book>;

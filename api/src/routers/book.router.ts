@@ -1,5 +1,4 @@
 import express from 'express'
-import { overArgs } from 'lodash'
 
 import {
   createBook,
@@ -27,4 +26,3 @@ router.delete('/id/:bookId', deleteBook)
 router.post('/', createBook)
 
 export default router
-// (...args) => checkAuth(...args, { isAdmin: true }),

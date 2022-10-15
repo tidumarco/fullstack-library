@@ -10,8 +10,10 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { CredentialResponse } from "@react-oauth/google";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { fetchTokenThunk } from "redux/services/auth.service";
 import { fetchBooksThunk } from "redux/services/book.service";
 import { AppDispatch, RootState } from "redux/store";
 
@@ -36,6 +38,7 @@ export default function EditBook() {
   };
 
   const { books } = useSelector((state: RootState) => state);
+  const { auth } = useSelector((state: RootState) => state);
   console.log("🚀 ~ file: EditBook.tsx ~ line 38 ~ EditBook ~ books", books);
   const [selectedBook, setSelectedBook] = useState(initialBook);
 
@@ -48,10 +51,17 @@ export default function EditBook() {
     setSelectedBook(initialBook);
   };
   console.log({ selectedBook });
-const filter = undefined
+
+  console.log("Token in edit books:", auth.token);
+  const filter = undefined;
   useEffect(() => {
-    dispatch(fetchBooksThunk({filter}));
+    dispatch(fetchBooksThunk({ filter }));
   }, [dispatch]);
+
+//   useEffect((response: any) => {
+// 	dispatch(fetchTokenThunk(response.credential?))
+//   },[])
+
   return (
     <>
       <Typography variant="h6">Edit a book</Typography>
@@ -71,9 +81,9 @@ const filter = undefined
             })}
           </Select>
         </Grid>
-      <Button variant="contained" color="primary" type="submit">
-        Submit
-      </Button>
+        <Button variant="contained" color="primary" type="submit">
+          Submit
+        </Button>
       </form>
     </>
   );
