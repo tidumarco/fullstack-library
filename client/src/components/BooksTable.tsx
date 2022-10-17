@@ -17,7 +17,7 @@ import {
 } from "@mui/material";
 import SearchBar from "./SearchBar";
 import { useEffect, useState } from "react";
-import { fetchBooksThunk } from "redux/services/book.service";
+import { deleteBookThunk, fetchBooksThunk } from "redux/services/book.service";
 
 export default function BooksTable({ authors }: any) {
   const dispatch = useDispatch<AppDispatch>();
@@ -60,6 +60,10 @@ export default function BooksTable({ authors }: any) {
       return dispatch(fetchBooksThunk({ filter }));
     }
     dispatch(fetchBooksThunk({ filter }));
+  };
+
+  const handleDelete = (bookId: string) => {
+	dispatch(deleteBookThunk(bookId))
   };
 
   useEffect(() => {
@@ -152,7 +156,13 @@ export default function BooksTable({ authors }: any) {
                   <Link href={`/update-book/${book._id}`}>EDIT</Link>
                 </TableCell>
                 <TableCell>
-                  <Button variant="outlined" color="error">
+                  <Button
+                    variant="outlined"
+                    color="error"
+                    onClick={() => {
+                      handleDelete(book._id!);
+                    }}
+                  >
                     Delete
                   </Button>
                 </TableCell>

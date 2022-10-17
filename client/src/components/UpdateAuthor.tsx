@@ -1,12 +1,14 @@
-import { Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { fetchAuthorsThunk } from "redux/services/author.service";
-import { fetchBooksThunk, updateBookThunk } from "redux/services/book.service";
+import {
+  fetchAuthorsThunk,
+  updateAuthorThunk,
+} from "redux/services/author.service";
+
 import { AppDispatch, RootState } from "redux/store";
-import { Book, UpdatedBook } from "types";
 
 export default function UpdateBook() {
   const { authorId } = useParams<{ authorId: string }>();
@@ -14,7 +16,7 @@ export default function UpdateBook() {
   const author = authors.find((author) => author._id === authorId);
 
   const [state, setState] = useState(author);
-
+  
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
@@ -23,7 +25,7 @@ export default function UpdateBook() {
     } else {
       setState(author);
     }
-    console.log("rendering");
+    // console.log("rendering");
   }, [author]);
 
   const handleChange = (e: any) => {
@@ -36,39 +38,45 @@ export default function UpdateBook() {
       });
     }
   };
-  console.log("State here:", state);
 
+  console.log(state)
   const handleSubmit = (e: any) => {
     e.preventDefault();
     if (state) {
-      dispatch(updateBookThunk(state));
+      dispatch(updateAuthorThunk(state));
       console.log(state);
+      alert("Author updated!");
     }
   };
 
   if (!author) return <h1>Loading author...</h1>;
   return (
     <>
-      <Typography variant="h5">Update an author: {author.firstName} {author.lastName}</Typography>
+      <Typography variant="h5">
+        Update an author: {author.firstName} {author.lastName}
+      </Typography>
       <form onSubmit={handleSubmit}>
         <label>First Name</label>
         <br />
         <input
           type="text"
-          name="title"
+          name="firstName"
           defaultValue={state?.firstName}
           placeholder="first name here"
           onChange={handleChange}
         />
-		<label>Last Name</label>
+        <label>Last Name</label>
         <br />
         <input
           type="text"
-          name="title"
+          name="lastName"
           defaultValue={state?.lastName}
           placeholder="last name here"
           onChange={handleChange}
         />
+        <Button variant="contained" type="submit">
+          Submit
+        </Button>
       </form>
     </>
   );

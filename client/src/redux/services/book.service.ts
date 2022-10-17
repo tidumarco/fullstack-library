@@ -74,11 +74,11 @@ export const updateBookThunk = createAsyncThunk(
 //DELETE ONE BOOK
 export const deleteBookThunk = createAsyncThunk(
   "book/delete",
-  async (bookId) => {
-    const response = await axios.delete(`${URL}/${bookId}`);
+  async (bookId:string) => {
+    const response = await axios.delete(`${origin}/api/v1/books/id/${bookId}`);
 
     return {
-      data: response.data,
+      data: bookId,
       status: response.status,
     };
   }

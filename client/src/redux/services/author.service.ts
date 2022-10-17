@@ -45,10 +45,8 @@ export const createAuthorThunk = createAsyncThunk(
 //UPDATE ONE AUTHOR
 export const updateAuthorThunk = createAsyncThunk(
   "author/update",
-  async (data: Params) => {
-    const { authorId, updatedAuthor } = data;
-
-    const response = await axios.put(`${URL}/${authorId}`, updatedAuthor);
+  async (author: Author) => {
+    const response = await axios.put(`${URL}/${author._id}`, author);
 
     return {
       data: response.data,

@@ -47,7 +47,8 @@ const NewBookForm = () => {
 
   const onSubmit = handleSubmit((data) => {
     dispatch(createBookThunk(data));
-    console.log(data.authors);
+    console.log(data);
+    alert("Book created!");
   });
   const errorsValues = Object.entries(errors);
 
