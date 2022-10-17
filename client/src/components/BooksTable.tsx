@@ -18,11 +18,11 @@ import {
 import SearchBar from "./SearchBar";
 import { useEffect, useState } from "react";
 import { deleteBookThunk, fetchBooksThunk } from "redux/services/book.service";
+import { deleteAuthorThunk } from "redux/services/author.service";
 
-export default function BooksTable({ authors }: any) {
+export default function BooksTable() {
   const dispatch = useDispatch<AppDispatch>();
-  const { books } = useSelector((state: RootState) => state);
-  console.log(books);
+  const { books, authors } = useSelector((state: RootState) => state);
   const [searchData, setSearchData] = useState({
     ISBN: "",
     title: "",
@@ -62,13 +62,16 @@ export default function BooksTable({ authors }: any) {
     dispatch(fetchBooksThunk({ filter }));
   };
 
-  const handleDelete = (bookId: string) => {
-	dispatch(deleteBookThunk(bookId))
+  const handleBookDelete = (bookId: string) => {
+    dispatch(deleteBookThunk(bookId));
+  };
+  const handleAuthorDelete = (authId: string) => {
+    dispatch(deleteAuthorThunk(authId));
   };
 
   useEffect(() => {
     dispatch(fetchBooksThunk());
-  }, [dispatch]);
+  }, [dispatch, authors]);
 
   return (
     <>
@@ -128,7 +131,7 @@ export default function BooksTable({ authors }: any) {
                   {book.authors.map((auth: any) => {
                     return (
                       <>
-                        <li key={auth._id}>
+                        <div key={auth._id}>
                           {auth.firstName} {auth.lastName}
                           <br />
                           <Link
@@ -137,7 +140,15 @@ export default function BooksTable({ authors }: any) {
                           >
                             EDIT
                           </Link>
-                        </li>
+                          <button
+                            color="error"
+                            onClick={() => {
+                              handleAuthorDelete(auth._id!);
+                            }}
+                          >
+                            Delete
+                          </button>
+                        </div>
                       </>
                     );
                   })}
@@ -160,7 +171,7 @@ export default function BooksTable({ authors }: any) {
                     variant="outlined"
                     color="error"
                     onClick={() => {
-                      handleDelete(book._id!);
+                      handleBookDelete(book._id!);
                     }}
                   >
                     Delete

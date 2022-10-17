@@ -1,6 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { Params } from "react-router-dom";
 
 import { Author } from "types";
 
@@ -55,14 +54,14 @@ export const updateAuthorThunk = createAsyncThunk(
   }
 );
 
-//DELETE ONE BOOK
+//DELETE ONE AUTHOR
 export const deleteAuthorThunk = createAsyncThunk(
   "author/delete",
-  async (authorId) => {
+  async (authorId: string) => {
     const response = await axios.delete(`${URL}/${authorId}`);
 
     return {
-      data: response.data,
+      data: authorId,
       status: response.status,
     };
   }
