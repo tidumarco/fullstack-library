@@ -120,12 +120,21 @@ export default function BooksTable({ authors }: any) {
                     <div>Not Available</div>
                   )}
                 </TableCell>
-                <TableCell>
+                <TableCell align="center">
                   {book.authors.map((auth: any) => {
                     return (
-                      <li key={auth._id}>
-                        {auth.firstName} {auth.lastName}
-                      </li>
+                      <>
+                        <li key={auth._id}>
+                          {auth.firstName} {auth.lastName}
+                          <br />
+                          <Link
+                            key={auth.lastName}
+                            href={`/update-author/${auth._id}`}
+                          >
+                            EDIT
+                          </Link>
+                        </li>
+                      </>
                     );
                   })}
                 </TableCell>

@@ -5,6 +5,7 @@ import AddBook from "./AddBook";
 
 import AddAuthor from "./AddAuthor";
 import UpdateBook from "./UpdateBook";
+import UpdateAuthor from "./UpdateAuthor";
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
         />
         <Route path="/create-author" element={<AddAuthor />} />
         <Route path="/update-book/:bookId" element={<UpdateBook />} />
+        <Route path="/update-author/:authorId" element={<UpdateAuthor />} />
       </Routes>
     </BrowserRouter>
   );
