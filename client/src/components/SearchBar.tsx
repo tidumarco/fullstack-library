@@ -3,17 +3,24 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import InputBase from "@mui/material/InputBase";
 
 import { useEffect, useState } from "react";
-import { Button, TextField } from "@mui/material";
-
+import {
+  Button,
+  IconButton,
+  Link,
+  Menu,
+  MenuItem,
+  TextField,
+} from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
 import { SearchBarProps } from "types";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "redux/store";
 import { fetchBooksThunk } from "redux/services/book.service";
 import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
 import { fetchTokenThunk } from "redux/services/auth.service";
+import PrivateRoute from "./PrivateRoute";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -36,7 +43,6 @@ export default function SearchAppBar({
   authors,
   category,
 }: SearchBarProps) {
-  const [open, setOpen] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
   const [formData, setFormData] = useState({
     ISBN: "",
@@ -86,10 +92,51 @@ export default function SearchAppBar({
     dispatch(fetchTokenThunk(response));
   };
 
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
+          <PrivateRoute>
+            <IconButton
+              id="basic-button"
+              aria-controls={open ? "basic-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+              color="inherit"
+              onClick={handleClick}
+            >
+              <MenuIcon />
+            </IconButton>
+          </PrivateRoute>
+          <Menu
+            id="basic-menu"
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            MenuListProps={{
+              "aria-labelledby": "basic-button",
+            }}
+          >
+            <MenuItem onClick={handleClose}>
+              <Link href={`/create-book`} color="inherit">
+                Create a book
+              </Link>
+            </MenuItem>
+            <MenuItem onClick={handleClose}>
+              <Link href={`/create-author`} color="inherit">
+                Create an author
+              </Link>
+            </MenuItem>
+          </Menu>
+
           <Typography
             variant="h6"
             noWrap
@@ -97,6 +144,7 @@ export default function SearchAppBar({
             sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
           >
             TIDU LIBRARY
+            <br />
           </Typography>
           <GoogleLogin
             onSuccess={handleGoogleOnSuccess}

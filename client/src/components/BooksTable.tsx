@@ -19,6 +19,7 @@ import SearchBar from "./SearchBar";
 import { useEffect, useState } from "react";
 import { deleteBookThunk, fetchBooksThunk } from "redux/services/book.service";
 import { deleteAuthorThunk } from "redux/services/author.service";
+import PrivateRoute from "./PrivateRoute";
 
 export default function BooksTable() {
   const dispatch = useDispatch<AppDispatch>();
@@ -133,21 +134,24 @@ export default function BooksTable() {
                       <>
                         <div key={auth._id}>
                           {auth.firstName} {auth.lastName}
-                          <br />
-                          <Link
-                            key={auth.lastName}
-                            href={`/update-author/${auth._id}`}
-                          >
-                            EDIT
-                          </Link>
-                          <button
-                            color="error"
-                            onClick={() => {
-                              handleAuthorDelete(auth._id!);
-                            }}
-                          >
-                            Delete
-                          </button>
+                          <PrivateRoute>
+                            <Link
+                              key={auth.lastName}
+                              href={`/update-author/${auth._id}`}
+                            >
+                              EDIT
+                            </Link>
+                          </PrivateRoute>
+                          <PrivateRoute>
+                            <button
+                              color="error"
+                              onClick={() => {
+                                handleAuthorDelete(auth._id!);
+                              }}
+                            >
+                              Delete
+                            </button>
+                          </PrivateRoute>
                         </div>
                       </>
                     );
@@ -163,20 +167,24 @@ export default function BooksTable() {
                 <TableCell>{book.updatedAt.toString()}</TableCell>
                 {/* <TableCell>{book.borrowDate.toString()}</TableCell>
                 <TableCell>{book.returnDate.toString()}</TableCell> */}
-                <TableCell>
-                  <Link href={`/update-book/${book._id}`}>EDIT</Link>
-                </TableCell>
-                <TableCell>
-                  <Button
-                    variant="outlined"
-                    color="error"
-                    onClick={() => {
-                      handleBookDelete(book._id!);
-                    }}
-                  >
-                    Delete
-                  </Button>
-                </TableCell>
+                <PrivateRoute>
+                  <TableCell>
+                    <Link href={`/update-book/${book._id}`}>EDIT</Link>
+                  </TableCell>
+                </PrivateRoute>
+                <PrivateRoute>
+                  <TableCell>
+                    <Button
+                      variant="outlined"
+                      color="error"
+                      onClick={() => {
+                        handleBookDelete(book._id!);
+                      }}
+                    >
+                      Delete
+                    </Button>
+                  </TableCell>
+                </PrivateRoute>
               </TableRow>
             ))}
           </TableBody>

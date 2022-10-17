@@ -1,4 +1,3 @@
-import { CredentialResponse } from "@react-oauth/google";
 import { createSlice } from "@reduxjs/toolkit";
 
 import { fetchTokenThunk } from "redux/services/auth.service";
