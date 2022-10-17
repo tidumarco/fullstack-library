@@ -13,30 +13,22 @@ import {
   Paper,
   Typography,
   Button,
+  Link,
 } from "@mui/material";
 import SearchBar from "./SearchBar";
 import { useEffect, useState } from "react";
 import { fetchBooksThunk } from "redux/services/book.service";
-import { fetchTokenThunk } from "redux/services/auth.service";
-import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
 
-export default function BooksTable() {
+export default function BooksTable({ authors }: any) {
   const dispatch = useDispatch<AppDispatch>();
   const { books } = useSelector((state: RootState) => state);
-  const { auth } = useSelector((state: RootState) => state);
-
+  console.log(books);
   const [searchData, setSearchData] = useState({
     ISBN: "",
     title: "",
+    authors: "",
+    category: "",
   });
-
-  console.log("Token in frontend here:", auth.token);
-  console.log("Books here:", books.allBooks);
-  const filter = undefined;
-
-  useEffect(() => {
-    dispatch(fetchBooksThunk({ filter }));
-  }, [dispatch, auth.token]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchData((prevState) => {
@@ -47,13 +39,9 @@ export default function BooksTable() {
     });
   };
 
-  const handleGoogleOnSuccess = async (response: CredentialResponse) => {
-    dispatch(fetchTokenThunk(response));
-  };
-
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const { ISBN, title } = searchData;
+    const { ISBN, title, authors, category } = searchData;
     let filter = "";
 
     if (ISBN) {
@@ -62,28 +50,34 @@ export default function BooksTable() {
     if (title) {
       filter = `title=${title}&`;
     }
+    if (authors) {
+      filter = `title=${title}&`;
+    }
+    if (category) {
+      filter = `title=${title}&`;
+    }
     if (filter) {
       return dispatch(fetchBooksThunk({ filter }));
     }
     dispatch(fetchBooksThunk({ filter }));
   };
 
+  useEffect(() => {
+    dispatch(fetchBooksThunk());
+  }, [dispatch]);
+
   return (
     <>
       <Typography>{books.isLoading && "Loading books"}</Typography>
-      <GoogleLogin
-        onSuccess={handleGoogleOnSuccess}
-        onError={() => {
-          console.log("Login Failed");
-        }}
-      />
+
       <SearchBar
         handleSubmit={handleSubmit}
         handleChange={handleChange}
         title={searchData.title}
         ISBN={searchData.ISBN}
+        authors={searchData.authors}
+        category={searchData.category}
       />
-      {/* <LoginButton /> */}
       <TableContainer component={Paper}>
         <Table
           sx={{ width: "95%", margin: "0, auto" }}
@@ -127,15 +121,13 @@ export default function BooksTable() {
                   )}
                 </TableCell>
                 <TableCell>
-                  <ul>
-                    {book.authors.map((auth: any) => {
-                      return (
-                        <li key={auth._id}>
-                          {auth.firstName} {auth.lastName}
-                        </li>
-                      );
-                    })}
-                  </ul>
+                  {book.authors.map((auth: any) => {
+                    return (
+                      <li key={auth._id}>
+                        {auth.firstName} {auth.lastName}
+                      </li>
+                    );
+                  })}
                 </TableCell>
                 <TableCell align="right">{book.publisher}</TableCell>
                 <TableCell align="right">
@@ -147,6 +139,14 @@ export default function BooksTable() {
                 <TableCell>{book.updatedAt.toString()}</TableCell>
                 {/* <TableCell>{book.borrowDate.toString()}</TableCell>
                 <TableCell>{book.returnDate.toString()}</TableCell> */}
+                <TableCell>
+                  <Link href={`/update-book/${book._id}`}>EDIT</Link>
+                </TableCell>
+                <TableCell>
+                  <Button variant="outlined" color="error">
+                    Delete
+                  </Button>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>

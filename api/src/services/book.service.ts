@@ -39,9 +39,7 @@ const findByISBN = async (ISBN: string): Promise<BookDocument> => {
 }
 
 const findByAuthors = async (authors: Authors): Promise<BookDocument> => {
-  const foundBook = await Book.findOne({ authors: authors.lastName }).populate(
-    'authors'
-  )
+  const foundBook = await Book.findOne({ authors: authors.lastName })
 
   if (!foundBook) {
     throw new NotFoundError(`Book's authors ${authors} not found`)

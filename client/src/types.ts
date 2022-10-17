@@ -43,6 +43,8 @@ export type SearchBarProps = {
   handleChange: React.ChangeEventHandler<HTMLInputElement>;
   ISBN: string;
   title: string;
+  authors: string;
+  category: string;
 };
 
 export type AddBookProps = {

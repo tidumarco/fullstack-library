@@ -54,7 +54,7 @@ export const booksSlice = createSlice({
       state.isLoading = true;
     });
     builder.addCase(updateBookThunk.fulfilled, (state, action) => {
-      state.allBooks = action.payload.data;
+    //   state.allBooks = action.payload.data;
       state.isLoading = false;
     });
 

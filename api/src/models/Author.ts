@@ -10,7 +10,7 @@ const authorSchema = new mongoose.Schema(
   {
     firstName: String,
     lastName: String,
-    publishedBooks: [{ type: Schema.Types.ObjectId, ref: 'Book' }],
+    publishedBooks: { type: [mongoose.Schema.Types.ObjectId], ref: 'Book' },
   },
   {
     timestamps: true,

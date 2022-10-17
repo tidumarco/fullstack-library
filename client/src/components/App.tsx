@@ -4,6 +4,7 @@ import PrivateRoute from "./PrivateRoute";
 import AddBook from "./AddBook";
 
 import AddAuthor from "./AddAuthor";
+import UpdateBook from "./UpdateBook";
 
 const App = () => {
   return (
@@ -13,12 +14,13 @@ const App = () => {
         <Route
           path="/create-book"
           element={
-            // <PrivateRoute>
-            <AddBook />
-            // </PrivateRoute>
+            <PrivateRoute>
+              <AddBook />
+            </PrivateRoute>
           }
         />
         <Route path="/create-author" element={<AddAuthor />} />
+        <Route path="/update-book/:bookId" element={<UpdateBook />} />
       </Routes>
     </BrowserRouter>
   );

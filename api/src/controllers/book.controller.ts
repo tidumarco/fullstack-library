@@ -25,14 +25,7 @@ export const createBook = async (
       adminId,
       category,
     } = req.body
-    console.log('authors', authors)
-    //create another form to create Author (admin)
 
-    // 1. first change the author from text input to a dropdown (the values of dropdown should come from GET /authors)
-    // 2. if the admin needs a new author then they have to create one before even filling the create new book
-    // 3. when creating new book, all what you need is that author id.
-    // 4. how to get it? from the dropdown. (you already got them!)
-    // 5. send that id/s via the req.body
     const book = new Book({
       ISBN,
       title,
@@ -182,7 +175,6 @@ export const findAll = async (
   next: NextFunction
 ) => {
   try {
-    console.log('USER HERE', req.user)
     res.status(200).json(await bookService.findAll())
   } catch (error) {
     if (error instanceof Error && error.name == 'ValidationError') {

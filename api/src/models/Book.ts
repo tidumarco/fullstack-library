@@ -1,7 +1,6 @@
 import mongoose, { Document, Date } from 'mongoose'
 
 export type BookDocument = Document & {
-  //   _id?: mongoose.Schema.Types.ObjectId
   ISBN: string
   title: string
   description: string
@@ -17,9 +16,6 @@ export type BookDocument = Document & {
 
 const bookSchema = new mongoose.Schema(
   {
-    // _id: {
-    //   type: mongoose.Schema.Types.ObjectId,
-    // },
     ISBN: {
       type: String,
       index: true,
@@ -38,10 +34,7 @@ const bookSchema = new mongoose.Schema(
       required: true,
     },
     publishedDate: Date,
-    authors: {
-      type: [mongoose.Schema.Types.ObjectId],
-      ref: 'Author',
-    },
+    authors: { type: [mongoose.Schema.Types.ObjectId], ref: 'Author' },
     borrowerId: [
       {
         type: String,

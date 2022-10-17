@@ -8,7 +8,7 @@ const createAuthor = async (
 }
 
 const findById = async (authorId: string): Promise<AuthorDocument> => {
-  const foundAuthor = await Author.findById(authorId)
+  const foundAuthor = await Author.findById(authorId).populate('Book')
 
   if (!foundAuthor) {
     throw new NotFoundError(`Author ${authorId} not found`)

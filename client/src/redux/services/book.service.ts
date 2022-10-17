@@ -1,27 +1,18 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-import { Book, NewBook, PutType } from "types";
-
-import jwt_decode from "jwt-decode";
-import { RootState } from "redux/store";
+import { NewBook } from "types";
 
 const origin = "http://localhost:4000";
 
-type DecodedUser = {
-  userId: string;
-  isAdmin: boolean;
-  iat: number;
-  exp: number;
-};
+
 
 //GET ALL BOOKS
 export const fetchBooksThunk = createAsyncThunk(
   "books/fetch",
-  async ({ filter }: { filter?: string } = { filter: "" }, thunkAPI) => {
+  async ({ filter }: { filter?: string } = { filter: "" }) => {
     let URL: string;
-    // let token = localStorage.getItem("token") || "";
-    let state = thunkAPI.getState() as RootState;
+    let token = localStorage.getItem("token") || "";
 
     if (filter) {
       URL = `${origin}/api/v1/books/filter?${filter}`;
@@ -30,7 +21,7 @@ export const fetchBooksThunk = createAsyncThunk(
     }
     const response = await axios.get(`${URL}`, {
       headers: {
-        Authorization: `Bearer ${state.auth.token}`,
+        Authorization: `Bearer ${token}`,
       },
     });
 
@@ -69,10 +60,9 @@ export const createBookThunk = createAsyncThunk(
 //UPDATE ONE BOOK
 export const updateBookThunk = createAsyncThunk(
   "book/update",
-  async (data: PutType) => {
-    const { bookId, updatedBook } = data;
-    //@ts-ignore
-    const response = await axios.get(`${URL}/${bookId}`, updatedBook);
+  async (book: NewBook) => {
+    const response = await axios.put(`${origin}/api/v1/books/id/${book._id}`, book);
+	console.log(response)
 
     return {
       data: response.data,
@@ -85,7 +75,7 @@ export const updateBookThunk = createAsyncThunk(
 export const deleteBookThunk = createAsyncThunk(
   "book/delete",
   async (bookId) => {
-    const response = await axios.get(`${URL}/${bookId}`);
+    const response = await axios.delete(`${URL}/${bookId}`);
 
     return {
       data: response.data,

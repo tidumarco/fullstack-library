@@ -23,8 +23,6 @@ export default function () {
           user.save()
         }
         done(null, user)
-        console.log('Email', email)
-        console.log('Is it Admin?', user.isAdmin)
       } catch (error) {
         done(error)
       }

@@ -2,26 +2,18 @@ import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import InputBase from "@mui/material/InputBase";
-import MenuIcon from "@mui/icons-material/Menu";
-
-import CloseIcon from "@mui/icons-material/Close";
 
 import { useState } from "react";
-import {
-  Button,
-  List,
-  ListItem,
-  SwipeableDrawer,
-  TextField,
-} from "@mui/material";
+import { Button, TextField } from "@mui/material";
 
 import { SearchBarProps } from "types";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "redux/store";
 import { fetchBooksThunk } from "redux/services/book.service";
+import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
+import { fetchTokenThunk } from "redux/services/auth.service";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -38,34 +30,12 @@ const Search = styled("div")(({ theme }) => ({
   },
 }));
 
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: "100%",
-  position: "absolute",
-  pointerEvents: "none",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "inherit",
-  "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("sm")]: {
-      width: "12ch",
-      "&:focus": {
-        width: "20ch",
-      },
-    },
-  },
-}));
-
-export default function SearchAppBar({ ISBN, title }: SearchBarProps) {
+export default function SearchAppBar({
+  ISBN,
+  title,
+  authors,
+  category,
+}: SearchBarProps) {
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
   const [formData, setFormData] = useState({
@@ -74,10 +44,7 @@ export default function SearchAppBar({ ISBN, title }: SearchBarProps) {
     description: "",
     publisher: "",
     publishedDate: new Date(0),
-    authors: {
-      firstName: "",
-      lastName: "",
-    },
+    authors: "",
     borrowerId: "",
     adminId: "",
     category: "",
@@ -115,6 +82,10 @@ export default function SearchAppBar({ ISBN, title }: SearchBarProps) {
     });
   };
 
+  const handleGoogleOnSuccess = async (response: CredentialResponse) => {
+    dispatch(fetchTokenThunk(response));
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -127,8 +98,14 @@ export default function SearchAppBar({ ISBN, title }: SearchBarProps) {
           >
             TIDU LIBRARY
           </Typography>
+          <GoogleLogin
+            onSuccess={handleGoogleOnSuccess}
+            onError={() => {
+              console.log("Login Failed");
+            }}
+          />
 
-          <form onSubmit={handleBookSubmit}>
+          <form style={{ display: "flex" }} onSubmit={handleBookSubmit}>
             <Search>
               <TextField
                 placeholder="Search title"
@@ -167,7 +144,6 @@ export default function SearchAppBar({ ISBN, title }: SearchBarProps) {
           </form>
         </Toolbar>
       </AppBar>
-      {/* <LoginButton /> */}
     </Box>
   );
 }
