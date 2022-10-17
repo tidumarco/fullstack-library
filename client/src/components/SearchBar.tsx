@@ -5,7 +5,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import InputBase from "@mui/material/InputBase";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, TextField } from "@mui/material";
 
 import { SearchBarProps } from "types";
