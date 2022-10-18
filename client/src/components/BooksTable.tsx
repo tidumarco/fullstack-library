@@ -23,7 +23,8 @@ import PrivateRoute from "./PrivateRoute";
 
 export default function BooksTable() {
   const dispatch = useDispatch<AppDispatch>();
-  const { books, authors } = useSelector((state: RootState) => state);
+  const { books, authors, users } = useSelector((state: RootState) => state);
+  console.log(users);
   const [searchData, setSearchData] = useState({
     ISBN: "",
     title: "",
@@ -63,6 +64,10 @@ export default function BooksTable() {
     dispatch(fetchBooksThunk({ filter }));
   };
 
+  const handleBookBorrow = (bookId: any) => {
+    // dispatch(updateBookThunk(bookId));
+    console.log("Borrow");
+  };
   const handleBookDelete = (bookId: string) => {
     dispatch(deleteBookThunk(bookId));
   };
@@ -86,9 +91,20 @@ export default function BooksTable() {
         authors={searchData.authors}
         category={searchData.category}
       />
-      <TableContainer component={Paper}>
+      <TableContainer
+        component={Paper}
+        sx={{
+          borderBottom: "2px solid black",
+          margin: "40px",
+          "& th": {
+            fontSize: "1.25rem",
+            color: "rgba(96, 96, 96)",
+          },
+          width: "95%",
+        }}
+      >
         <Table
-          sx={{ width: "95%", margin: "0, auto" }}
+          sx={{  margin: "0, auto" }}
           aria-label="simple table"
         >
           <TableHead>
@@ -109,12 +125,13 @@ export default function BooksTable() {
               <TableCell>Publisher</TableCell>
               <TableCell>Published Date</TableCell>
               <TableCell>Category</TableCell>
-              <TableCell>Created on</TableCell>
-              <TableCell>Updated on</TableCell>
+              {/* <TableCell>Created on</TableCell>
+              <TableCell>Updated on</TableCell> */}
               {/* <TableCell>Borrowed on</TableCell>
               <TableCell>Returned on</TableCell> */}
             </TableRow>
           </TableHead>
+
           <TableBody>
             {books.allBooks.map((book: Book) => (
               <TableRow key={book.ISBN}>
@@ -138,6 +155,7 @@ export default function BooksTable() {
                             <Link
                               key={auth.lastName}
                               href={`/update-author/${auth._id}`}
+							  target="_blank"
                             >
                               EDIT
                             </Link>
@@ -163,8 +181,8 @@ export default function BooksTable() {
                 </TableCell>
 
                 <TableCell>{book.category}</TableCell>
-                <TableCell>{book.createdAt.toString()}</TableCell>
-                <TableCell>{book.updatedAt.toString()}</TableCell>
+                {/* <TableCell>{book.createdAt.toString()}</TableCell>
+                <TableCell>{book.updatedAt.toString()}</TableCell> */}
                 {/* <TableCell>{book.borrowDate.toString()}</TableCell>
                 <TableCell>{book.returnDate.toString()}</TableCell> */}
                 <PrivateRoute>
@@ -185,6 +203,17 @@ export default function BooksTable() {
                     </Button>
                   </TableCell>
                 </PrivateRoute>
+                <TableCell>
+                  <Button
+                    variant="outlined"
+                    color="inherit"
+                    onClick={() => {
+                      handleBookBorrow(book._id!);
+                    }}
+                  >
+                    Borrow
+                  </Button>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>

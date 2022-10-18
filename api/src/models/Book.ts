@@ -35,11 +35,11 @@ const bookSchema = new mongoose.Schema(
     },
     publishedDate: Date,
     authors: { type: [mongoose.Schema.Types.ObjectId], ref: 'Author' },
-    borrowerId: [
-      {
-        type: String,
-      },
-    ],
+    borrowerId: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: 'Borrower',
+    },
+
     borrowDate: Date,
     returnDate: Date,
     category: {

@@ -8,6 +8,7 @@ import { createBookThunk } from "redux/services/book.service";
 import { Author, NewBook } from "types";
 import { useEffect } from "react";
 import { fetchAuthorsThunk } from "redux/services/author.service";
+import { Form } from "react-router-dom";
 
 const author = z.object({
   firstName: z.string(),
@@ -75,7 +76,11 @@ const NewBookForm = () => {
       ) : (
         <div></div>
       )}
-      <Grid sx={{ width: "40%" }} container direction="column">
+      <Grid
+        sx={{ border: "2px solid black", width: 1/2, margin: 2, padding:2 }}
+        container
+        direction="column"
+      >
         <TextField
           label="ISBN"
           {...register("ISBN")}

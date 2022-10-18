@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { Params } from "react-router-dom";
 
-import { User } from "types";
+import { NewUser, User } from "types";
 
 const URL = "http://localhost:4000/api/v1/users";
 
@@ -42,11 +42,9 @@ export const createUserThunk = createAsyncThunk(
 //UPDATE ONE USER
 export const updateUserThunk = createAsyncThunk(
   "user/update",
-  async (data: Params) => {
-    const { userId, updatedUser } = data;
-
-    const response = await axios.put(`${URL}/${userId}`, updatedUser);
-
+  async (user: NewUser) => {
+    const response = await axios.put(`${URL}/${user._id}`, user);
+    console.log("User updated", response);
     return {
       data: response.data,
       status: response.status,

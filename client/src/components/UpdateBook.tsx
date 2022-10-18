@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -45,6 +45,7 @@ export default function UpdateBook() {
     if (state) {
       dispatch(updateBookThunk(state));
       console.log(state);
+	  alert("Book updated!")
     }
   };
 
@@ -63,6 +64,9 @@ export default function UpdateBook() {
           onChange={handleChange}
         />
       </form>
+		<Button variant="contained" type="submit">
+          Submit
+        </Button>
     </>
   );
 }

@@ -28,7 +28,7 @@ const NewAuthorForm = () => {
   const onSubmit = handleSubmit((data) => {
     dispatch(createAuthorThunk(data));
     console.log(data);
-	alert("Author Created!")
+    alert("Author Created!");
   });
   const errorsValues = Object.entries(errors);
   return (
@@ -52,7 +52,11 @@ const NewAuthorForm = () => {
       ) : (
         <div></div>
       )}
-      <Grid sx={{ width: "40%" }} container direction="column">
+      <Grid
+        sx={{ border: "2px solid black", width: 1 / 2, margin: 2, padding: 2 }}
+        container
+        direction="column"
+      >
         <TextField label="First Name" {...register("firstName")} />
 
         <TextField label="Last Name" {...register("lastName")} />

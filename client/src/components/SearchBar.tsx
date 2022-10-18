@@ -126,16 +126,22 @@ export default function SearchAppBar({
             }}
           >
             <MenuItem onClick={handleClose}>
-              <Link href={`/create-book`} color="inherit">
+              <Link href={`/create-book`} color="inherit" target="_blank">
                 Create a book
               </Link>
             </MenuItem>
             <MenuItem onClick={handleClose}>
-              <Link href={`/create-author`} color="inherit">
+              <Link href={`/create-author`} color="inherit" target="_blank">
                 Create an author
               </Link>
             </MenuItem>
+			<MenuItem onClick={handleClose}>
+              <Link href={`/users`} color="inherit" target="_blank">
+                Edit an user
+              </Link>
+            </MenuItem>
           </Menu>
+
 
           <Typography
             variant="h6"

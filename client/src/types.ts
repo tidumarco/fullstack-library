@@ -78,9 +78,10 @@ export type DecodedUser = {
 
 export type User = {
   _id?: string;
-  userName: string;
-  email: string;
   isAdmin: boolean;
+  email: string;
+  firstName: string;
+  lastName: string;
 };
 
 export interface AuthState {
@@ -90,3 +91,4 @@ export interface AuthState {
 }
 
 export type NewBook = Partial<Book>;
+export type NewUser = Partial<User>;

@@ -1,9 +1,10 @@
 import mongoose, { Document } from 'mongoose'
 
 export type UserDocument = Document & {
-  _id?: mongoose.Schema.Types.ObjectId
   isAdmin: boolean
   email: string
+  firstName: string
+  lastName: string
 }
 
 const userSchema = new mongoose.Schema(
@@ -14,6 +15,12 @@ const userSchema = new mongoose.Schema(
     email: {
       type: String,
       index: true,
+    },
+    firstName: {
+      type: String,
+    },
+    lastName: {
+      type: String,
     },
   },
   {
