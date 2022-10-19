@@ -33,10 +33,9 @@ export default function BooksTable() {
   const userId = authUser.userId;
 
   const { books, authors } = useSelector((state: RootState) => state);
-  
-  const book = books.allBooks.find((book) => book.borrowerId === userId);
-  const [state, setState] = useState(book);
-  console.log("State pre assign:", state);
+
+  const [singleBookState, setSingleBookState] = useState<Book | undefined>();
+
   const dispatch = useDispatch<AppDispatch>();
 
   const [searchData, setSearchData] = useState({
@@ -89,17 +88,18 @@ export default function BooksTable() {
     dispatch(fetchBooksThunk());
   }, [dispatch, authors]);
 
-  const handleBorrowerChange = (e: any) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    console.log("Borrower user's ID:", value);
-    if (state) {
-      setState({
-        ...state,
-        [name]: value,
-      });
+  const handleBorrowerChange = (bookId: string) => {
+    const singleBook = books.allBooks.find((book) => book._id === bookId);
+
+    console.log("State before thunk:", singleBookState);
+    if (singleBook) {
+      singleBook.borrowerId = [...singleBook.borrowerId, userId];
+      setSingleBookState(singleBook);
+      if (singleBookState) {
+        dispatch(updateBookThunk(singleBookState));
+      }
     }
-    console.log("State post assign:", state);
+    console.log("State after thunk:", singleBookState);
   };
 
   return (
@@ -181,33 +181,31 @@ export default function BooksTable() {
                 <TableCell align="center">
                   {book.authors.map((auth: any) => {
                     return (
-                      <>
-                        <div key={auth._id}>
-                          {auth.firstName} {auth.lastName}
-                          <br />
-                          <PrivateRoute>
-                            <Link
-                              key={auth.lastName}
-                              href={`/update-author/${auth._id}`}
-                              target="_blank"
-                              underline="none"
-                            >
-                              EDIT
-                            </Link>
-                          </PrivateRoute>
-                          <br />
-                          <PrivateRoute>
-                            <button
-                              color="error"
-                              onClick={() => {
-                                handleAuthorDelete(auth._id!);
-                              }}
-                            >
-                              Delete
-                            </button>
-                          </PrivateRoute>
-                        </div>
-                      </>
+                      <div key={auth._id}>
+                        {auth.firstName} {auth.lastName}
+                        <br />
+                        <PrivateRoute>
+                          <Link
+                            key={auth.lastName}
+                            href={`/update-author/${auth._id}`}
+                            target="_blank"
+                            underline="none"
+                          >
+                            EDIT
+                          </Link>
+                        </PrivateRoute>
+                        <br />
+                        <PrivateRoute>
+                          <button
+                            color="error"
+                            onClick={() => {
+                              handleAuthorDelete(auth._id!);
+                            }}
+                          >
+                            Delete
+                          </button>
+                        </PrivateRoute>
+                      </div>
                     );
                   })}
                 </TableCell>
@@ -238,7 +236,7 @@ export default function BooksTable() {
                       variant="outlined"
                       color="error"
                       onClick={() => {
-                        handleBookDelete(book._id!);
+                        handleBookDelete(book._id);
                       }}
                     >
                       Delete
@@ -250,14 +248,13 @@ export default function BooksTable() {
                     variant="outlined"
                     color="inherit"
                     name="borrowerId"
-                    value={book._id}
-                    onClick={handleBorrowerChange}
+                    onClick={() => handleBorrowerChange(book._id)}
                   >
                     Borrow
                   </Button>
                 </TableCell>
                 <PrivateRoute>
-                  <TableCell>{book.borrowerId}</TableCell>
+                  <TableCell>{singleBookState?.borrowerId}</TableCell>
                 </PrivateRoute>
               </TableRow>
             ))}

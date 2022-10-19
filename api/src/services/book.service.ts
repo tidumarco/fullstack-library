@@ -48,10 +48,8 @@ const findByAuthors = async (authors: Authors): Promise<BookDocument> => {
 }
 
 const findAll = async (): Promise<BookDocument[]> => {
-  return Book.find()
-    .sort({ title: 1, publishedDate: -1 })
-    .populate('authors')
-    .populate('borrowerId')
+  return Book.find().sort({ title: 1, publishedDate: -1 }).populate('authors')
+  // .populate('borrowerId')
 }
 
 const findByFilter = async (queries: any[]): Promise<BookDocument[]> => {

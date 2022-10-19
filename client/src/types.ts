@@ -1,11 +1,11 @@
 export type Book = {
-  _id?: string;
+  _id: string;
   ISBN: string;
   title: string;
   description: string;
   publisher: string;
   publishedDate: Date;
-  borrowerId: string;
+  borrowerId: string[];
   borrowDate: Date;
   authors: (string | Author)[];
   returnDate: Date;

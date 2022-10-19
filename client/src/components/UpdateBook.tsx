@@ -69,12 +69,11 @@ export default function UpdateBook() {
           <TextField
             type="text"
             name="title"
+			value={book.title}
             defaultValue={state?.title}
             placeholder="title here"
             onChange={handleChange}
           />
-          <InputLabel>Borrower</InputLabel>
-          <Box>{book.borrowerId}</Box>
           <Button variant="contained" type="submit">
             Submit
           </Button>
