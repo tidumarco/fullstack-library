@@ -1,16 +1,11 @@
-import { Button, Typography } from "@mui/material";
-
+import { Button, Grid, InputLabel, TextField, Typography } from "@mui/material";
+import { Helmet } from "react-helmet";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { fetchBooksThunk, updateBookThunk } from "redux/services/book.service";
-import {
-  fetchUsersThunk,
-  fetchUserThunk,
-  updateUserThunk,
-} from "redux/services/user.service";
+
+import { fetchUsersThunk, updateUserThunk } from "redux/services/user.service";
 import { AppDispatch, RootState } from "redux/store";
-import { Book, UpdatedBook } from "types";
 
 export default function UpdateBook() {
   const { userId } = useParams<{ userId: string }>();
@@ -52,33 +47,49 @@ export default function UpdateBook() {
   if (!user) return <h1>Loading user...</h1>;
   return (
     <>
-      <Typography variant="h5">
+      <Helmet>
+        <title>Update user page</title>
+      </Helmet>
+      <Typography variant="h4">
         Update an user: {user.firstName} {user.lastName}
       </Typography>
 
       <form onSubmit={handleSubmit}>
-        <label>First Name</label>
-        <br />
-        <input
-          type="text"
-          name="firstName"
-          defaultValue={state?.firstName}
-          placeholder="first name"
-          onChange={handleChange}
-        />
-        <br />
-        <label>Last Name</label>
-		<br />
-        <input
-          type="text"
-          name="lastName"
-          defaultValue={state?.lastName}
-          placeholder="last name"
-          onChange={handleChange}
-        />
-        <Button variant="contained" type="submit">
-          Submit
-        </Button>
+        <Grid
+          sx={{
+            border: "2px solid black",
+            width: 1 / 2,
+            margin: 2,
+            padding: 2,
+          }}
+          container
+          direction="column"
+        >
+          <InputLabel>First Name</InputLabel>
+
+          <TextField
+            type="text"
+            name="firstName"
+            defaultValue={state?.firstName}
+            value={state?.firstName}
+            placeholder="first name"
+            onChange={handleChange}
+          />
+
+          <InputLabel>Last Name</InputLabel>
+
+          <TextField
+            type="text"
+            name="lastName"
+            defaultValue={state?.lastName}
+            value={state?.lastName}
+            onChange={handleChange}
+          />
+
+          <Button variant="contained" type="submit">
+            Submit
+          </Button>
+        </Grid>
       </form>
     </>
   );

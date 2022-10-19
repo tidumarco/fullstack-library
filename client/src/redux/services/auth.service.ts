@@ -5,7 +5,6 @@ import axios from "axios";
 export const fetchTokenThunk = createAsyncThunk(
   "auth/fetch",
   async (response: CredentialResponse) => {
-    console.log("Auth credential:", response.credential);
     try {
       const res = await axios.post(
         "http://localhost:4000/api/v1/login",
@@ -16,7 +15,7 @@ export const fetchTokenThunk = createAsyncThunk(
           },
         }
       );
-	  const token = res.data.token;
+      const token = res.data.token;
       localStorage.setItem("token", token);
       return {
         data: res.data.token,

@@ -1,6 +1,7 @@
 import mongoose, { Document } from 'mongoose'
 
 export type UserDocument = Document & {
+  //   _id?: string
   isAdmin: boolean
   email: string
   firstName: string
@@ -9,6 +10,10 @@ export type UserDocument = Document & {
 
 const userSchema = new mongoose.Schema(
   {
+    // _id: {
+    //   type: [mongoose.Schema.Types.ObjectId],
+    //   ref: 'User',
+    // },
     isAdmin: {
       type: Boolean,
     },

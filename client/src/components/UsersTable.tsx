@@ -9,6 +9,7 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
+import { Helmet } from "react-helmet";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUsersThunk } from "redux/services/user.service";
@@ -27,20 +28,20 @@ export default function UsersTable() {
 
   return (
     <>
+      <Helmet>
+        <title>Users Table</title>
+      </Helmet>
       <Typography variant="h2">Users</Typography>
-      <TableContainer
-        component={Paper}
-        sx={{
-          borderBottom: "2px solid black",
-          margin: "40px",
-          "& th": {
-            fontSize: "1.25rem",
-            color: "rgba(96, 96, 96)",
-          },
-          width: "95%",
-        }}
-      >
-        <Table sx={{ margin: "0, auto" }} aria-label="simple table">
+      <TableContainer>
+        <Table
+          sx={{
+            border: "2px solid black",
+            width: 1 / 2,
+            margin: 2,
+            padding: 2,
+          }}
+          aria-label="simple table"
+        >
           <TableHead>
             <TableRow
               sx={{
@@ -61,7 +62,12 @@ export default function UsersTable() {
                 <TableCell>{user.firstName}</TableCell>
                 <TableCell>{user.lastName}</TableCell>
                 <TableCell>
-                  <Link key={user._id} href={`/update-user/${user._id}`} target="_blank">
+                  <Link
+                    key={user._id}
+                    href={`/update-user/${user._id}`}
+                    target="_blank"
+                    underline="none"
+                  >
                     EDIT
                   </Link>
                 </TableCell>

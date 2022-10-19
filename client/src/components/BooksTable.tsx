@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "redux/store";
-
-import { Book } from "types";
-
+import { Helmet } from "react-helmet";
+import { Book, DecodedUser } from "types";
+import jwt_decode from "jwt-decode";
 import {
   Table,
   TableBody,
@@ -14,17 +14,31 @@ import {
   Typography,
   Button,
   Link,
+  InputLabel,
+  TextField,
 } from "@mui/material";
 import SearchBar from "./SearchBar";
-import { useEffect, useState } from "react";
-import { deleteBookThunk, fetchBooksThunk } from "redux/services/book.service";
+import React, { useEffect, useState } from "react";
+import {
+  deleteBookThunk,
+  fetchBooksThunk,
+  updateBookThunk,
+} from "redux/services/book.service";
 import { deleteAuthorThunk } from "redux/services/author.service";
 import PrivateRoute from "./PrivateRoute";
 
 export default function BooksTable() {
+  const token = localStorage.getItem("token") || "";
+  const authUser = jwt_decode(token) as DecodedUser;
+  const userId = authUser.userId;
+
+  const { books, authors } = useSelector((state: RootState) => state);
+  
+  const book = books.allBooks.find((book) => book.borrowerId === userId);
+  const [state, setState] = useState(book);
+  console.log("State pre assign:", state);
   const dispatch = useDispatch<AppDispatch>();
-  const { books, authors, users } = useSelector((state: RootState) => state);
-  console.log(users);
+
   const [searchData, setSearchData] = useState({
     ISBN: "",
     title: "",
@@ -64,10 +78,6 @@ export default function BooksTable() {
     dispatch(fetchBooksThunk({ filter }));
   };
 
-  const handleBookBorrow = (bookId: any) => {
-    // dispatch(updateBookThunk(bookId));
-    console.log("Borrow");
-  };
   const handleBookDelete = (bookId: string) => {
     dispatch(deleteBookThunk(bookId));
   };
@@ -79,8 +89,24 @@ export default function BooksTable() {
     dispatch(fetchBooksThunk());
   }, [dispatch, authors]);
 
+  const handleBorrowerChange = (e: any) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    console.log("Borrower user's ID:", value);
+    if (state) {
+      setState({
+        ...state,
+        [name]: value,
+      });
+    }
+    console.log("State post assign:", state);
+  };
+
   return (
     <>
+      <Helmet>
+        <title>Library Homepage</title>
+      </Helmet>
       <Typography>{books.isLoading && "Loading books"}</Typography>
 
       <SearchBar
@@ -103,10 +129,7 @@ export default function BooksTable() {
           width: "95%",
         }}
       >
-        <Table
-          sx={{  margin: "0, auto" }}
-          aria-label="simple table"
-        >
+        <Table sx={{ margin: "0, auto" }} aria-label="simple table">
           <TableHead>
             <TableRow
               sx={{
@@ -125,6 +148,16 @@ export default function BooksTable() {
               <TableCell>Publisher</TableCell>
               <TableCell>Published Date</TableCell>
               <TableCell>Category</TableCell>
+              <PrivateRoute>
+                <TableCell>Edit</TableCell>
+              </PrivateRoute>
+              <PrivateRoute>
+                <TableCell>Delete</TableCell>
+              </PrivateRoute>
+              <TableCell>Borrow</TableCell>
+              <PrivateRoute>
+                <TableCell>Borrower ID</TableCell>
+              </PrivateRoute>
               {/* <TableCell>Created on</TableCell>
               <TableCell>Updated on</TableCell> */}
               {/* <TableCell>Borrowed on</TableCell>
@@ -151,15 +184,18 @@ export default function BooksTable() {
                       <>
                         <div key={auth._id}>
                           {auth.firstName} {auth.lastName}
+                          <br />
                           <PrivateRoute>
                             <Link
                               key={auth.lastName}
                               href={`/update-author/${auth._id}`}
-							  target="_blank"
+                              target="_blank"
+                              underline="none"
                             >
                               EDIT
                             </Link>
                           </PrivateRoute>
+                          <br />
                           <PrivateRoute>
                             <button
                               color="error"
@@ -187,7 +223,13 @@ export default function BooksTable() {
                 <TableCell>{book.returnDate.toString()}</TableCell> */}
                 <PrivateRoute>
                   <TableCell>
-                    <Link href={`/update-book/${book._id}`}>EDIT</Link>
+                    <Link
+                      href={`/update-book/${book._id}`}
+                      underline="none"
+                      target="_blank"
+                    >
+                      EDIT
+                    </Link>
                   </TableCell>
                 </PrivateRoute>
                 <PrivateRoute>
@@ -207,13 +249,16 @@ export default function BooksTable() {
                   <Button
                     variant="outlined"
                     color="inherit"
-                    onClick={() => {
-                      handleBookBorrow(book._id!);
-                    }}
+                    name="borrowerId"
+                    value={book._id}
+                    onClick={handleBorrowerChange}
                   >
                     Borrow
                   </Button>
                 </TableCell>
+                <PrivateRoute>
+                  <TableCell>{book.borrowerId}</TableCell>
+                </PrivateRoute>
               </TableRow>
             ))}
           </TableBody>
