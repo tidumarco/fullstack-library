@@ -87,17 +87,18 @@ export default function BooksTable() {
   }, [dispatch, authors]);
 
   const handleBorrowerChange = (bookId: string) => {
-    const singleBook = books.allBooks.find((book) => book._id === bookId);
+    // const singleBook = books.allBooks.find((book) => book._id === bookId);
 
-    // console.log("State before thunk:", singleBookState);
-    if (singleBook) {
-      singleBook.borrowerId = [...singleBook.borrowerId, userId];
-      setSingleBookState(singleBook);
-      if (singleBookState) {
-        dispatch(updateBookThunk(singleBookState));
-      }
-    }
-    // console.log("State after thunk:", singleBookState);
+    // // console.log("State before thunk:", singleBookState);
+    // if (singleBook) {
+    //   singleBook.borrowerId = [...singleBook.borrowerId, userId];
+    //   setSingleBookState(singleBook);
+    //   if (singleBookState) {
+    //     dispatch(updateBookThunk(singleBookState));
+    //   }
+    // }
+    // // console.log("State after thunk:", singleBookState);
+	alert("Coming soon!")
   };
 
   return (
