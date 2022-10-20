@@ -13,9 +13,7 @@ import {
   Paper,
   Typography,
   Button,
-  Link,
-  InputLabel,
-  TextField,
+  Link
 } from "@mui/material";
 import SearchBar from "./SearchBar";
 import React, { useEffect, useState } from "react";
@@ -91,7 +89,7 @@ export default function BooksTable() {
   const handleBorrowerChange = (bookId: string) => {
     const singleBook = books.allBooks.find((book) => book._id === bookId);
 
-    console.log("State before thunk:", singleBookState);
+    // console.log("State before thunk:", singleBookState);
     if (singleBook) {
       singleBook.borrowerId = [...singleBook.borrowerId, userId];
       setSingleBookState(singleBook);
@@ -99,7 +97,7 @@ export default function BooksTable() {
         dispatch(updateBookThunk(singleBookState));
       }
     }
-    console.log("State after thunk:", singleBookState);
+    // console.log("State after thunk:", singleBookState);
   };
 
   return (
@@ -155,9 +153,9 @@ export default function BooksTable() {
                 <TableCell>Delete</TableCell>
               </PrivateRoute>
               <TableCell>Borrow</TableCell>
-              <PrivateRoute>
+              {/* <PrivateRoute>
                 <TableCell>Borrower ID</TableCell>
-              </PrivateRoute>
+              </PrivateRoute> */}
               {/* <TableCell>Created on</TableCell>
               <TableCell>Updated on</TableCell> */}
               {/* <TableCell>Borrowed on</TableCell>

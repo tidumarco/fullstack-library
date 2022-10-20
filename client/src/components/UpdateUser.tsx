@@ -1,4 +1,10 @@
-import { Button, Grid, InputLabel, TextField, Typography } from "@mui/material";
+import {
+  Button,
+  Grid,
+  InputLabel,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { Helmet } from "react-helmet";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -41,6 +47,7 @@ export default function UpdateBook() {
       dispatch(updateUserThunk(state));
       console.log(state);
       alert("User updated!");
+      window.close();
     }
   };
 
@@ -66,7 +73,6 @@ export default function UpdateBook() {
           direction="column"
         >
           <InputLabel>First Name</InputLabel>
-
           <TextField
             type="text"
             name="firstName"
@@ -77,12 +83,19 @@ export default function UpdateBook() {
           />
 
           <InputLabel>Last Name</InputLabel>
-
           <TextField
             type="text"
             name="lastName"
             defaultValue={state?.lastName}
             value={state?.lastName}
+            onChange={handleChange}
+          />
+          <InputLabel>Email</InputLabel>
+          <TextField
+            type="text"
+            name="email"
+            defaultValue={state?.email}
+            value={state?.email}
             onChange={handleChange}
           />
 

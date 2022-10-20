@@ -1,6 +1,5 @@
 import {
   Link,
-  Paper,
   Table,
   TableBody,
   TableCell,

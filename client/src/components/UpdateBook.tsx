@@ -1,11 +1,4 @@
-import {
-  Box,
-  Button,
-  Grid,
-  InputLabel,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Button, Grid, InputLabel, TextField, Typography } from "@mui/material";
 
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -47,6 +40,7 @@ export default function UpdateBook() {
       dispatch(updateBookThunk(state));
       console.log(state);
       alert("Book updated!");
+      window.close();
     }
   };
 
@@ -65,13 +59,58 @@ export default function UpdateBook() {
           container
           direction="column"
         >
+          <InputLabel>ISBN</InputLabel>
+          <TextField
+            type="text"
+            name="ISBN"
+            value={state?.ISBN}
+            defaultValue={state?.ISBN}
+            placeholder="ISBN here"
+            onChange={handleChange}
+          />
           <InputLabel>Title</InputLabel>
           <TextField
             type="text"
             name="title"
-			value={book.title}
+            value={state?.title}
             defaultValue={state?.title}
             placeholder="title here"
+            onChange={handleChange}
+          />
+          <InputLabel>Description</InputLabel>
+          <TextField
+            type="text"
+            name="description"
+            value={state?.description}
+            defaultValue={state?.description}
+            placeholder="description here"
+            onChange={handleChange}
+          />
+          <InputLabel>Publisher</InputLabel>
+          <TextField
+            type="text"
+            name="publisher"
+            value={state?.publisher}
+            defaultValue={state?.publisher}
+            placeholder="publisher here"
+            onChange={handleChange}
+          />
+          <InputLabel>Published Date</InputLabel>
+          <TextField
+            type="date"
+            name="publishedDate"
+            value={state?.publishedDate}
+            defaultValue={state?.publishedDate}
+            placeholder="published date here"
+            onChange={handleChange}
+          />
+          <InputLabel>Category</InputLabel>
+          <TextField
+            type="text"
+            name="category"
+            value={state?.category}
+            defaultValue={state?.category}
+            placeholder="category here"
             onChange={handleChange}
           />
           <Button variant="contained" type="submit">

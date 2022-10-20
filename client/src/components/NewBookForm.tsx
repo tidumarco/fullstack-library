@@ -19,7 +19,7 @@ const schema = z.object({
   ISBN: z.string(),
   title: z.string(),
   description: z.string(),
-  available: z.string().transform((val) => Boolean(val)),
+  available: z.string().refine((val) => Boolean(val)),
   publisher: z.string(),
   publishedDate: z.string(),
   borrowerId: z.string().optional(),
@@ -29,6 +29,7 @@ const schema = z.object({
   returnDate: z.date().optional(),
   adminId: z.string().optional(),
 });
+console.log(schema);
 
 const NewBookForm = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -50,6 +51,7 @@ const NewBookForm = () => {
     dispatch(createBookThunk(data));
     console.log(data);
     alert("Book created!");
+    window.close();
   });
   const errorsValues = Object.entries(errors);
 
@@ -77,7 +79,7 @@ const NewBookForm = () => {
         <div></div>
       )}
       <Grid
-        sx={{ border: "2px solid black", width: 1/2, margin: 2, padding:2 }}
+        sx={{ border: "2px solid black", width: 1 / 2, margin: 2, padding: 2 }}
         container
         direction="column"
       >

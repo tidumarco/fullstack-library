@@ -150,7 +150,7 @@ export const filterBooks = async (
 ) => {
   try {
     const queries = []
-    const allowedQueries = ['title', 'ISBN', 'category']
+    const allowedQueries = ['title', 'ISBN', 'category', 'authors']
 
     for (const key in req.query) {
       const value = req.query[key]

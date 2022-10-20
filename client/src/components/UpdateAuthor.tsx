@@ -25,7 +25,6 @@ export default function UpdateBook() {
     } else {
       setState(author);
     }
-    // console.log("rendering");
   }, [author]);
 
   const handleChange = (e: any) => {
@@ -46,6 +45,7 @@ export default function UpdateBook() {
       dispatch(updateAuthorThunk(state));
       console.log(state);
       alert("Author updated!");
+      window.close();
     }
   };
 
@@ -72,7 +72,7 @@ export default function UpdateBook() {
             type="text"
             name="firstName"
             defaultValue={state?.firstName}
-			value={state?.firstName}
+            value={state?.firstName}
             placeholder="first name here"
             onChange={handleChange}
           />
@@ -82,7 +82,7 @@ export default function UpdateBook() {
             type="text"
             name="lastName"
             defaultValue={state?.lastName}
-			value={state?.lastName}
+            value={state?.lastName}
             placeholder="last name here"
             onChange={handleChange}
           />

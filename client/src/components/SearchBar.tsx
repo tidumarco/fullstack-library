@@ -14,13 +14,15 @@ import {
   TextField,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import { SearchBarProps } from "types";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "redux/store";
+import { DecodedUser, SearchBarProps } from "types";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "redux/store";
 import { fetchBooksThunk } from "redux/services/book.service";
 import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
 import { fetchTokenThunk } from "redux/services/auth.service";
 import PrivateRoute from "./PrivateRoute";
+import jwt_decode from "jwt-decode";
+import { fetchUsersThunk } from "redux/services/user.service";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -43,6 +45,11 @@ export default function SearchAppBar({
   authors,
   category,
 }: SearchBarProps) {
+  const token = localStorage.getItem("token") || "";
+  const authUser = jwt_decode(token) as DecodedUser;
+  const userId = authUser.userId;
+  const users = useSelector((state: RootState) => state.users.allUsers);
+  const activeUser = users.find((user) => user._id === userId);
   const dispatch = useDispatch<AppDispatch>();
   const [formData, setFormData] = useState({
     ISBN: "",
@@ -57,9 +64,15 @@ export default function SearchAppBar({
     available: true,
   });
 
+  useEffect(() => {
+    if (!activeUser) {
+      dispatch(fetchUsersThunk());
+    }
+  }, [activeUser, dispatch]);
+
   const handleBookSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const { ISBN, title, category } = formData;
+    const { ISBN, title, category, authors } = formData;
     let filter = "";
     if (ISBN) {
       filter += `ISBN=${ISBN}&`;
@@ -69,6 +82,10 @@ export default function SearchAppBar({
     }
     if (category) {
       filter += `category=${category}&`;
+    }
+
+    if (authors) {
+      filter += `authors=${authors}&`;
     }
 
     if (filter) {
@@ -126,22 +143,21 @@ export default function SearchAppBar({
             }}
           >
             <MenuItem onClick={handleClose}>
-              <Link href={`/create-book`} color="inherit" target="_blank">
+              <Link href={`/create-author`} color="inherit" target="_blank" underline="none">
+                Create an author
+              </Link>
+            </MenuItem>
+            <MenuItem onClick={handleClose}>
+              <Link href={`/create-book`} color="inherit" target="_blank" underline="none">
                 Create a book
               </Link>
             </MenuItem>
             <MenuItem onClick={handleClose}>
-              <Link href={`/create-author`} color="inherit" target="_blank">
-                Create an author
-              </Link>
-            </MenuItem>
-			<MenuItem onClick={handleClose}>
-              <Link href={`/users`} color="inherit" target="_blank">
+              <Link href={`/users`} color="inherit" target="_blank" underline="none">
                 Edit an user
               </Link>
             </MenuItem>
           </Menu>
-
 
           <Typography
             variant="h6"
@@ -151,7 +167,9 @@ export default function SearchAppBar({
           >
             TIDU LIBRARY
             <br />
+            Hello, {activeUser?.firstName}!
           </Typography>
+
           <GoogleLogin
             onSuccess={handleGoogleOnSuccess}
             onError={() => {
@@ -176,14 +194,14 @@ export default function SearchAppBar({
                 onChange={handleBookChange}
               />
             </Search>
-            <Search sx={{ flexGrow: 1 }}>
+            {/* <Search sx={{ flexGrow: 1 }}>
               <TextField
                 placeholder="Search author"
                 type="text"
-                name="author"
+                name="authors"
                 onChange={handleBookChange}
               />
-            </Search>
+            </Search> */}
             <Search sx={{ flexGrow: 1 }}>
               <TextField
                 placeholder="Search category"

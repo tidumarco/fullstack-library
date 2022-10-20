@@ -5,8 +5,6 @@ import { NewBook } from "types";
 
 const origin = "http://localhost:4000";
 
-
-
 //GET ALL BOOKS
 export const fetchBooksThunk = createAsyncThunk(
   "books/fetch",
@@ -46,7 +44,7 @@ export const fetchBookThunk = createAsyncThunk("book/fetch", async (bookId) => {
 export const createBookThunk = createAsyncThunk(
   "book/create",
   async (book: NewBook) => {
-    console.log("redux", book);
+    console.log("redux create", book);
 
     const response = await axios.post(`${origin}/api/v1/books`, book);
 
@@ -61,8 +59,11 @@ export const createBookThunk = createAsyncThunk(
 export const updateBookThunk = createAsyncThunk(
   "book/update",
   async (book: NewBook) => {
-    const response = await axios.put(`${origin}/api/v1/books/id/${book._id}`, book);
-	console.log(response)
+    const response = await axios.put(
+      `${origin}/api/v1/books/id/${book._id}`,
+      book
+    );
+    console.log(response);
 
     return {
       data: response.data,
@@ -74,7 +75,7 @@ export const updateBookThunk = createAsyncThunk(
 //DELETE ONE BOOK
 export const deleteBookThunk = createAsyncThunk(
   "book/delete",
-  async (bookId:string) => {
+  async (bookId: string) => {
     const response = await axios.delete(`${origin}/api/v1/books/id/${bookId}`);
 
     return {

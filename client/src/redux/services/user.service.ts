@@ -1,6 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { Params } from "react-router-dom";
 
 import { NewUser, User } from "types";
 

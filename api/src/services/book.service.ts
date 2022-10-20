@@ -55,7 +55,8 @@ const findAll = async (): Promise<BookDocument[]> => {
 const findByFilter = async (queries: any[]): Promise<BookDocument[]> => {
   return Book.find({
     $or: queries,
-  }).populate('authors')
+  })
+  //   .populate('authors')
 }
 
 const update = async (

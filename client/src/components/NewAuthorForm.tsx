@@ -29,6 +29,7 @@ const NewAuthorForm = () => {
     dispatch(createAuthorThunk(data));
     console.log(data);
     alert("Author Created!");
+	window.close()
   });
   const errorsValues = Object.entries(errors);
   return (
