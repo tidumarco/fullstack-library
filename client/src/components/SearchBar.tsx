@@ -64,11 +64,14 @@ export default function SearchAppBar({
     available: true,
   });
 
+  const handleGoogleOnSuccess = async (response: CredentialResponse) => {
+    dispatch(fetchTokenThunk(response));
+  };
   useEffect(() => {
     if (!activeUser) {
       dispatch(fetchUsersThunk());
     }
-  }, [activeUser, dispatch]);
+  }, [activeUser, dispatch, handleGoogleOnSuccess]);
 
   const handleBookSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -105,10 +108,6 @@ export default function SearchAppBar({
     });
   };
 
-  const handleGoogleOnSuccess = async (response: CredentialResponse) => {
-    dispatch(fetchTokenThunk(response));
-  };
-
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -143,17 +142,32 @@ export default function SearchAppBar({
             }}
           >
             <MenuItem onClick={handleClose}>
-              <Link href={`/create-author`} color="inherit" target="_blank" underline="none">
+              <Link
+                href={`/create-author`}
+                color="inherit"
+                target="_blank"
+                underline="none"
+              >
                 Create an author
               </Link>
             </MenuItem>
             <MenuItem onClick={handleClose}>
-              <Link href={`/create-book`} color="inherit" target="_blank" underline="none">
+              <Link
+                href={`/create-book`}
+                color="inherit"
+                target="_blank"
+                underline="none"
+              >
                 Create a book
               </Link>
             </MenuItem>
             <MenuItem onClick={handleClose}>
-              <Link href={`/users`} color="inherit" target="_blank" underline="none">
+              <Link
+                href={`/users`}
+                color="inherit"
+                target="_blank"
+                underline="none"
+              >
                 Edit an user
               </Link>
             </MenuItem>

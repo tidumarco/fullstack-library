@@ -11,7 +11,7 @@ export const fetchBooksThunk = createAsyncThunk(
   async ({ filter }: { filter?: string } = { filter: "" }) => {
     let URL: string;
     let token = localStorage.getItem("token") || "";
-
+	console.log(token)
     if (filter) {
       URL = `${origin}/api/v1/books/filter?${filter}`;
     } else {
