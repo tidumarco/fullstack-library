@@ -13,7 +13,7 @@ import {
   Paper,
   Typography,
   Button,
-  Link
+  Link,
 } from "@mui/material";
 import SearchBar from "./SearchBar";
 import React, { useEffect, useState } from "react";
@@ -24,6 +24,7 @@ import {
 } from "redux/services/book.service";
 import { deleteAuthorThunk } from "redux/services/author.service";
 import PrivateRoute from "./PrivateRoute";
+import { fetchTokenThunk } from "redux/services/auth.service";
 
 export default function BooksTable() {
   const token = localStorage.getItem("token") || "";
@@ -98,7 +99,7 @@ export default function BooksTable() {
     //   }
     // }
     // // console.log("State after thunk:", singleBookState);
-	alert("Coming soon!")
+    alert("Coming soon!");
   };
 
   return (

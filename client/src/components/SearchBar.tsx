@@ -64,14 +64,14 @@ export default function SearchAppBar({
     available: true,
   });
 
-  const handleGoogleOnSuccess = async (response: CredentialResponse) => {
-    dispatch(fetchTokenThunk(response));
-  };
+  //   const handleGoogleOnSuccess = async (response: CredentialResponse) => {
+  //     dispatch(fetchTokenThunk(response));
+  //   };
   useEffect(() => {
     if (!activeUser) {
       dispatch(fetchUsersThunk());
     }
-  }, [activeUser, dispatch, handleGoogleOnSuccess]);
+  }, [activeUser, dispatch]);
 
   const handleBookSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -183,13 +183,6 @@ export default function SearchAppBar({
             <br />
             Hello, {activeUser?.firstName}!
           </Typography>
-
-          <GoogleLogin
-            onSuccess={handleGoogleOnSuccess}
-            onError={() => {
-              console.log("Login Failed");
-            }}
-          />
 
           <form style={{ display: "flex" }} onSubmit={handleBookSubmit}>
             <Search>

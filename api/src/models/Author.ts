@@ -1,4 +1,4 @@
-import mongoose, { Document, Schema } from 'mongoose'
+import mongoose, { Document } from 'mongoose'
 
 export type AuthorDocument = Document & {
   firstName: string

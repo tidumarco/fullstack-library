@@ -1,6 +1,6 @@
 import { Typography } from "@mui/material";
 import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
