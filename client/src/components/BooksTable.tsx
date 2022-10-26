@@ -26,8 +26,10 @@ import { deleteAuthorThunk } from "redux/services/author.service";
 import PrivateRoute from "./PrivateRoute";
 import { fetchTokenThunk } from "redux/services/auth.service";
 
+
 export default function BooksTable() {
   const token = localStorage.getItem("token") || "";
+
   const authUser = jwt_decode(token) as DecodedUser;
   const userId = authUser.userId;
 
@@ -102,165 +104,173 @@ export default function BooksTable() {
     alert("Coming soon!");
   };
 
-  return (
-    <>
-      <Helmet>
-        <title>Library Homepage</title>
-      </Helmet>
-      <Typography>{books.isLoading && "Loading books"}</Typography>
+  if (token == null) {
+    return (
+      <div>
+        <h1>Not Allowed</h1>
+      </div>
+    );
+  } else {
+    return (
+      <>
+        <Helmet>
+          <title>Library Homepage</title>
+        </Helmet>
+        <Typography>{books.isLoading && "Loading books"}</Typography>
 
-      <SearchBar
-        handleSubmit={handleSubmit}
-        handleChange={handleChange}
-        title={searchData.title}
-        ISBN={searchData.ISBN}
-        authors={searchData.authors}
-        category={searchData.category}
-      />
-      <TableContainer
-        component={Paper}
-        sx={{
-          borderBottom: "2px solid black",
-          margin: "40px",
-          "& th": {
-            fontSize: "1.25rem",
-            color: "rgba(96, 96, 96)",
-          },
-          width: "95%",
-        }}
-      >
-        <Table sx={{ margin: "0, auto" }} aria-label="simple table">
-          <TableHead>
-            <TableRow
-              sx={{
-                borderBottom: "2px solid black",
-                "& th": {
-                  fontSize: "1.25rem",
-                  color: "rgba(96, 96, 96)",
-                },
-              }}
-            >
-              <TableCell>ISBN</TableCell>
-              <TableCell>Title</TableCell>
-              <TableCell>Description</TableCell>
-              <TableCell>Available</TableCell>
-              <TableCell>Authors</TableCell>
-              <TableCell>Publisher</TableCell>
-              <TableCell>Published Date</TableCell>
-              <TableCell>Category</TableCell>
-              <PrivateRoute>
-                <TableCell>Edit</TableCell>
-              </PrivateRoute>
-              <PrivateRoute>
-                <TableCell>Delete</TableCell>
-              </PrivateRoute>
-              <TableCell>Borrow</TableCell>
-              {/* <PrivateRoute>
-                <TableCell>Borrower ID</TableCell>
-              </PrivateRoute> */}
-              {/* <TableCell>Created on</TableCell>
-              <TableCell>Updated on</TableCell> */}
-              {/* <TableCell>Borrowed on</TableCell>
-              <TableCell>Returned on</TableCell> */}
-            </TableRow>
-          </TableHead>
-
-          <TableBody>
-            {books.allBooks.map((book: Book) => (
-              <TableRow key={book.ISBN}>
-                <TableCell>{book.ISBN}</TableCell>
-                <TableCell>{book.title}</TableCell>
-                <TableCell>{book.description}</TableCell>
-                <TableCell align="right">
-                  {book.available ? (
-                    <div>Available</div>
-                  ) : (
-                    <div>Not Available</div>
-                  )}
-                </TableCell>
-                <TableCell align="center">
-                  {book.authors.map((auth: any) => {
-                    return (
-                      <div key={auth._id}>
-                        {auth.firstName} {auth.lastName}
-                        <br />
-                        <PrivateRoute>
-                          <Link
-                            key={auth.lastName}
-                            href={`/update-author/${auth._id}`}
-                            target="_blank"
-                            underline="none"
-                          >
-                            EDIT
-                          </Link>
-                        </PrivateRoute>
-                        <br />
-                        <PrivateRoute>
-                          <button
-                            color="error"
-                            onClick={() => {
-                              handleAuthorDelete(auth._id!);
-                            }}
-                          >
-                            Delete
-                          </button>
-                        </PrivateRoute>
-                      </div>
-                    );
-                  })}
-                </TableCell>
-                <TableCell align="right">{book.publisher}</TableCell>
-                <TableCell align="right">
-                  {book.publishedDate.toString()}
-                </TableCell>
-
-                <TableCell>{book.category}</TableCell>
-                {/* <TableCell>{book.createdAt.toString()}</TableCell>
-                <TableCell>{book.updatedAt.toString()}</TableCell> */}
-                {/* <TableCell>{book.borrowDate.toString()}</TableCell>
-                <TableCell>{book.returnDate.toString()}</TableCell> */}
+        <SearchBar
+          handleSubmit={handleSubmit}
+          handleChange={handleChange}
+          title={searchData.title}
+          ISBN={searchData.ISBN}
+          authors={searchData.authors}
+          category={searchData.category}
+        />
+        <TableContainer
+          component={Paper}
+          sx={{
+            borderBottom: "2px solid black",
+            margin: "40px",
+            "& th": {
+              fontSize: "1.25rem",
+              color: "rgba(96, 96, 96)",
+            },
+            width: "95%",
+          }}
+        >
+          <Table sx={{ margin: "0, auto" }} aria-label="simple table">
+            <TableHead>
+              <TableRow
+                sx={{
+                  borderBottom: "2px solid black",
+                  "& th": {
+                    fontSize: "1.25rem",
+                    color: "rgba(96, 96, 96)",
+                  },
+                }}
+              >
+                <TableCell>ISBN</TableCell>
+                <TableCell>Title</TableCell>
+                <TableCell>Description</TableCell>
+                <TableCell>Available</TableCell>
+                <TableCell>Authors</TableCell>
+                <TableCell>Publisher</TableCell>
+                <TableCell>Published Date</TableCell>
+                <TableCell>Category</TableCell>
                 <PrivateRoute>
-                  <TableCell>
-                    <Link
-                      href={`/update-book/${book._id}`}
-                      underline="none"
-                      target="_blank"
-                    >
-                      EDIT
-                    </Link>
-                  </TableCell>
+                  <TableCell>Edit</TableCell>
                 </PrivateRoute>
                 <PrivateRoute>
+                  <TableCell>Delete</TableCell>
+                </PrivateRoute>
+                <TableCell>Borrow</TableCell>
+                {/* <PrivateRoute>
+						<TableCell>Borrower ID</TableCell>
+					  </PrivateRoute> */}
+                {/* <TableCell>Created on</TableCell>
+					  <TableCell>Updated on</TableCell> */}
+                {/* <TableCell>Borrowed on</TableCell>
+					  <TableCell>Returned on</TableCell> */}
+              </TableRow>
+            </TableHead>
+
+            <TableBody>
+              {books.allBooks.map((book: Book) => (
+                <TableRow key={book.ISBN}>
+                  <TableCell>{book.ISBN}</TableCell>
+                  <TableCell>{book.title}</TableCell>
+                  <TableCell>{book.description}</TableCell>
+                  <TableCell align="right">
+                    {book.available ? (
+                      <div>Available</div>
+                    ) : (
+                      <div>Not Available</div>
+                    )}
+                  </TableCell>
+                  <TableCell align="center">
+                    {book.authors.map((auth: any) => {
+                      return (
+                        <div key={auth._id}>
+                          {auth.firstName} {auth.lastName}
+                          <br />
+                          <PrivateRoute>
+                            <Link
+                              key={auth.lastName}
+                              href={`/update-author/${auth._id}`}
+                              target="_blank"
+                              underline="none"
+                            >
+                              EDIT
+                            </Link>
+                          </PrivateRoute>
+                          <br />
+                          <PrivateRoute>
+                            <button
+                              color="error"
+                              onClick={() => {
+                                handleAuthorDelete(auth._id!);
+                              }}
+                            >
+                              Delete
+                            </button>
+                          </PrivateRoute>
+                        </div>
+                      );
+                    })}
+                  </TableCell>
+                  <TableCell align="right">{book.publisher}</TableCell>
+                  <TableCell align="right">
+                    {book.publishedDate.toString()}
+                  </TableCell>
+
+                  <TableCell>{book.category}</TableCell>
+                  {/* <TableCell>{book.createdAt.toString()}</TableCell>
+						<TableCell>{book.updatedAt.toString()}</TableCell> */}
+                  {/* <TableCell>{book.borrowDate.toString()}</TableCell>
+						<TableCell>{book.returnDate.toString()}</TableCell> */}
+                  <PrivateRoute>
+                    <TableCell>
+                      <Link
+                        href={`/update-book/${book._id}`}
+                        underline="none"
+                        target="_blank"
+                      >
+                        EDIT
+                      </Link>
+                    </TableCell>
+                  </PrivateRoute>
+                  <PrivateRoute>
+                    <TableCell>
+                      <Button
+                        variant="outlined"
+                        color="error"
+                        onClick={() => {
+                          handleBookDelete(book._id);
+                        }}
+                      >
+                        Delete
+                      </Button>
+                    </TableCell>
+                  </PrivateRoute>
                   <TableCell>
                     <Button
                       variant="outlined"
-                      color="error"
-                      onClick={() => {
-                        handleBookDelete(book._id);
-                      }}
+                      color="inherit"
+                      name="borrowerId"
+                      onClick={() => handleBorrowerChange(book._id)}
                     >
-                      Delete
+                      Borrow
                     </Button>
                   </TableCell>
-                </PrivateRoute>
-                <TableCell>
-                  <Button
-                    variant="outlined"
-                    color="inherit"
-                    name="borrowerId"
-                    onClick={() => handleBorrowerChange(book._id)}
-                  >
-                    Borrow
-                  </Button>
-                </TableCell>
-                <PrivateRoute>
-                  <TableCell>{singleBookState?.borrowerId}</TableCell>
-                </PrivateRoute>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </>
-  );
+                  <PrivateRoute>
+                    <TableCell>{singleBookState?.borrowerId}</TableCell>
+                  </PrivateRoute>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </>
+    );
+  }
 }
