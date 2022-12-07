@@ -1,16 +1,11 @@
 import jwt_decode from "jwt-decode";
-
-type DecodedUser = {
-  userId: string;
-  isAdmin: boolean;
-  iat: number;
-  exp: number;
-};
+import { useSelector } from "react-redux";
+import { RootState } from "redux/store";
 
 function PrivateRoute({ children }: { children: React.ReactElement }) {
-  const token = localStorage.getItem("token") || "";
-  const authUser = jwt_decode(token) as DecodedUser;
-  if (!authUser.isAdmin) {
+  const { users, auth } = useSelector((state: RootState) => state);
+  const isAdmin = auth.decodedUser.isAdmin ;
+  if (!isAdmin) {
     return <div></div>;
   }
   return children;

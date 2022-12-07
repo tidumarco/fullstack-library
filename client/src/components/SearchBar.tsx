@@ -45,11 +45,9 @@ export default function SearchAppBar({
   authors,
   category,
 }: SearchBarProps) {
-  const token = localStorage.getItem("token") || "";
-  const authUser = jwt_decode(token) as DecodedUser;
-  const userId = authUser.userId;
-  const users = useSelector((state: RootState) => state.users.allUsers);
-  const activeUser = users.find((user) => user._id === userId);
+  const {users, auth} = useSelector((state: RootState) => state);
+  const userId = auth.decodedUser.userId;
+  const activeUser = users.allUsers.find((user) => user._id === userId);
   const dispatch = useDispatch<AppDispatch>();
   const [formData, setFormData] = useState({
     ISBN: "",

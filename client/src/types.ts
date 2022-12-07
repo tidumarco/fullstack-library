@@ -74,6 +74,7 @@ export type DecodedUser = {
   role: string;
   iat: number;
   exp: number;
+  isAdmin: boolean;
 };
 
 export type User = {
@@ -86,6 +87,7 @@ export type User = {
 
 export interface AuthState {
   token: string;
+  decodedUser: DecodedUser;
   isLoading: boolean;
   error: boolean;
 }
