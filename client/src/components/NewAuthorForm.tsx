@@ -27,7 +27,7 @@ const NewAuthorForm = () => {
 
   const onSubmit = handleSubmit((data) => {
     dispatch(createAuthorThunk(data));
-    console.log(data);
+    
     alert("Author Created!");
 	window.close()
   });

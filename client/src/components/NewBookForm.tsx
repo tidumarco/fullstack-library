@@ -8,7 +8,7 @@ import { createBookThunk } from "redux/services/book.service";
 import { Author, NewBook } from "types";
 import { useEffect } from "react";
 import { fetchAuthorsThunk } from "redux/services/author.service";
-import { Form } from "react-router-dom";
+import { getToken } from "redux/slices/authSlice";
 
 const author = z.object({
   firstName: z.string(),
@@ -29,13 +29,13 @@ const schema = z.object({
   returnDate: z.date().optional(),
   adminId: z.string().optional(),
 });
-console.log(schema);
 
 const NewBookForm = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     dispatch(fetchAuthorsThunk());
+    dispatch(getToken());
   }, [dispatch]);
 
   const {
@@ -49,14 +49,14 @@ const NewBookForm = () => {
 
   const onSubmit = handleSubmit((data) => {
     dispatch(createBookThunk(data));
-    console.log(data);
+
     alert("Book created!");
     window.close();
   });
   const errorsValues = Object.entries(errors);
 
   const { authors } = useSelector((state: RootState) => state);
-  console.log(authors.allAuthors);
+
   return (
     <form onSubmit={onSubmit}>
       {errorsValues.length > 0 ? (

@@ -38,12 +38,12 @@ export default function UpdateBook() {
     }
   };
 
-  console.log(state);
+  
   const handleSubmit = (e: any) => {
     e.preventDefault();
     if (state) {
       dispatch(updateAuthorThunk(state));
-      console.log(state);
+      
       alert("Author updated!");
       window.close();
     }

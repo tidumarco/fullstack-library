@@ -10,7 +10,7 @@ import { AppDispatch } from "redux/store";
 export default function AddBook() {
   const navigate = useNavigate();
   const [authenticated, setAuthenticated] = useState<boolean>();
-  console.log(authenticated);
+  
   const dispatch = useDispatch<AppDispatch>();
 
   const handleGoogleOnSuccess = async (response: CredentialResponse) => {

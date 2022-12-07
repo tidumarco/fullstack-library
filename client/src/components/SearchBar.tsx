@@ -90,7 +90,7 @@ export default function SearchAppBar({
     }
 
     if (filter) {
-      console.log("filter", filter);
+      
       return dispatch(fetchBooksThunk({ filter }));
     }
 

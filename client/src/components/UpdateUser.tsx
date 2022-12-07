@@ -1,11 +1,17 @@
 import {
   Button,
+  FormControlLabel,
   Grid,
   InputLabel,
+  MenuItem,
+  NativeSelect,
+  Radio,
+  RadioGroup,
+  Select,
+  SelectChangeEvent,
   TextField,
   Typography,
 } from "@mui/material";
-import { Helmet } from "react-helmet";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -21,7 +27,7 @@ export default function UpdateBook() {
 
   const dispatch = useDispatch<AppDispatch>();
   const [state, setState] = useState(user);
-  console.log("State id:", state?._id);
+
   useEffect(() => {
     if (!user) {
       dispatch(fetchUsersThunk());
@@ -45,7 +51,7 @@ export default function UpdateBook() {
     e.preventDefault();
     if (state) {
       dispatch(updateUserThunk(state));
-      console.log(state);
+
       alert("User updated!");
       window.close();
     }
@@ -54,9 +60,6 @@ export default function UpdateBook() {
   if (!user) return <h1>Loading user...</h1>;
   return (
     <>
-      <Helmet>
-        <title>Update user page</title>
-      </Helmet>
       <Typography variant="h4">
         Update an user: {user.firstName} {user.lastName}
       </Typography>
@@ -88,6 +91,7 @@ export default function UpdateBook() {
             name="lastName"
             defaultValue={state?.lastName}
             value={state?.lastName}
+            placeholder="last name"
             onChange={handleChange}
           />
           <InputLabel>Email</InputLabel>
@@ -96,9 +100,18 @@ export default function UpdateBook() {
             name="email"
             defaultValue={state?.email}
             value={state?.email}
+            placeholder="email"
             onChange={handleChange}
           />
-
+          <InputLabel>Is Admin</InputLabel>
+          <TextField
+            type="text"
+            name="isAdmin"
+            defaultValue={state?.isAdmin}
+            value={state?.isAdmin}
+            placeholder="isAdmin"
+            onChange={handleChange}
+          />
           <Button variant="contained" type="submit">
             Submit
           </Button>

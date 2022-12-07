@@ -24,13 +24,8 @@ import { getToken } from "redux/slices/authSlice";
 
 export default function BooksTable() {
   const { books, authors, auth } = useSelector((state: RootState) => state);
-
-  console.log("auth", auth.decodedUser);
-  console.log("token", auth.token)
   const [singleBookState, setSingleBookState] = useState<Book | undefined>();
-
   const dispatch = useDispatch<AppDispatch>();
-
   const [searchData, setSearchData] = useState({
     ISBN: "",
     title: "",
@@ -79,7 +74,7 @@ export default function BooksTable() {
 
   useEffect(() => {
     dispatch(fetchBooksThunk());
-	dispatch(getToken());
+    dispatch(getToken());
   }, [dispatch, authors]);
 
   const handleBorrowerChange = (bookId: string) => {
@@ -99,11 +94,8 @@ export default function BooksTable() {
 
   return (
     <>
-      {/* <Helmet>
-        <title>Library Homepage</title>
-      </Helmet> */}
       <Typography>{books.isLoading && "Loading books"}</Typography>
-	  
+
       <SearchBar
         handleSubmit={handleSubmit}
         handleChange={handleChange}
@@ -150,13 +142,6 @@ export default function BooksTable() {
                 <TableCell>Delete</TableCell>
               </PrivateRoute>
               <TableCell>Borrow</TableCell>
-              {/* <PrivateRoute>
-						<TableCell>Borrower ID</TableCell>
-					  </PrivateRoute> */}
-              {/* <TableCell>Created on</TableCell>
-					  <TableCell>Updated on</TableCell> */}
-              {/* <TableCell>Borrowed on</TableCell>
-					  <TableCell>Returned on</TableCell> */}
             </TableRow>
           </TableHead>
 
@@ -167,16 +152,12 @@ export default function BooksTable() {
                 <TableCell>{book.title}</TableCell>
                 <TableCell>{book.description}</TableCell>
                 <TableCell align="right">
-                  {book.available ? (
-                    <div>Available</div>
-                  ) : (
-                    <div>Not Available</div>
-                  )}
+                  {book.available ? <p>Available</p> : <p>Not Available</p>}
                 </TableCell>
                 <TableCell align="center">
                   {book.authors.map((auth: any) => {
                     return (
-                      <div key={auth._id}>
+                      <p key={auth._id}>
                         {auth.firstName} {auth.lastName}
                         <br />
                         <PrivateRoute>
@@ -200,7 +181,7 @@ export default function BooksTable() {
                             Delete
                           </button>
                         </PrivateRoute>
-                      </div>
+                      </p>
                     );
                   })}
                 </TableCell>
@@ -210,10 +191,6 @@ export default function BooksTable() {
                 </TableCell>
 
                 <TableCell>{book.category}</TableCell>
-                {/* <TableCell>{book.createdAt.toString()}</TableCell>
-						<TableCell>{book.updatedAt.toString()}</TableCell> */}
-                {/* <TableCell>{book.borrowDate.toString()}</TableCell>
-						<TableCell>{book.returnDate.toString()}</TableCell> */}
                 <PrivateRoute>
                   <TableCell>
                     <Link

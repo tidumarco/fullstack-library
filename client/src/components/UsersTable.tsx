@@ -17,7 +17,6 @@ import { AppDispatch, RootState } from "redux/store";
 export default function UsersTable() {
   const dispatch = useDispatch<AppDispatch>();
   const { users } = useSelector((state: RootState) => state);
-  console.log(users);
 
   useEffect(() => {
     dispatch(fetchUsersThunk());
@@ -27,9 +26,6 @@ export default function UsersTable() {
 
   return (
     <>
-      <Helmet>
-        <title>Users Table</title>
-      </Helmet>
       <Typography variant="h2">Users</Typography>
       <TableContainer>
         <Table
@@ -53,13 +49,18 @@ export default function UsersTable() {
             >
               <TableCell>First Name</TableCell>
               <TableCell>Last Name</TableCell>
+			  <TableCell>Email</TableCell>
+			  <TableCell>Is Admin</TableCell>
+			  <TableCell>Edit</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {users.allUsers.map((user) => (
-              <TableRow>
+              <TableRow key={user._id}>
                 <TableCell>{user.firstName}</TableCell>
                 <TableCell>{user.lastName}</TableCell>
+				<TableCell>{user.email}</TableCell>
+				<TableCell>{JSON.stringify(user.isAdmin)}</TableCell>
                 <TableCell>
                   <Link
                     key={user._id}

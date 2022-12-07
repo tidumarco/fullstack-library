@@ -11,7 +11,7 @@ export default function UpdateBook() {
   const books = useSelector((state: RootState) => state.books.allBooks);
   const book = books.find((book) => book._id === bookId);
   const [state, setState] = useState(book);
-  console.log("State:", state?.title);
+  
 
   const dispatch = useDispatch<AppDispatch>();
 
