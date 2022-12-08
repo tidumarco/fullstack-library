@@ -28,9 +28,6 @@ import { getToken } from "redux/slices/authSlice";
 
 export default function BooksTable() {
   const { books, authors, auth } = useSelector((state: RootState) => state);
-
-//   const book = books.allBooks.find((book) => book._id === bookId);
-//   const [state, setState] = useState(book);
   const dispatch = useDispatch<AppDispatch>();
   const [searchData, setSearchData] = useState({
     ISBN: "",
@@ -83,21 +80,6 @@ export default function BooksTable() {
     dispatch(getToken());
   }, [dispatch, authors]);
 
-//   const handleBorrowerChange = (e: any) => {
-//     console.log("User Id", auth.decodedUser.userId);
-//     const borrowerId = auth.decodedUser.userId;
-//     console.log("Borrower ID before", borrowerId);
-//     const name = e.target.name;
-//     const value = e.target.value;
-//     if (state) {
-//       setState({
-//         ...state,
-//         [borrowerId]: borrowerId,
-//       });
-//       dispatch(updateBookThunk(state));
-//     }
-//   };
-
   return (
     <>
       <Typography>{books.isLoading && "Loading books"}</Typography>
@@ -147,8 +129,7 @@ export default function BooksTable() {
               <PrivateRoute>
                 <TableCell>Delete</TableCell>
               </PrivateRoute>
-              <TableCell>Borrow</TableCell>
-              <TableCell>Borrower</TableCell>
+              <TableCell>Details</TableCell>
             </TableRow>
           </TableHead>
 
@@ -223,15 +204,13 @@ export default function BooksTable() {
                   </TableCell>
                 </PrivateRoute>
                 <TableCell>
-                  <Button
-                    value={book._id}
-                    variant="outlined"
-                    color="inherit"
-                    name="borrowerId"
-                    onClick={() => handleBorrowerChange(book._id)}
-                  >
-                    Borrow
-                  </Button>
+				<Link
+                      href={`/book-details/${book._id}`}
+                      underline="none"
+                      target="_blank"
+                    >
+                      DETAILS
+                    </Link>
                 </TableCell>
                 <PrivateRoute>
                   <TableCell>{book.borrowerId}</TableCell>

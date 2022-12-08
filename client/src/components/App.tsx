@@ -8,6 +8,7 @@ import UpdateAuthor from "./UpdateAuthor";
 import UpdateUsers from "./UpdateUser";
 import UsersTable from "./UsersTable";
 import Login from "./Login";
+import BookDetails from "./BookDetails";
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/home" element={<Home />} />
+		<Route path="/book-details/:bookId" element={<BookDetails />} />
         <Route path="/create-book" element={<AddBook />} />
         <Route path="/create-author" element={<AddAuthor />} />
         <Route path="/update-book/:bookId" element={<UpdateBook />} />
