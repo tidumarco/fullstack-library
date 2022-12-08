@@ -8,7 +8,6 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import { Helmet } from "react-helmet";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUsersThunk } from "redux/services/user.service";

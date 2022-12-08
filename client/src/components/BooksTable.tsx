@@ -17,14 +17,20 @@ import {
 } from "@mui/material";
 import SearchBar from "./SearchBar";
 import React, { useEffect, useState } from "react";
-import { deleteBookThunk, fetchBooksThunk } from "redux/services/book.service";
+import {
+  deleteBookThunk,
+  fetchBooksThunk,
+  updateBookThunk,
+} from "redux/services/book.service";
 import { deleteAuthorThunk } from "redux/services/author.service";
 import PrivateRoute from "./PrivateRoute";
 import { getToken } from "redux/slices/authSlice";
 
 export default function BooksTable() {
   const { books, authors, auth } = useSelector((state: RootState) => state);
-  const [singleBookState, setSingleBookState] = useState<Book | undefined>();
+
+//   const book = books.allBooks.find((book) => book._id === bookId);
+//   const [state, setState] = useState(book);
   const dispatch = useDispatch<AppDispatch>();
   const [searchData, setSearchData] = useState({
     ISBN: "",
@@ -77,20 +83,20 @@ export default function BooksTable() {
     dispatch(getToken());
   }, [dispatch, authors]);
 
-  const handleBorrowerChange = (bookId: string) => {
-    // const singleBook = books.allBooks.find((book) => book._id === bookId);
-
-    // // console.log("State before thunk:", singleBookState);
-    // if (singleBook) {
-    //   singleBook.borrowerId = [...singleBook.borrowerId, userId];
-    //   setSingleBookState(singleBook);
-    //   if (singleBookState) {
-    //     dispatch(updateBookThunk(singleBookState));
-    //   }
-    // }
-    // // console.log("State after thunk:", singleBookState);
-    alert("Coming soon!");
-  };
+//   const handleBorrowerChange = (e: any) => {
+//     console.log("User Id", auth.decodedUser.userId);
+//     const borrowerId = auth.decodedUser.userId;
+//     console.log("Borrower ID before", borrowerId);
+//     const name = e.target.name;
+//     const value = e.target.value;
+//     if (state) {
+//       setState({
+//         ...state,
+//         [borrowerId]: borrowerId,
+//       });
+//       dispatch(updateBookThunk(state));
+//     }
+//   };
 
   return (
     <>
@@ -142,6 +148,7 @@ export default function BooksTable() {
                 <TableCell>Delete</TableCell>
               </PrivateRoute>
               <TableCell>Borrow</TableCell>
+              <TableCell>Borrower</TableCell>
             </TableRow>
           </TableHead>
 
@@ -172,14 +179,14 @@ export default function BooksTable() {
                         </PrivateRoute>
                         <br />
                         <PrivateRoute>
-                          <button
+                          <Button
                             color="error"
                             onClick={() => {
                               handleAuthorDelete(auth._id!);
                             }}
                           >
                             Delete
-                          </button>
+                          </Button>
                         </PrivateRoute>
                       </p>
                     );
@@ -217,6 +224,7 @@ export default function BooksTable() {
                 </PrivateRoute>
                 <TableCell>
                   <Button
+                    value={book._id}
                     variant="outlined"
                     color="inherit"
                     name="borrowerId"
@@ -226,7 +234,7 @@ export default function BooksTable() {
                   </Button>
                 </TableCell>
                 <PrivateRoute>
-                  <TableCell>{singleBookState?.borrowerId}</TableCell>
+                  <TableCell>{book.borrowerId}</TableCell>
                 </PrivateRoute>
               </TableRow>
             ))}
