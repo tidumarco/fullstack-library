@@ -25,6 +25,7 @@ export const authSlice = createSlice({
       const token = localStorage.getItem("token");
       if (token) {
         state.decodedUser = jwt_decode(token);
+        console.log(state.decodedUser);
       }
     },
   },

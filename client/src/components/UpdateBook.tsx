@@ -1,4 +1,4 @@
-import { Button, Grid, InputLabel, TextField, Typography } from "@mui/material";
+import { Button, Grid, InputLabel, TextareaAutosize, TextField, Typography } from "@mui/material";
 
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -77,8 +77,8 @@ export default function UpdateBook() {
             onChange={handleChange}
           />
           <InputLabel>Description</InputLabel>
-          <TextField
-            type="text"
+          <TextareaAutosize
+            
             name="description"
             value={state?.description}
             defaultValue={state?.description}

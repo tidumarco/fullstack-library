@@ -25,6 +25,8 @@ import {
 
 import { getToken } from "redux/slices/authSlice";
 import { useParams } from "react-router-dom";
+import PrivateRoute from "./PrivateRoute";
+import { deleteAuthorThunk } from "redux/services/author.service";
 
 export default function BooksTable() {
   const { bookId } = useParams<{ bookId: string }>();
@@ -72,7 +74,10 @@ export default function BooksTable() {
       dispatch(updateBookThunk(state));
     }
   };
-  console.log(state?.borrowerId);
+  
+  const handleAuthorDelete = (authId: string) => {
+    dispatch(deleteAuthorThunk(authId));
+  };
   return (
     <>
       <Typography variant="h4">{book?.title}</Typography>
@@ -121,6 +126,28 @@ export default function BooksTable() {
                   return (
                     <p key={auth._id}>
                       {auth.firstName} {auth.lastName}
+					  <br/>
+					  <PrivateRoute>
+                          <Link
+                            key={auth.lastName}
+                            href={`/update-author/${auth._id}`}
+                            target="_blank"
+                            underline="none"
+                          >
+                            EDIT
+                          </Link>
+                        </PrivateRoute>
+                        <br />
+                        <PrivateRoute>
+                          <Button
+                            color="error"
+                            onClick={() => {
+                              handleAuthorDelete(auth._id!);
+                            }}
+                          >
+                            Delete
+                          </Button>
+                        </PrivateRoute>
                     </p>
                   );
                 })}

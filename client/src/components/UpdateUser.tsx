@@ -1,4 +1,4 @@
-import { Button, Grid, InputLabel, TextField, Typography } from "@mui/material";
+import { Button, Grid, InputLabel, NativeSelect, TextField, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -91,14 +91,18 @@ export default function UpdateBook() {
             onChange={handleChange}
           />
           <InputLabel>Is Admin</InputLabel>
-          <TextField
+          {/* <TextField
             type="text"
             name="isAdmin"
             defaultValue={state?.isAdmin}
             value={state?.isAdmin}
             placeholder="isAdmin"
             onChange={handleChange}
-          />
+          /> */}
+		  <NativeSelect name="isAdmin" >
+			<option value="true">{JSON.stringify(user.isAdmin)}</option>
+			<option value="false">{JSON.stringify(!user.isAdmin)}</option>
+		  </NativeSelect>
           <Button variant="contained" type="submit">
             Submit
           </Button>

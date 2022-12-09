@@ -14,6 +14,10 @@ import {
   Typography,
   Button,
   Link,
+  Card,
+  CardContent,
+  CardActions,
+  Box,
 } from "@mui/material";
 import SearchBar from "./SearchBar";
 import React, { useEffect, useState } from "react";
@@ -76,9 +80,9 @@ export default function BooksTable() {
   };
 
   useEffect(() => {
-    dispatch(fetchBooksThunk());
     dispatch(getToken());
-  }, [dispatch, authors]);
+    dispatch(fetchBooksThunk());
+  }, []);
 
   return (
     <>
@@ -92,7 +96,7 @@ export default function BooksTable() {
         authors={searchData.authors}
         category={searchData.category}
       />
-      <TableContainer
+      {/* <TableContainer
         component={Paper}
         sx={{
           borderBottom: "2px solid black",
@@ -103,9 +107,9 @@ export default function BooksTable() {
           },
           width: "95%",
         }}
-      >
-        <Table sx={{ margin: "0, auto" }} aria-label="simple table">
-          <TableHead>
+      > */}
+      {/* <Table sx={{ margin: "0, auto" }} aria-label="simple table"> */}
+      {/* <TableHead>
             <TableRow
               sx={{
                 borderBottom: "2px solid black",
@@ -131,9 +135,9 @@ export default function BooksTable() {
               </PrivateRoute>
               <TableCell>Details</TableCell>
             </TableRow>
-          </TableHead>
+          </TableHead> */}
 
-          <TableBody>
+      {/* <TableBody>
             {books.allBooks.map((book: Book) => (
               <TableRow key={book.ISBN}>
                 <TableCell>{book.ISBN}</TableCell>
@@ -204,22 +208,94 @@ export default function BooksTable() {
                   </TableCell>
                 </PrivateRoute>
                 <TableCell>
-				<Link
-                      href={`/book-details/${book._id}`}
-                      underline="none"
-                      target="_blank"
-                    >
-                      DETAILS
-                    </Link>
+                  <Link
+                    href={`/book-details/${book._id}`}
+                    underline="none"
+                    target="_blank"
+                  >
+                    DETAILS
+                  </Link>
                 </TableCell>
                 <PrivateRoute>
                   <TableCell>{book.borrowerId}</TableCell>
                 </PrivateRoute>
               </TableRow>
             ))}
-          </TableBody>
+          </TableBody> */}
+      {/* <TableBody></TableBody>
         </Table>
-      </TableContainer>
+      </TableContainer> */}
+      <Box display="flex" width="100%" flexWrap="wrap">
+        {books.allBooks.map((book: Book) => (
+          <Card sx={{ minWidth: 275, maxWidth: 275, margin: 5 }}>
+            <CardContent>
+              <Typography
+                sx={{ fontSize: 14 }}
+                color="text.secondary"
+                gutterBottom
+              >
+                {book.authors.map((auth: any) => {
+                  return (
+                    <p key={auth._id}>
+                      {auth.firstName} {auth.lastName}
+                    </p>
+                  );
+                })}
+              </Typography>
+              <Typography variant="h5" component="div">
+                {book.title}
+              </Typography>
+              <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                {book.category}
+              </Typography>
+              <Typography
+                sx={{
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  display: "-webkit-box",
+                  WebkitLineClamp: "2",
+                  WebkitBoxOrient: "vertical",
+                }}
+              >
+                {book.description}
+              </Typography>
+            </CardContent>
+            <CardActions>
+              <Link
+                href={`/book-details/${book._id}`}
+                underline="none"
+                target="_blank"
+              >
+                DETAILS
+              </Link>
+            </CardActions>
+            <PrivateRoute>
+              <CardActions>
+                <Link
+                  href={`/update-book/${book._id}`}
+                  underline="none"
+                  target="_blank"
+                >
+                  EDIT
+                </Link>
+              </CardActions>
+            </PrivateRoute>
+            <PrivateRoute>
+              <CardActions>
+                <Button
+                  variant="outlined"
+                  color="error"
+                  onClick={() => {
+                    handleBookDelete(book._id);
+                  }}
+                >
+                  Delete
+                </Button>
+              </CardActions>
+            </PrivateRoute>
+          </Card>
+        ))}
+      </Box>
     </>
   );
 }
