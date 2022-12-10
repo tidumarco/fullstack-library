@@ -6,3 +6,8 @@
   version "0.2.8"
   resolved "https://registry.yarnpkg.com/@react-oauth/google/-/google-0.2.8.tgz#68ebce792c6c5e4123c7485d1c60ae562a894924"
   integrity sha512-W3sRcU6kSZMGUOk10Vy5kPZPzvsi7+UpM2MxnT6fMVp+whDMKCVope5R01gwRydK9OI+0rozAARCD2NgrbkV7w==
+
+moment@^2.29.4:
+  version "2.29.4"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.4.tgz#3dbe052889fe7c1b2ed966fcb3a77328964ef108"
+  integrity sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==

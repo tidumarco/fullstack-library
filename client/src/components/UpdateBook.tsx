@@ -7,6 +7,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import moment from "moment";
 
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -108,8 +109,8 @@ console.log(state?.authors)
           <TextField
             type="date"
             name="publishedDate"
-            value={state?.publishedDate}
-            defaultValue={state?.publishedDate}
+            value={moment(state?.publishedDate).utc().format('yyyy-MM-DD')}
+            defaultValue={moment(state?.publishedDate).utc().format('yyyy-MM-DD')}
             placeholder="published date here"
             onChange={handleChange}
           />

@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "redux/store";
-
+import moment from 'moment'
 import { Book } from "types";
 
 import {
@@ -227,7 +227,7 @@ export default function BooksTable() {
       </TableContainer> */}
       <Box display="flex" width="100%" flexWrap="wrap">
         {books.allBooks.map((book: Book) => (
-          <Card sx={{ minWidth: 275, maxWidth: 275, margin: 5 }}>
+			<Card sx={{ minWidth: 275, maxWidth: 275, margin: 5 }}>
             <CardContent>
               <Typography
                 sx={{ fontSize: 14 }}
@@ -246,8 +246,9 @@ export default function BooksTable() {
                 {book.title}
               </Typography>
               <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                {book.category}
+                {book.category} 
               </Typography>
+			  <Typography>{moment(book.publishedDate).utc().format('YYYY-MM-DD')}</Typography>
               <Typography
                 sx={{
                   overflow: "hidden",

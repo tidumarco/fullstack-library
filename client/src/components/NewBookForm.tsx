@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { Button, Grid, NativeSelect, TextField } from "@mui/material";
+import { Button, Grid, NativeSelect, TextareaAutosize, TextField } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "redux/store";
 import { createBookThunk } from "redux/services/book.service";
@@ -91,7 +91,7 @@ const NewBookForm = () => {
 
         <TextField label="Title" {...register("title")} />
 
-        <TextField label="Description" {...register("description")} />
+        <TextareaAutosize minRows={3} {...register("description")} />
 
         <NativeSelect {...register("available")}>
           <option value="true">Available</option>
