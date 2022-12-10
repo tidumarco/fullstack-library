@@ -14,14 +14,11 @@ import {
   TextField,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import { DecodedUser, SearchBarProps } from "types";
+import { SearchBarProps } from "types";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "redux/store";
 import { fetchBooksThunk } from "redux/services/book.service";
-import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
-import { fetchTokenThunk } from "redux/services/auth.service";
 import PrivateRoute from "./PrivateRoute";
-import jwt_decode from "jwt-decode";
 import { fetchUsersThunk } from "redux/services/user.service";
 
 const Search = styled("div")(({ theme }) => ({
@@ -61,10 +58,6 @@ export default function SearchAppBar({
     category: "",
     available: true,
   });
-
-  //   const handleGoogleOnSuccess = async (response: CredentialResponse) => {
-  //     dispatch(fetchTokenThunk(response));
-  //   };
   useEffect(() => {
     if (!activeUser) {
       dispatch(fetchUsersThunk());
