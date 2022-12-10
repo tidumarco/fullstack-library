@@ -262,6 +262,7 @@ export default function BooksTable() {
             </CardContent>
             <CardActions>
               <Link
+                margin="5px"
                 href={`/book-details/${book._id}`}
                 underline="none"
                 target="_blank"
@@ -272,6 +273,7 @@ export default function BooksTable() {
             <PrivateRoute>
               <CardActions>
                 <Link
+                  margin="5px"
                   href={`/update-book/${book._id}`}
                   underline="none"
                   target="_blank"
@@ -283,6 +285,7 @@ export default function BooksTable() {
             <PrivateRoute>
               <CardActions>
                 <Button
+				
                   variant="outlined"
                   color="error"
                   onClick={() => {
