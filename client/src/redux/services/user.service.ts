@@ -43,7 +43,7 @@ export const updateUserThunk = createAsyncThunk(
   "user/update",
   async (user: NewUser) => {
     const response = await axios.put(`${URL}/${user._id}`, user);
-    console.log("User updated", response);
+    
     return {
       data: response.data,
       status: response.status,

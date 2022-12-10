@@ -49,12 +49,11 @@ export default function UpdateBook() {
     e.preventDefault();
     if (state) {
       dispatch(updateBookThunk(state));
-      console.log(state.authors);
+      
       alert("Book updated!");
       window.close();
     }
   };
-console.log(state?.authors)
   if (!book) return <h1>Loading book...</h1>;
   return (
     <>

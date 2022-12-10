@@ -63,7 +63,6 @@ export const updateBook = async (
     const bookId = req.params.bookId
     const updateBook = await bookService.update(bookId, update)
     res.status(200).json(updateBook)
-    console.log('Book edited.')
   } catch (error) {
     if (error instanceof Error && error.name == 'ValidationError') {
       next(new BadRequestError('Invalid Request', 400, error))
@@ -159,7 +158,6 @@ export const filterBooks = async (
         queries.push({ [key]: value })
       }
     }
-    // console.log(queries)
     res.status(200).json(await bookService.findByFilter(queries))
   } catch (error) {
     if (error instanceof Error && error.name == 'ValidationError') {

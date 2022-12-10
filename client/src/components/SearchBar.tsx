@@ -14,7 +14,6 @@ import {
   TextField,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import { SearchBarProps } from "types";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "redux/store";
 import { fetchBooksThunk } from "redux/services/book.service";
@@ -36,12 +35,7 @@ const Search = styled("div")(({ theme }) => ({
   },
 }));
 
-export default function SearchAppBar({
-  ISBN,
-  title,
-  authors,
-  category,
-}: SearchBarProps) {
+export default function SearchAppBar() {
   const {users, auth} = useSelector((state: RootState) => state);
   const userId = auth.decodedUser.userId;
   const activeUser = users.allUsers.find((user) => user._id === userId);

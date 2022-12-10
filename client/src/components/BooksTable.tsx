@@ -4,13 +4,6 @@ import moment from 'moment'
 import { Book } from "types";
 
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
   Typography,
   Button,
   Link,
@@ -24,7 +17,6 @@ import React, { useEffect, useState } from "react";
 import {
   deleteBookThunk,
   fetchBooksThunk,
-  updateBookThunk,
 } from "redux/services/book.service";
 import { deleteAuthorThunk } from "redux/services/author.service";
 import PrivateRoute from "./PrivateRoute";
@@ -88,14 +80,7 @@ export default function BooksTable() {
     <>
       <Typography>{books.isLoading && "Loading books"}</Typography>
 
-      <SearchBar
-        handleSubmit={handleSubmit}
-        handleChange={handleChange}
-        title={searchData.title}
-        ISBN={searchData.ISBN}
-        authors={searchData.authors}
-        category={searchData.category}
-      />
+      <SearchBar />
       <Box display="flex" width="100%" flexWrap="wrap">
         {books.allBooks.map((book: Book) => (
 			<Card sx={{ minWidth: 275, maxWidth: 275, margin: 5 }}>

@@ -43,8 +43,6 @@ export const fetchBookThunk = createAsyncThunk("book/fetch", async (bookId) => {
 export const createBookThunk = createAsyncThunk(
   "book/create",
   async (book: NewBook) => {
-    console.log("redux create", book);
-
     const response = await axios.post(`${origin}/api/v1/books`, book);
 
     return {
@@ -62,7 +60,6 @@ export const updateBookThunk = createAsyncThunk(
       `${origin}/api/v1/books/id/${book._id}`,
       book
     );
-    console.log(response);
 
     return {
       data: response.data,

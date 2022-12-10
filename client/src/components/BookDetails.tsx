@@ -1,8 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "redux/store";
 
-import { Book } from "types";
-
 import {
   Table,
   TableBody,
@@ -16,12 +14,8 @@ import {
   Link,
 } from "@mui/material";
 
-import React, { useEffect, useState } from "react";
-import {
-  deleteBookThunk,
-  fetchBooksThunk,
-  updateBookThunk,
-} from "redux/services/book.service";
+import { useEffect, useState } from "react";
+import { fetchBooksThunk, updateBookThunk } from "redux/services/book.service";
 
 import { getToken } from "redux/slices/authSlice";
 import { useParams } from "react-router-dom";
@@ -69,12 +63,11 @@ export default function BooksTable() {
   };
 
   const handleSubmit = (e: any) => {
-    
     if (state) {
       dispatch(updateBookThunk(state));
     }
   };
-  
+
   const handleAuthorDelete = (authId: string) => {
     dispatch(deleteAuthorThunk(authId));
   };
@@ -111,7 +104,7 @@ export default function BooksTable() {
                 <TableCell>Published Date</TableCell>
                 <TableCell>Category</TableCell>
                 <TableCell>Borrow</TableCell>
-				<TableCell>Return</TableCell>
+                <TableCell>Return</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -126,28 +119,28 @@ export default function BooksTable() {
                   return (
                     <p key={auth._id}>
                       {auth.firstName} {auth.lastName}
-					  <br/>
-					  <PrivateRoute>
-                          <Link
-                            key={auth.lastName}
-                            href={`/update-author/${auth._id}`}
-                            target="_blank"
-                            underline="none"
-                          >
-                            EDIT
-                          </Link>
-                        </PrivateRoute>
-                        <br />
-                        <PrivateRoute>
-                          <Button
-                            color="error"
-                            onClick={() => {
-                              handleAuthorDelete(auth._id!);
-                            }}
-                          >
-                            Delete
-                          </Button>
-                        </PrivateRoute>
+                      <br />
+                      <PrivateRoute>
+                        <Link
+                          key={auth.lastName}
+                          href={`/update-author/${auth._id}`}
+                          target="_blank"
+                          underline="none"
+                        >
+                          EDIT
+                        </Link>
+                      </PrivateRoute>
+                      <br />
+                      <PrivateRoute>
+                        <Button
+                          color="error"
+                          onClick={() => {
+                            handleAuthorDelete(auth._id!);
+                          }}
+                        >
+                          Delete
+                        </Button>
+                      </PrivateRoute>
                     </p>
                   );
                 })}
@@ -174,7 +167,7 @@ export default function BooksTable() {
                   </Button>
                 )}
               </TableCell>
-			  <TableCell>
+              <TableCell>
                 {!book?.borrowerId ? (
                   <Button disabled color="secondary">
                     return

@@ -31,7 +31,6 @@ export default function () {
           user.save()
         }
         done(null, user)
-        console.log(user)
       } catch (error) {
         done(error)
       }

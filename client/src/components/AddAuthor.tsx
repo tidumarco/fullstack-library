@@ -1,5 +1,4 @@
 import { Typography } from "@mui/material";
-import { Helmet } from "react-helmet";
 import NewAuthorForm from "./NewAuthorForm";
 
 export default function AddAuthor() {

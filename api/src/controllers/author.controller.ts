@@ -40,7 +40,6 @@ export const updateAuthor = async (
     const authorId = req.params.authorId
     const updateAuthor = await authorService.update(authorId, update)
     res.status(200).json(updateAuthor)
-    console.log('Author edited.')
   } catch (error) {
     if (error instanceof Error && error.name == 'ValidationError') {
       next(new BadRequestError('Invalid Request', 400, error))

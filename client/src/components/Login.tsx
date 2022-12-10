@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { fetchTokenThunk } from "redux/services/auth.service";
 import { AppDispatch } from "redux/store";
-import background from "../images/background.jpeg";
+
 export default function AddBook() {
   const navigate = useNavigate();
   const [authenticated, setAuthenticated] = useState<boolean>();
@@ -46,13 +46,4 @@ export default function AddBook() {
       </div>
     </div>
   );
-}
-
-{
-  /* <GoogleLogin
-onSuccess={handleGoogleOnSuccess}
-onError={() => {
-  console.log("Login Failed");
-}}
-/> */
 }
