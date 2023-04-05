@@ -8,7 +8,6 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Paper,
   Typography,
   Button,
   Link,
@@ -38,6 +37,7 @@ export default function BooksTable() {
       setState(book);
       dispatch(getToken());
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [book]);
 
   const handleChange = (e: any) => {
