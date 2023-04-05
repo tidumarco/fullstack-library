@@ -100,3 +100,5 @@ export const findAll = async (
     }
   }
 }
+
+console.log('Hello World')
