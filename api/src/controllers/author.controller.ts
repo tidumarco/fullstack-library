@@ -100,5 +100,5 @@ export const findAll = async (
     }
   }
 }
-console.log('Hello node')
-console.log('Hello Katja')
+
+console.log('Hello World')
