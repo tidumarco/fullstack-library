@@ -12,3 +12,5 @@ module.exports = {
   testEnvironment: 'node',
   setupFiles: ['dotenv/config'],
 }
+
+// this is a comment to test the git commit hook
